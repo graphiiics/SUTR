@@ -15,8 +15,10 @@ class CreateSesionsTable extends Migration
         Schema::create('sesions', function (Blueprint $table) {
             $table->increments('id');
             $table->date('fecha');
-            $table->integer('user_id');
-            $table->integer('paciente_id');
+            $table->integer('paciente_id')->unsigned();
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('paciente_id')->references('id')->on('pacientes');
             $table->timestamps();
         });
     }
