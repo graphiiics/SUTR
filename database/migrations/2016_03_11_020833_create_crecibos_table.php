@@ -26,7 +26,7 @@ class CreateCrecibosTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('paciente_id')->references('id')->on('pacientes');
             $table->foreign('concepto_id')->references('id')->on('conceptos');
-             $table->foreign('recibo_id')->references('id')->on('recibos')
+            $table->foreign('recibo_id')->references('id')->on('recibos');
             $table->timestamps();
         });
     }
