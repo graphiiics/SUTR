@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBeneficiosTable extends Migration
+class CreateRecibosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,16 +12,16 @@ class CreateBeneficiosTable extends Migration
      */
     public function up()
     {
-        Schema::create('beneficios', function (Blueprint $table) {
+        Schema::create('recibos', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('paciente_id');
-            $table->integer('empresa_id');
+            $table->integer('concepto_id')->unsigned();
+            $table->integer('paciente_id')->unsigned();
+            $table->integer('unidad_id')->unsigned();
+            $table->integer('user_id')->unsigned();
+            $table->integer('beneficio_id')->unsigned();
             $table->date('fecha');
-            $table->integer('sesiones');
-            $table->double('cantidad');
+            $table->integer('cantidad');
             $table->integer('estatus');
-            $table->integer('sesiones_realizadas');
             $table->timestamps();
         });
     }
@@ -33,6 +33,6 @@ class CreateBeneficiosTable extends Migration
      */
     public function down()
     {
-        Schema::drop('beneficios');
+        Schema::drop('recibos');
     }
 }

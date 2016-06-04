@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSesionsTable extends Migration
+class CreateProductoUnidadsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,11 @@ class CreateSesionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sesions', function (Blueprint $table) {
+        Schema::create('producto_unidads', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('fecha');
-            $table->integer('user_id');
-            $table->integer('paciente_id');
+            $table->integer('unidad_id')->unsigned();
+            $table->integer('producto_id')->unsigned();
+            $table->integer('cantidad');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateSesionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('sesions');
+        Schema::drop('producto_unidads');
     }
 }

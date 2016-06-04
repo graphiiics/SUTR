@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRecibosTable extends Migration
+class CreateProductoVentasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,11 @@ class CreateRecibosTable extends Migration
      */
     public function up()
     {
-        Schema::create('recibos', function (Blueprint $table) {
+        Schema::create('producto_ventas', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('fecha');
+            $table->integer('venta_id')->unsigned();
+            $table->integer('producto_id')->unsigned();
             $table->integer('cantidad');
-            $table->integer('estatus');
-            $table->integer('concepto_id');
-            $table->integer('paciente_id');
-            $table->integer('unidad_id');
-            $table->integer('user_id');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class CreateRecibosTable extends Migration
      */
     public function down()
     {
-        Schema::drop('recibos');
+        Schema::drop('producto_ventas');
     }
 }

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCrecibosTable extends Migration
+class CreatePedidoProductosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,11 @@ class CreateCrecibosTable extends Migration
      */
     public function up()
     {
-        Schema::create('crecibos', function (Blueprint $table) {
+        Schema::create('pedido_productos', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('recibo_id');
-            
+            $table->integer('pedido_id')->unsigned();
+            $table->integer('producto_id')->unsigned();
+            $table->integer('cantidad');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateCrecibosTable extends Migration
      */
     public function down()
     {
-        Schema::drop('crecibos');
+        Schema::drop('pedido_productos');
     }
 }
