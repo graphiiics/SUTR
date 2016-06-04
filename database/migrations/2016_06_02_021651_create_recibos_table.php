@@ -22,8 +22,6 @@ class CreateRecibosTable extends Migration
             $table->date('fecha');
             $table->integer('cantidad');
             $table->integer('estatus');
-<<<<<<< HEAD:database/migrations/2016_06_02_021651_create_recibos_table.php
-=======
             $table->integer('concepto_id')->unsigned();
             $table->integer('paciente_id')->unsigned();
             $table->integer('unidad_id')->unsigned();
@@ -32,7 +30,6 @@ class CreateRecibosTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('paciente_id')->references('id')->on('pacientes');
             $table->foreign('concepto_id')->references('id')->on('conceptos');
->>>>>>> f6bcb8072f0a381e371035737763d5b7690635c8:database/migrations/2016_03_11_012251_create_recibos_table.php
             $table->timestamps();
         });
     }

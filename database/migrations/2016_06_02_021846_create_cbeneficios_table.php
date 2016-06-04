@@ -15,16 +15,13 @@ class CreateCbeneficiosTable extends Migration
         Schema::create('cbeneficios', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('beneficio_id')->unsigned();
-<<<<<<< HEAD:database/migrations/2016_06_02_021846_create_cbeneficios_table.php
-            $table->integer('user_id')->unsigned();;
-            $table->integer('paciente_id')->unsigned();;
-            $table->integer('empresa_id')->unsigned();;
-            $table->integer('unidad_id')->unsigned();
-=======
             $table->integer('user_id')->unsigned();
             $table->integer('paciente_id')->unsigned();
             $table->integer('empresa_id')->unsigned();
->>>>>>> f6bcb8072f0a381e371035737763d5b7690635c8:database/migrations/2016_03_11_020820_create_cbeneficios_table.php
+            $table->integer('unidad_id')->unsigned();
+            $table->integer('user_id')->unsigned();
+            $table->integer('paciente_id')->unsigned();
+            $table->integer('empresa_id')->unsigned();
             $table->date('fecha');
             $table->integer('sesiones');
             $table->double('cantidad');
@@ -34,7 +31,6 @@ class CreateCbeneficiosTable extends Migration
             $table->foreign('paciente_id')->references('id')->on('pacientes');
             $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->foreign('beneficio_id')->references('id')->on('beneficios');
-
             $table->timestamps();
         });
     }
