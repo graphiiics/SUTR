@@ -291,3 +291,25 @@ Route::get('productos_de_ventas/{id}', function ($id) {
     $productos_de_ventas = Venta::find($id)->productos;
     return ($productos_de_ventas);
 });
+
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<php
+
+Route::get('menu_super', function()
+{
+    return View::make('layouts/super_admin');
+});
+
+Route::get('menu_admin', function()
+{
+    return View::make('layouts/admin');
+});
+
+Route::get('menu_gerente', function()
+{
+    return View::make('layouts/gerente');
+});
+
+Route::get('consultar_recibos', function()
+{
+    return View::make('super_views/consultar_recibos');
+});
