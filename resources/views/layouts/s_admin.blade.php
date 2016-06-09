@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Kode is a Premium Bootstrap Admin Template, It's responsive, clean coded and mobile friendly">
-  <meta name="keywords" content="bootstrap, admin, dashboard, flat admin template, responsive," />
-  <title>@yield('titulo', 'Unidad de Terapia Renal Zacatecas')</title>
+      <meta charset="utf-8"/>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1"/>
+      <meta name="description" content="Kode is a Premium Bootstrap Admin Template, It's responsive, clean coded and mobile friendly"/>
+      <meta name="keywords" content="bootstrap, admin, dashboard, flat admin template, responsive," />
+      <title>@yield('titulo', 'Unidad de Terapia Renal Zacatecas')</title>
 
-  <!-- ========== Css Files ========== -->
-  <link href="css/root.css" rel="stylesheet">
+      <!-- ========== Css Files ========== -->
+      <link href="css/root.css" rel="stylesheet">
 
   </head>
   <body>
@@ -110,7 +110,8 @@
       <li><a href="icons.html">Beneficios</a></li>
       <li><a href="tabs.html">Recibos</a></li>
     </ul>
-  </li>    
+  </li>  
+    </ul>
 </div>
 <!-- END SIDEBAR -->
 <!-- START CONTENT -->
@@ -147,14 +148,14 @@
     <!-- Start perfil -->
    <img src="img/profileimg.png" alt="img" class="icon profile">
       <ul class="list-w-title">
-         <a href="#" data-toggle="dropdown" class="dropdown-toggle profilebox"><img src="img/{{ Auth::user()->foto }}" alt="img"><b>{{ Auth::user()->name }}</b><span class="caret"></span></a>
-        <ul class="dropdown-menu dropdown-menu-list dropdown-menu-right">
+         <a href="#" <img src="img/{{ Auth::user()->foto }}" alt="img"><b>{{ Auth::user()->name }}</b></a>
+        
           <li role="presentation" class="dropdown-header">Perfil</li>
           <li><a href="#"><i class="fa falist fa-inbox"></i> Mensajes <span class="badge label-danger">4</span></a></li>
           <li><a href="#"><i class="fa falist fa-gear"></i> Configuración </a></li>
           <li class="divider"></li>
           <li><a href="{{ url('/logout') }}"><i class="fa falist fa-power-off"></i> Cerrar sesión</a></li>
-        </ul>
+
       </ul>
     <!-- End perfil -->
   </div>
