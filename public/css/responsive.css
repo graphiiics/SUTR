@@ -22,7 +22,10 @@ smaller than 1024
 	.content{margin-left: 0 !important;}
 	.sidebar-open-button{display: none;}
 	.sidebar-open-button-mobile{display: block;}
+<<<<<<< HEAD
     .sidepanel-open-button-mobile{display: block;}
+=======
+>>>>>>> 9444e322fc112cc4e4772b617475c89c831ec09e
 	.social-stats{bottom: 100px;}
 	.topstats li{width: 33%;}
 	.demo-sidebarmenu .sidebar{display: block;}

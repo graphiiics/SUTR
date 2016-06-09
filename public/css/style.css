@@ -341,6 +341,7 @@ Sidebar Open Button - Show or Hide Sidebar
 .sidebar-open-button-mobile:active {
   background: rgba(255, 255, 255, 0.07);
 }
+<<<<<<< HEAD
 .sidepanel-open-button-mobile {
   height: 60px;
   display: none;
@@ -356,6 +357,8 @@ Sidebar Open Button - Show or Hide Sidebar
 .sidepanel-open-button-mobile:active {
   background: rgba(255, 255, 255, 0.07);
 }
+=======
+>>>>>>> 9444e322fc112cc4e4772b617475c89c831ec09e
 /* =================================================================================
 Searchbox - Top Search Input
 ================================================================================= */
