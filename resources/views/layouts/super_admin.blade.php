@@ -72,7 +72,7 @@
   <li><a href="#"><span class="icon color12"><i class="fa fa-suitcase"></i></span>Beneficios</a>
   <li><a href="#"><span class="icon color12"><i class="fa fa-university"></i></span>Unidades</a>
   <li><a href="#"><span class="icon color12"><i class="fa fa-users"></i></span>Pacientes</a>
-  <li><a href="#"><span class="icon color12"><i class="fa fa-font"></i></span>Sesiones</a>
+  <li><a href="#"><span class="icon color12"><i class="fa fa-stethoscope"></i></span>Sesiones</a>
   <li><a href="#"><span class="icon color12"><i class="fa fa-pencil-square-o"></i></span>Pedidos</a>
   <li><a href="#"><span class="icon color12"><i class="fa fa-bar-chart"></i></span>Registros</a>
   <li><a href="#"><span class="icon color12"><i class="fa fa-dollar"></i></span>Ventas</a>
@@ -81,13 +81,6 @@
   <li><a href="#"><span class="icon color12"><i class="fa fa-truck"></i></span>Proveedores</a>
   <li><a href="#"><span class="icon color12"><i class="fa fa-flask"></i></span>Productos</a>
   <li><a href="#"><span class="icon color12"><i class="fa fa-male"></i></span>Usuarios</a>
-  </li>
-  <li><a href="#"><span class="icon color14"><i class="fa fa-paper-plane-o"></i></span>Extra Pages<span class="caret"></span></a>
-    <ul>
-      <li><a href="#">Option 1</a></li>
-      <li><a href="#">Option 2</a></li>
-    </ul>
-  </li>
 </ul>
 
 <ul class="sidebar-panel nav">

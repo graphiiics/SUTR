@@ -292,8 +292,9 @@ Route::get('productos_de_ventas/{id}', function ($id) {
     return ($productos_de_ventas);
 });
 
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<php
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+//TEST DE LOS LAYOUTS
 Route::get('menu_super', function()
 {
     return View::make('layouts/super_admin');
@@ -309,7 +310,14 @@ Route::get('menu_gerente', function()
     return View::make('layouts/gerente');
 });
 
-Route::get('consultar_recibos', function()
-{
-    return View::make('super_views/consultar_recibos');
-});
+
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+//Recibos
+Route::get('consultar_recibos','ReciboController@consultar_recibos');
+
+//Conceptos
+Route::get('consultar_conceptos','ConceptoController@consultar_conceptos');
+Route::get('crear_concepto','ConceptoController@crear_concepto');
+Route::post('guardar_concepto', 'ConceptoController@guardar_concepto');
+Route::get('editar_concepto/{id}', 'ConceptoController@editar_concepto');
+Route::post('actualizar_concepto/{id}', 'ConceptoController@actualizar_concepto');

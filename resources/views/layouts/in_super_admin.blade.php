@@ -9,7 +9,7 @@
   <title>Sistema de Unidad de Terapia Renal</title>
 
   <!-- ========== Css Files ========== -->
-  <link href="css/root.css" rel="stylesheet">
+  <link href="../css/root.css" rel="stylesheet">
   @yield('css')
 
   </head>
@@ -41,7 +41,7 @@
     <ul class="top-right">
 
     <li class="dropdown link">
-      <a href="#" data-toggle="dropdown" class="dropdown-toggle profilebox"><img src="http://lorempixel.com/240/260/cats/?96448" alt="img"><b>Administrador</b><span class="caret"></span></a>
+      <a href="#" data-toggle="dropdown" class="dropdown-toggle profilebox"><img src="http://lorempixel.com/240/260/cats/?96448" alt="img"><b>Super Administrador</b><span class="caret"></span></a>
         <ul class="dropdown-menu dropdown-menu-list dropdown-menu-right">
           <li role="presentation" class="dropdown-header">Profile</li>
           <li><a href="#"><i class="fa falist fa-inbox"></i>Inbox<span class="badge label-danger">4</span></a></li>
@@ -143,17 +143,17 @@
 <!-- ================================================
 jQuery Library
 ================================================ -->
-<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="../text/javascript" src="js/jquery.min.js"></script>
 
 <!-- ================================================
 Bootstrap Core JavaScript File
 ================================================ -->
-<script src="js/bootstrap/bootstrap.min.js"></script>
+<script src="../js/bootstrap/bootstrap.min.js"></script>
 
 <!-- ================================================
 Plugin.js - Some Specific JS codes for Plugin Settings
 ================================================ -->
-<script type="text/javascript" src="js/plugins.js"></script>
+<script type="../text/javascript" src="js/plugins.js"></script>
 @yield('js')
 
 </body>
