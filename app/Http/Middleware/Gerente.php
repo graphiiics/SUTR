@@ -3,21 +3,19 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
-
-class RedirectIfAuthenticated
+use Auth;
+class Gerente
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
-     * @param  string|null  $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+    public function handle($request, Closure $next)
     {
-        if (Auth::guard($guard)->check()) {
+        if (Auth::check()) {
             switch (Auth::user()->tipo) {
                 #SuperAdministrador
                 case '1':
@@ -29,7 +27,6 @@ class RedirectIfAuthenticated
                     break;
                 #Gerente
                 case '3':
-                    return redirect('Gerente');
                     break;
                 
                 default:
@@ -37,7 +34,6 @@ class RedirectIfAuthenticated
                     break;
             }
         }
-
         return $next($request);
     }
 }

@@ -9,7 +9,7 @@ class Producto extends Model
     //
     public function unidades()
     {
-        return $this->belongsToMany('App\Unidad', 'producto_unidads');
+        return $this->belongsToMany('App\Unidad', 'producto_unidads')->withPivot('cantidad');
     }
 
     public function pedidos()
@@ -31,5 +31,8 @@ class Producto extends Model
     {
         return $this->belongsToMany('App\Proveedor', 'producto_proveedors');
     }
+
+   
+
 }
 

@@ -6,10 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Kode is a Premium Bootstrap Admin Template, It's responsive, clean coded and mobile friendly">
   <meta name="keywords" content="bootstrap, admin, dashboard, flat admin template, responsive," />
-  <title>Sistema de Unidad de Terapia Renal</title>
+  <title>@yield('titulo', 'Unidad de Terapia Renal Zacatecas')</title>
 
   <!-- ========== Css Files ========== -->
-  <link href="css/root.css" rel="stylesheet">
+ <link href="{{asset('css/root.css')}}" rel="stylesheet">
   @yield('css')
 
   </head>
@@ -23,7 +23,7 @@
 
     <!-- Start App Logo -->
     <div class="applogo">
-      <a href="index.html" class="logo">SUTR</a>
+      <a href="{{route('inicio')}}" class="logo">SUTR</a>
     </div>
     <!-- End App Logo -->
 
@@ -43,13 +43,8 @@
     <li class="dropdown link">
       <a href="#" data-toggle="dropdown" class="dropdown-toggle profilebox"><img src="http://lorempixel.com/240/260/cats/?96448" alt="img"><b>Administrador</b><span class="caret"></span></a>
         <ul class="dropdown-menu dropdown-menu-list dropdown-menu-right">
-          <li role="presentation" class="dropdown-header">Profile</li>
-          <li><a href="#"><i class="fa falist fa-inbox"></i>Inbox<span class="badge label-danger">4</span></a></li>
-          <li><a href="#"><i class="fa falist fa-file-o"></i>Files</a></li>
-          <li><a href="#"><i class="fa falist fa-wrench"></i>Settings</a></li>
-          <li class="divider"></li>
-          <li><a href="#"><i class="fa falist fa-lock"></i> Lockscreen</a></li>
-          <li><a href="#"><i class="fa falist fa-power-off"></i> Logout</a></li>
+         
+          <li><a href="{{url('/logout')}}"><i class="fa falist fa-power-off"></i> Cerrar Sesión</a></li>
         </ul>
     </li>
 
@@ -78,13 +73,13 @@
   <li><a href="#"><span class="icon color12"><i class="fa fa-dollar"></i></span>Ventas</a>
   <li><a href="#"><span class="icon color12"><i class="fa fa-cube"></i></span>Conceptos</a>
   <li><a href="#"><span class="icon color12"><i class="fa fa-building"></i></span>Empresas</a>
-  <li><a href="#"><span class="icon color12"><i class="fa fa-truck"></i></span>Proveedores</a>
-  <li><a href="#"><span class="icon color12"><i class="fa fa-flask"></i></span>Productos</a>
+  <li><a href="{{route('proveedores')}}"><span class="icon color12"><i class="fa fa-truck"></i></span>Proveedores</a>
+  <li><a href="{{route('productos')}}"><span class="icon color12"><i class="fa fa-flask"></i></span>Productos</a>
   <li><a href="#"><span class="icon color12"><i class="fa fa-male"></i></span>Usuarios</a>
 </ul>
 
 <ul class="sidebar-panel nav">
-  <li><a href="#"><span class="icon color15"><i class="fa fa-lock"></i></span>Cerrar Sesión</a></li>
+  <li><a href="{{url('/logout')}}"><span class="icon color15"><i class="fa fa-lock"></i></span>Cerrar Sesión</a></li>
 </ul>
 
 
@@ -117,9 +112,6 @@
 
 @yield('contenido')
 
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-
 
 
 </div>
@@ -130,7 +122,7 @@
 <!-- Start Footer -->
 <div class="row footer">
   <div class="col-md-12 text-center">
-  Copyright © 2016 All rights reserved.
+  Unidad de Terapia Renal Zacatecas S.A. de C.V.
   </div>
 </div>
 <!-- End Footer -->
@@ -140,20 +132,21 @@
 
 
 
+
 <!-- ================================================
 jQuery Library
 ================================================ -->
-<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="{{asset('js/jquery.min.js')}}"></script>
 
 <!-- ================================================
 Bootstrap Core JavaScript File
 ================================================ -->
-<script src="js/bootstrap/bootstrap.min.js"></script>
+<script src="{{asset('js/bootstrap/bootstrap.min.js')}}"></script>
 
 <!-- ================================================
 Plugin.js - Some Specific JS codes for Plugin Settings
 ================================================ -->
-<script type="text/javascript" src="js/plugins.js"></script>
+<script type="text/javascript" src="{{asset('js/plugins.js')}}"></script>
 @yield('js')
 
 </body>

@@ -14,16 +14,24 @@ class Producto_unidadsTableSeeder extends Seeder
     {
         //
         $faker = Faker::create();
-
+        $unidad=1;
+        $producto=1;
   		for($i=0; $i<350; $i++)
-  		{ 
+  		{
+       
+        if($producto>50){
+          $producto=1;
+          $unidad++;
+        }
   			DB::table('producto_unidads')->insert([
-  				'unidad_id' => rand(1,6),
-  				'producto_id' => rand(1,50),
+  				'unidad_id' => $unidad,
+  				'producto_id' => $producto,
   				'cantidad' => rand(1,30),
   				'created_at' => $faker->dateTime,
     		  'updated_at' => $faker->dateTime
           	]);
+        
+        $producto++;
   		}
     }
 }
