@@ -21,15 +21,15 @@ class RedirectIfAuthenticated
             switch (Auth::user()->tipo) {
                 #SuperAdministrador
                 case '1':
-                    return redirect('SuperAdmin');
+                    return redirect('superAdmin');
                     break;
                 #Administrador
                 case '2':
-                    return redirect('Admin');
+                    return redirect('admin');
                     break;
                 #Gerente
                 case '3':
-                    return redirect('Gerente');
+                    return redirect('gerente');
                     break;
                 
                 default:

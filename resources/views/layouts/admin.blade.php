@@ -68,8 +68,8 @@
   <li><a href="#"><span class="icon color12"><i class="fa fa-university"></i></span>Unidades</a>
   <li><a href="#"><span class="icon color12"><i class="fa fa-users"></i></span>Pacientes</a>
   <li><a href="#"><span class="icon color12"><i class="fa fa-stethoscope"></i></span>Sesiones</a>
-  <li><a href="#"><span class="icon color12"><i class="fa fa-pencil-square-o"></i></span>Pedidos</a>
-  <li><a href="#"><span class="icon color12"><i class="fa fa-bar-chart"></i></span>Registros</a>
+  <li><a href="{{route('pedidos')}}"><span class="icon color12"><i class="fa fa-pencil-square-o"></i></span>Pedidos</a>
+  <li><a href="{{route('registros')}}"><span class="icon color12"><i class="fa fa-bar-chart"></i></span>Registros</a>
   <li><a href="#"><span class="icon color12"><i class="fa fa-dollar"></i></span>Ventas</a>
   <li><a href="#"><span class="icon color12"><i class="fa fa-cube"></i></span>Conceptos</a>
   <li><a href="#"><span class="icon color12"><i class="fa fa-building"></i></span>Empresas</a>
@@ -98,7 +98,7 @@
 
 
     <!-- Start Page Header Right Div -->
-    <div class="right">
+    <div  class="right col-lg-12 col-md-6">
     @yield('botones')
     </div>
     <!-- End Page Header Right Div -->
@@ -129,7 +129,33 @@
 
 
 </div>
+<div role="tabpanel" class="sidepanel">
 
+ 
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+
+    <!-- Start Today -->
+    <div role="tabpanel" class="tab-pane active" >
+
+      <div class="gn-title">Opciones</div>
+
+      <ul class="list-w-title">
+        @yield('panelBotones')
+        <li>
+          <a href="#sidepanel" class="sidepanel-open-button"><i class="fa fa-close"></i></a>
+        </li>
+      </ul>
+
+    </div>
+    <!-- End Today -->
+
+    
+
+  </div>
+
+  </div>
 
 
 

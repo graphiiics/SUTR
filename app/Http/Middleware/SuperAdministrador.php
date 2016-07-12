@@ -22,11 +22,11 @@ class SuperAdministrador
                     break;
                 #Administrador
                 case '2':
-                    return redirect('Admin');
+                    return redirect('admin');
                     break;
                 #Gerente
                 case '3':
-                    return redirect('Gerente');
+                    return redirect('gerente');
                     break;
                 
                 default:

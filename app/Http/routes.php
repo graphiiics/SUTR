@@ -76,9 +76,19 @@ Route::group(['middleware' => 'admin','prefix'=>'admin'], function() {
    //Rutas Productos
    Route::get('productos',['as'=>'productos','uses'=>'ProductoController@index']);
    Route::get('productosProveedores',['as'=>'productosProveedores','uses'=>'ProductoController@productosProveedores']);
+   Route::post('editarProducto/{producto}',['as'=>'editarProducto','uses'=> 'ProductoController@editarProducto'])->where('producto', '[0-9]+');
+   Route::post('guardarProducto',['as'=>'guardarProducto','uses'=>'ProductoController@guardarProducto']);
 
    //Rutas Proveedores
    Route::get('proveedores',['as'=>'proveedores','uses'=>'ProveedorController@index']);
+
+
+   //Rutas Registros
+   Route::get('registros',['as'=>'registros','uses'=>'RegistroController@index']);
+
+   //Rutas Pedidos
+   Route::get('pedidos',['as'=>'pedidos', 'uses'=>'PedidoController@index']);
+   Route::post('guardarPedido',['as'=>'guardarPedido','uses'=>'PedidoController@guardarPedido']);
 });
     //
 });

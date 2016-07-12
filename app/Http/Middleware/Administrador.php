@@ -19,14 +19,14 @@ class Administrador
             switch (Auth::user()->tipo) {
                 #SuperAdministrador
                 case '1':
-                    return redirect('SuperAdmin');
+                    return redirect('superAdmin');
                     break;
                 #Administrador
                 case '2':
                     break;
                 #Gerente
                 case '3':
-                    return redirect('Gerente');
+                    return redirect('gerente');
                     break;
                 
                 default:
