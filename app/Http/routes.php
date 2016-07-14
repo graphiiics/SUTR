@@ -81,14 +81,24 @@ Route::group(['middleware' => 'admin','prefix'=>'admin'], function() {
 
    //Rutas Proveedores
    Route::get('proveedores',['as'=>'proveedores','uses'=>'ProveedorController@index']);
+   Route::post('guardarProveedor',['as'=>'guardarProveedor','uses'=>'ProveedorController@guardarProveedor']);
+   Route::post('editarProveedor/{proveedor}',['as'=>'editarProveedor','uses'=> 'ProveedorController@editarProveedor'])->where('proveedor', '[0-9]+');
+   Route::get('eliminarProveedor/{proveedor}',['as'=>'eliminarProveedor','uses'=>'ProveedorController@eliminarProveedor'])->where('proveedor', '[0-9]+');
 
 
    //Rutas Registros
    Route::get('registros',['as'=>'registros','uses'=>'RegistroController@index']);
+   Route::post('guardarRegistro',['as'=>'guardarRegistro','uses'=>'RegistroController@guardarRegistro']);
+   Route::get('eliminarRegistro/{registro}',['as'=>'eliminarRegistro','uses'=>'RegistroController@eliminarRegistro'])->where('registro', '[0-9]+');
 
    //Rutas Pedidos
    Route::get('pedidos',['as'=>'pedidos', 'uses'=>'PedidoController@index']);
    Route::post('guardarPedido',['as'=>'guardarPedido','uses'=>'PedidoController@guardarPedido']);
+   Route::get('eliminarPedido/{pedido}',['as'=>'eliminarPedido','uses'=>'PedidoController@eliminarPedido'])->where('pedido', '[0-9]+');
+
+   //Rutas Ventas
+   Route::get('ventas',['as'=>'ventas', 'uses'=>'VentaController@index']);
+   Route::post('guardarVenta',['as'=>'guardarVenta','uses'=>'VentaController@guardarVenta']);
 });
     //
 });

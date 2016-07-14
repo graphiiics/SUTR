@@ -4,17 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Pedido extends Model
+class Compra extends Model
 {
-    //
-    public function user()
+     public function user()
     {
         return $this->belongsTo('App\User');
-    }
-
-    public function unidad()
-    {
-        return $this->belongsTo('App\Unidad');
     }
 
     public function productos()

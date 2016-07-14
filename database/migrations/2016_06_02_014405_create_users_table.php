@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('telefono');
             $table->string('foto');
             $table->integer('tipo');
+            $table->integer('unidad_id')->unsigned();
             $table->rememberToken();
             $table->timestamps();
         });

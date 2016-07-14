@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Database\Schema\Blueprint;
@@ -15,13 +16,8 @@ class CreateProductosTable extends Migration
         Schema::create('productos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
-            $table->string('precio');
+            $table->double('precio');
             $table->string('categoria');
-            $table->date('fecha');
-            $table->integer('paciente_id')->unsigned();
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('paciente_id')->references('id')->on('pacientes');
             $table->timestamps();
         });
     }

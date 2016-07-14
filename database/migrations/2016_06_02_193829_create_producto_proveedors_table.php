@@ -16,19 +16,7 @@ class CreateProductoProveedorsTable extends Migration
             $table->increments('id');
             $table->integer('proveedor_id')->unsigned();
             $table->integer('producto_id')->unsigned();
-            $table->integer('recibo_id')->unsigned();
-            $table->integer('concepto_id')->unsigned();
-            $table->integer('paciente_id')->unsigned();
-            $table->integer('unidad_id')->unsigned();
-            $table->integer('user_id')->unsigned();
-            $table->date('fecha');
-            $table->integer('cantidad');
-            $table->integer('estatus');
-            $table->foreign('unidad_id')->references('id')->on('unidads');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('paciente_id')->references('id')->on('pacientes');
-            $table->foreign('concepto_id')->references('id')->on('conceptos');
-            $table->foreign('recibo_id')->references('id')->on('recibos');
+            $table->integer('precio');
             $table->timestamps();
         });
     }

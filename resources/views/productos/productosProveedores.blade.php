@@ -57,7 +57,7 @@ Productos <i class="fa fa-home"></i>
                         <tr>
                           <td>{{$producto->id}}</td>
                           <td>{{$producto->nombre}}</td>
-                          <td>${{$producto->precio}}</td>
+                          <td>${{$proveedor->pivot->precio}}</td>
                           <td>{{$producto->categoria}}</td>
                           <td>{{$proveedor->nombre}}</td>
                           <td>{{$proveedor->telefono}}</td>

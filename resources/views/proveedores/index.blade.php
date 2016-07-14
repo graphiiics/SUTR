@@ -16,19 +16,22 @@
 @section('titulo') Proveedores 
 @endsection
 @section('tituloModulo')
-Productos <i class="fa fa-home"></i>
-@endsection
-
+Proveedores <i class="fa fa-home"></i>
 @section ('botones')
-<a href="crear_concepto" class="btn btn-light"><i class="fa fa-plus"></i> Crear Nuevo</a>
-@stop
+
+<a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light"><i class="fa fa-plus"></i> Crear Nuevo</a>
+@endsection
+@section('panelBotones')
+  <li class="checkbox checkbox-primary">
+    <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light"><i class="fa fa-plus"></i> Crear Nuevo</a>
+  </li>
+@endsection
  @section('contenido')
         <!-- Start Panel -->
     <div class="col-md-12 col-lg-12">
-    @if(Session::has('message'))
-          <div  class="alert alert-{{ Session::get('class') }} alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong> {{ Session::get('message')}} </strong>
+     @if(Session::has('message'))
+          <div  class="alert alert-{{ Session::get('class') }} alert-dismissable kode-alert-click">
+                <strong>{{ Session::get('message')}} </strong>
           </div>
         @endif
       <div class="panel panel-default">
@@ -57,8 +60,61 @@ Productos <i class="fa fa-home"></i>
                         <td>{{$proveedor->gerente}}</td>
                         <td>{{$proveedor->telefono}}</td>
                         <td>{{$proveedor->correo}}</td>
-                        <td><a  href="" class="btn btn-rounded btn-light">Editar</a></td>
-                        
+                         <td><a  href="#" data-toggle="modal" data-target="#modal{{$proveedor->id}}" class="btn btn-rounded btn-light">Editar</a>
+                            <!-- Modal -->
+                                <div class="modal fade" id="modal{{$proveedor->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                  <div class="modal-dialog modal-md">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title">Editar {{$proveedor->nombre}}</h4>
+                                      </div>
+                                      <form class="form-horizontal" role="form" method="POST" action="{{ route('editarProveedor',$proveedor->id) }}">
+                                        {!! csrf_field() !!}  
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label " class="col-sm-2 control-label form-label">Nombre: </label>
+                                                <div class="col-sm-10">
+                                                  <input type="text" name="nombre" value="{{$proveedor->nombre}}" class="form-control form-control-radius" >
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label " class="col-sm-2 control-label form-label">Gerente: </label>
+                                                <div class="col-sm-10">
+                                                  <input type="text"  name="gerente" value="{{$proveedor->gerente}}" class="form-control form-control-radius">
+                                                </div>
+                                            </div>
+                                             <div class="form-group">
+                                                <label " class="col-sm-2 control-label form-label">Teléfono: </label>
+                                                <div class="col-sm-10">
+                                                  <input type="text"  name="telefono" value="{{$proveedor->telefono}}" class="form-control form-control-radius">
+                                                </div>
+                                            </div>
+                                             <div class="form-group">
+                                                <label " class="col-sm-2 control-label form-label">Correo: </label>
+                                                <div class="col-sm-10">
+                                                  <input type="email"  name="correo" value="{{$proveedor->correo}}" class="form-control form-control-radius">
+                                                </div>
+                                            </div>
+                                             
+                                            
+                                             
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
+                                          @if(Auth::user()->tipo!=1)
+                                            <a  href="{{Route('eliminarProveedor',$proveedor->id)}}" type="button" class="btn btn-danger" >Eliminar</a>
+                                          @endif
+                                          <button type="submit" class="btn btn-default">Guardar</button>
+                                        </div>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </div>
+
+                              <!-- End Modal Code -->
+
+                        </td>
                        
                     </tr>
                   @endforeach
@@ -71,6 +127,56 @@ Productos <i class="fa fa-home"></i>
       </div>
     </div>
     <!-- End Panel -->
+
+       <!-- Modal -->
+          <div class="modal fade" id="modal_nuevo" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">Nuevo proveedor</h4>
+                </div>
+                <form class="form-horizontal" role="form" method="POST" action="{{ route('guardarProveedor') }}">
+                  {!! csrf_field() !!}  
+                  <div class="modal-body">
+                      <div class="form-group">
+                          <label " class="col-sm-2 control-label form-label">Nombre: </label>
+                          <div class="col-sm-10">
+                            <input type="text" name="nombre" placeholder="Empresa" class="form-control form-control-radius" >
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label " class="col-sm-2 control-label form-label">Gerente: </label>
+                          <div class="col-sm-10">
+                            <input type="text"  name="gerente" placeholder="Nombre completo" class="form-control form-control-radius">
+                          </div>
+                      </div>
+                       <div class="form-group">
+                          <label " class="col-sm-2 control-label form-label">Teléfono: </label>
+                          <div class="col-sm-10">
+                            <input type="text"  name="telefono" placeholder="Incluir clave lada" class="form-control form-control-radius">
+                          </div>
+                      </div>
+                       <div class="form-group">
+                          <label " class="col-sm-2 control-label form-label">Correo: </label>
+                          <div class="col-sm-10">
+                            <input type="email"  name="correo" placeholder="Correo electrónico" class="form-control form-control-radius">
+                          </div>
+                      </div>
+                       
+                      
+                       
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-default">Guardar</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+        <!-- End Modal Code -->
  @endsection
 
  @section ('js')

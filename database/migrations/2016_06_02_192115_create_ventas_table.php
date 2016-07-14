@@ -16,9 +16,10 @@ class CreateVentasTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->date('fecha');
-            $table->integer('estatus');
+            $table->integer('pago');
             $table->string('cliente');
             $table->double('importe');
+            $table->integer('estatus');
             $table->timestamps();
         });
     }

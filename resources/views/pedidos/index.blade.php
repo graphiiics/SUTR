@@ -31,10 +31,9 @@ Productos <i class="fa fa-home"></i>
  @section('contenido')
         <!-- Start Panel -->
     <div class="col-md-12 col-lg-12">
-    @if(Session::has('message'))
-          <div  class="alert alert-{{ Session::get('class') }} alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong> {{ Session::get('message')}} </strong>
+   @if(Session::has('message'))
+          <div  class="alert alert-{{ Session::get('class') }} alert-dismissable kode-alert-click">
+                <strong>{{ Session::get('message')}} </strong>
           </div>
         @endif
       <div class="panel panel-default">
@@ -76,13 +75,14 @@ Productos <i class="fa fa-home"></i>
                                         <h4 class="modal-title">Detalles del pedido</h4>
                                       </div>
                                       <div class="modal-body">
-                                         <table id="example0" class="table display">
+                                         <table  class="table-striped">
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
                                                     <th>Id</th>
                                                     <th>Nombre</th>
                                                     <th>precio</th>
+                                                    <th>Cantidad</th>
                                                     <th>Categoría</th>                            </tr>
                                             </thead>
                                             <tbody id="modalTableBody">
@@ -92,6 +92,7 @@ Productos <i class="fa fa-home"></i>
                                                     <td>{{$producto->id}}</td>
                                                     <td>{{$producto->nombre}}</td>
                                                     <td>${{$producto->precio}}</td>
+                                                    <td>{{$producto->pivot->cantidad}}</td>
                                                     <td>{{$producto->categoria}}</td>
                                                 </tr>
                                               @endforeach
@@ -99,12 +100,11 @@ Productos <i class="fa fa-home"></i>
                                         </table>                  
                                       </div>
                                       <div class="modal-footer">
-                                        <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
-                                        @if($pedido->estatus==1 && $pedido->user->user_id==Auth::user()->id)
-                                         <button type="button" class="btn btn-primary">editar</button>
-                                        <button type="button" class="btn btn-danger">Eliminar</button>
+                                        <a type="button" class="btn btn-white" data-dismiss="modal">Cerrar</a>
+                                        @if($pedido->estatus==1 && $pedido->user_id==Auth::user()->id)
+                                        <a  href="{{ route('eliminarPedido',$pedido->id) }}" type="button" class="btn btn-danger">Eliminar</a>
                                         @endif
-                                        <button type="button" class="btn btn-default">Imprimir</button>
+                                        <a type="button" class="btn btn-default">Imprimir</a>
                                       </div>
                                     </div>
                                   </div>
@@ -125,60 +125,68 @@ Productos <i class="fa fa-home"></i>
       </div>
     </div>
     <!-- End Panel -->
-     <!-- Modal -->
-                                <div class="modal fade" id="modal_nuevo" tabindex="-1" role="dialog" aria-hidden="true">
-                                  <div class="modal-dialog modal-md">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title">Nuevo Pedido</h4>
-                                      </div>
-                                      <form class="form-horizontal" role="form" method="POST" action="{{ route('guardarPedido') }}">
-                                        {!! csrf_field() !!}  
-                                        <div class="modal-body">
-                                                                                        
-                                            <div id="bodyModal" class="form-group">
-                                              <label class="col-sm-2 control-label form-label">Unidad: </label>
-                                              <div class="col-sm-10">
-                                                <select name="categoria" class="selectpicker form-control form-control-radius">
-                                                    <option>Real de Minas</option>
-                                                    <option>San Agustin</option>
-                                                    <option>Rio Grande</option>
-                                                    <option>Jerez</option>
-                                                    <option>Medica Norte</option>
-                                                    <option>Tlatenango</option>
-                                                  </select>                  
-                                              </div>
-                                            </div>
+          <!-- Modal -->
+                <div class="modal fade" id="modal_nuevo" tabindex="-1" role="dialog" aria-hidden="true">
+                  <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Nuevo Pedido</h4>
+                      </div>
+                      <form class="form-horizontal" role="form" method="POST" action="{{ route('guardarPedido') }}">
+                        {!! csrf_field() !!}  
+                        <div  class="modal-body">
+                                                                        
+                            <div  class="form-group">
+                              <label class="col-sm-2 control-label form-label">Unidad: </label>
+                              <div class="col-sm-10">
+                                <select name="unidad" class="selectpicker form-control form-control-radius">
+                                    <option value="1">Real de Minas</option>
+                                    <option value="2">San Agustin</option>
+                                    <option value="3">Rio Grande</option>
+                                    <option value="4">Jerez</option>
+                                    <option value="5">Medica Norte</option>
+                                    <option value="6">Tlatenango</option>
+                                  </select>                  
+                              </div>
+                            </div>
 
-                                            <div class="form-group col-lg-8 md-8 sm-8">
-                                                <label " class="col-lg-4 control-label form-label">Producto:</label>
-                                                <div class="col-lg-8">
-                                                  <select id="nProducto" class="selectpicker form-control form-control-radius">
-                                                    @foreach($productos as $producto)
-                                                    <option>{{$producto->nombre}}</option>
-                                                    @endforeach
-                                                  </select>     
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-lg-4 md-4 sm-4">
-                                                <div class="col-lg-12">
-                                                  <input type="number" id="cProducto"  value="0" class="form-control form-control-radius" >
-                                                </div>
-                                            </div>
-                                           <a  href="#" onclick="AgregarCampos();" type="button" class="btn btn-rounded btn-danger btn-icon"><i class="fa fa-plus"></i></a>
-                                           
-                                        </div>
-                                        <div class="modal-footer">
-                                          
-                                          <button type="submit" class="btn btn-default">Guardar</button>
-                                        </div>
-                                      </form>
-                                    </div>
+                            <div>
+                              <div class="form-group col-lg-8 md-8 sm-8">
+                                  <label " class="col-lg-4 control-label form-label">Producto:</label>
+                                  <div class="col-lg-8">
+                                    <select id="nProducto" class="selectpicker form-control form-control-radius">
+                                      @foreach($productos as $producto)
+                                      <option value="{{$producto->id}}-{{$producto->nombre}}" >{{$producto->nombre}}</option>
+                                      @endforeach
+                                    </select>     
                                   </div>
-                                </div>
+                              </div>
+                              <div class="form-group col-lg-4 md-4 sm-4">
+                                  <div class="col-lg-12">
+                                    <input type="number"   id="cProducto"  value="" class="form-control form-control-radius" >
+                                  </div>
+                              </div>
+                               <a  href="#" id="agregar" onclick="AgregarCampos();" type="button" class="btn btn-rounded btn-success   btn-icon"><i class="fa fa-plus"></i></a>
+                            </div>
 
-                              <!-- End Modal Code -->
+                            <div id="bodyModal">
+                            <input type="hidden" id="totalProductos" name="totalProductos" value="0">
+                            </div>
+                          
+                           
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
+                          <button type="button" onclick="eliminarCampos();" class="btn btn-danger">Limpiar</button>
+                          <button type="submit" class="btn btn-default">Guardar</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+              <!-- End Modal Code -->
  
       
  
@@ -194,15 +202,35 @@ $(document).ready(function() {
 <script type="text/javascript">
   var nextinput = 0;
   function AgregarCampos(){
-var producto=$('#nProducto').val();
- var cantidad=$('#cProducto').val();
-  nextinput++;
-  campo = '<div class="form-group col-lg-8 md-8 sm-8"><label " class="col-lg-4 control-label form-label">Producto:</label><div class="col-lg-8"><input type="text" id="producto'+nextinput+'" value="'+producto+'" class="form-control form-control-radius"></div></div><div class="form-group col-lg-4 md-4 sm-4"><div class="col-lg-12"><input type="number" value="'+cantidad+'" id="cantidad'+nextinput+'"  class="form-control form-control-radius" ></div></div>';
-
-  $("#bodyModal").append(campo);
-  $('#cProducto').val(0);
-  $('#nProducto').val();
-}
+    var producto=$('#nProducto').val();
+    var cantidad=$('#cProducto').val();
+    nextinput++;
+    campo = '<div id="campo'+nextinput+'"><div class="form-group col-lg-8 md-8 sm-8"><label  class="col-lg-4 control-label form-label">Producto '+(nextinput)+':</label><div class="col-lg-8"><input type="text" id="producto'+nextinput+'" name="producto'+nextinput+'" value="'+producto.substring(producto.indexOf('-')+1)+'" class="form-control form-control-radius" disabled > <input type="hidden" name="producto'+nextinput+'" value="'+producto.substring(0,producto.indexOf('-'))+'"></div></div><div class="form-group col-lg-4 md-4 sm-4"><div class="col-lg-12"><input type="number" value="'+cantidad+'" name="cantidad'+nextinput+'"  class="form-control form-control-radius" required ></div></div><div class="form-group col-lg-2 md-2 sm-2"></div>  </div>';
+     
+    if(producto!=null){
+        $('#totalProductos').val(nextinput);
+        $("#nProducto option[value='"+producto+"']").remove();
+        $("#bodyModal").prepend(campo);
+        $('#cProducto').val();
+        $('#nProducto').val();
+    }
+    else{
+      $('#agregar').attr("disabled", true);
+    }
+  }
+  function eliminarCampos(campo){
+    for (var i = 1; i <= nextinput; i++) {
+       var producto=$('#producto'+i);
+      $('#nProducto').append($('<option>', {
+      value: producto.val(),
+      text: producto.val()
+      }));
+      $('#campo'+i).remove();
+    }
+    nextinput=0;
+    
+  }
+ 
 </script>
 
 @stop

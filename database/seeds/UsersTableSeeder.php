@@ -27,11 +27,12 @@ class UsersTableSeeder extends Seeder
   			DB::table('users')->insert([
               'name' => $faker->name,
               'email' => $faker->unique()->email,
-              'password' => str_random(10),
+              'password' => bcrypt('hemodialisis'),
               'estatus' => rand(1,2),
               'telefono' => $faker->PhoneNumber,
               'foto' => $faker->imageUrl($width = 240, $height = 260, 'people'),
               'tipo' => rand(1,3),
+              'unidad_id'=>rand(1,7),
               'remember_token' => str_random(10),
               'created_at' => $faker->dateTime,
     			'updated_at' => $faker->dateTime

@@ -21,8 +21,9 @@ class VentasTableSeeder extends Seeder
   				'user_id' => rand(1,5),
   				'fecha' => $faker->date($format = 'Y-m-d', $max = 'now'),
   				'cliente' => $faker->name,
-  				'importe'=> $faker->randomFloat($nbMaxDecimals = 2, $min = 50, $max = 999),
-  				'estatus' => rand(1,3),
+  				'importe'=> $faker->randomFloat($nbMaxDecimals = 0, $min = 50, $max = 999),
+  				'pago' => rand(1,2),
+          'estatus' => rand(1,2),
   				'created_at' => $faker->dateTime,
     		  	'updated_at' => $faker->dateTime
           	]);

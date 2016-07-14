@@ -41,7 +41,7 @@
     <ul class="top-right">
 
     <li class="dropdown link">
-      <a href="#" data-toggle="dropdown" class="dropdown-toggle profilebox"><img src="http://lorempixel.com/240/260/cats/?96448" alt="img"><b>Administrador</b><span class="caret"></span></a>
+      <a href="#" data-toggle="dropdown" class="dropdown-toggle profilebox"><img src="http://lorempixel.com/240/260/cats/?96448" alt="img"><b>{{Auth::user()->name}}  (Administrador)</b><span class="caret"></span></a>
         <ul class="dropdown-menu dropdown-menu-list dropdown-menu-right">
          
           <li><a href="{{url('/logout')}}"><i class="fa falist fa-power-off"></i> Cerrar Sesión</a></li>
@@ -70,7 +70,7 @@
   <li><a href="#"><span class="icon color12"><i class="fa fa-stethoscope"></i></span>Sesiones</a>
   <li><a href="{{route('pedidos')}}"><span class="icon color12"><i class="fa fa-pencil-square-o"></i></span>Pedidos</a>
   <li><a href="{{route('registros')}}"><span class="icon color12"><i class="fa fa-bar-chart"></i></span>Registros</a>
-  <li><a href="#"><span class="icon color12"><i class="fa fa-dollar"></i></span>Ventas</a>
+  <li><a href="{{route('ventas')}}""><span class="icon color12"><i class="fa fa-dollar"></i></span>Ventas</a>
   <li><a href="#"><span class="icon color12"><i class="fa fa-cube"></i></span>Conceptos</a>
   <li><a href="#"><span class="icon color12"><i class="fa fa-building"></i></span>Empresas</a>
   <li><a href="{{route('proveedores')}}"><span class="icon color12"><i class="fa fa-truck"></i></span>Proveedores</a>

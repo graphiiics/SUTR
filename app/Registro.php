@@ -20,6 +20,6 @@ class Registro extends Model
 
     public function productos()
     {
-        return $this->belongsToMany('App\Producto', 'producto_registros');
+        return $this->belongsToMany('App\Producto', 'producto_registros')->withPivot('cantidad');
     }
 }

@@ -54,7 +54,7 @@ Productos <i class="fa fa-home"></i>
                         <th>Precio</th>
                         <th>Categoría</th>
                         <th>Real de Minas</th>
-                        <th>San Agustin</th>
+                        <th>San Agustín</th>
                         <th>Jerez</th>
                         <th>Rio Grande</th>
                         <th>Medica Norte</th>
@@ -178,7 +178,7 @@ Productos <i class="fa fa-home"></i>
                               <!-- End Modal Code -->
 
                         </td>
-                        
+                        </tr>
                   @endforeach
                 </tbody>
             </table>

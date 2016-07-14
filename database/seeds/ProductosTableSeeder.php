@@ -19,8 +19,8 @@ class ProductosTableSeeder extends Seeder
   		{ 
   			DB::table('productos')->insert([
   				'nombre' => $faker->word,
-  				'precio'=> $faker->randomFloat($nbMaxDecimals = 2, $min = 50, $max = 999),
-  				'categoria' => $faker->randomElement($array = array ('medicamento','suplemento','material')),
+  				'precio'=> $faker->randomFloat($nbMaxDecimals = 0, $min = 50, $max = 999),
+  				'categoria' => $faker->randomElement($array = array ('Medicamento','Suplemento','Material')),
   				'created_at' => $faker->dateTime,
     		  'updated_at' => $faker->dateTime
           	]);
