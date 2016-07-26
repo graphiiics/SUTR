@@ -20,7 +20,8 @@ Productos <i class="fa fa-home"></i>
 @endsection
 
 @section ('botones')
-<a href="{{route('productos')}}" class="btn btn-light"><i class="fa fa-home"></i> Mostrar Productos</a>
+<a href="{{route('proveedores')}}" class="btn btn-light"><i class="fa fa-home"></i> Mostrar proveedores
+</a>
 @stop
  @section('contenido')
         <!-- Start Panel -->

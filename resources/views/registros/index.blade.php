@@ -16,7 +16,7 @@
 @section('titulo') Registro 
 @endsection
 @section('tituloModulo')
-Productos <i class="fa fa-home"></i>
+Registro <i class="fa fa-home"></i>
 @endsection
 @section ('botones')
 
@@ -127,9 +127,15 @@ Productos <i class="fa fa-home"></i>
                     <div class="modal-content">
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Nuevo Pedido</h4>
+                        <h4 class="modal-title">Nuevo Registro</h4>
                       </div>
+                     @if(Auth::user()->tipo==1)
                       <form class="form-horizontal" role="form" method="POST" action="{{ route('guardarRegistro') }}">
+                       @elseif(Auth::user()->tipo==2)
+                      <form class="form-horizontal" role="form" method="POST" action="{{ route('guardarRegistro') }}">
+                       @elseif(Auth::user()->tipo==3)
+                      <form class="form-horizontal" role="form" method="POST" action="{{ route('guardarRegistroGerente') }}">
+                      @endif
                         {!! csrf_field() !!}  
                         <div  class="modal-body">
                                                                         
@@ -137,20 +143,20 @@ Productos <i class="fa fa-home"></i>
                               <label class="col-sm-2 control-label form-label">Unidad: </label>
                               <div class="col-sm-10">
                                 <select name="unidad" class="selectpicker form-control form-control-radius">
-                                    <option value="1">Real de Minas</option>
-                                    <option value="2">San Agustín</option>
-                                    <option value="3">Rio Grande</option>
-                                    <option value="4">Jerez</option>
-                                    <option value="5">Medica Norte</option>
-                                    <option value="6">Tlatenango</option>
-                                    <option value="7">Almacén</option>
+                                    {{-- @if(Auth::user()->tipo<=2)
+                                    @foreach($unidades as$unidad)
+                                      <option value="{{$unidad->id}}">{{$unidad->nombre}}</option>
+                                    @endforeach
+                                  @else --}}
+                                    <option value="{{Auth::user()->unidad->id}}">{{Auth::user()->unidad->nombre}}</option>
+                               {{--    @endif --}}
                                   </select>                  
                               </div>
                             </div>
                             <div  class="form-group">
                               <label class="col-sm-2 control-label form-label">Tipo: </label>
                               <div class="col-sm-10">
-                                <select name="tipo" class="selectpicker form-control form-control-radius">
+                                <select name="tipo"  id="tipo" onchange="cantidadUnidad();" class="selectpicker form-control form-control-radius">
                                     <option value="1">Entrada</option>
                                     <option value="2">Salida</option>
                                   </select>                  
@@ -161,7 +167,7 @@ Productos <i class="fa fa-home"></i>
                               <div class="form-group col-lg-8 md-8 sm-8">
                                   <label " class="col-lg-4 control-label form-label">Producto:</label>
                                   <div class="col-lg-8">
-                                    <select id="nProducto" class="selectpicker form-control form-control-radius">
+                                    <select id="nProducto" onchange="cantidadUnidad();" class="selectpicker form-control form-control-radius">
                                       @foreach($productos as $producto)
                                       <option value="{{$producto->id}}-{{$producto->nombre}}" >{{$producto->nombre}}</option>
                                       @endforeach
@@ -170,7 +176,7 @@ Productos <i class="fa fa-home"></i>
                               </div>
                               <div class="form-group col-lg-4 md-4 sm-4">
                                   <div class="col-lg-12">
-                                    <input type="number"   id="cProducto"  value="" class="form-control form-control-radius" >
+                                    <input type="number"   id="cProducto"  value="1"  min="0"  max="100" class="form-control form-control-radius" >
                                   </div>
                               </div>
                                <a  href="#" id="agregar" onclick="AgregarCampos();" type="button" class="btn btn-rounded btn-success   btn-icon"><i class="fa fa-plus"></i></a>
@@ -203,15 +209,22 @@ Productos <i class="fa fa-home"></i>
 <script>
 $(document).ready(function() {
     $('#example0').DataTable();
+     cantidadUnidad();
 } );
 </script>
 <script type="text/javascript">
   var nextinput = 0;
   function AgregarCampos(){
     var producto=$('#nProducto').val();
-    var cantidad=$('#cProducto').val();
+    var cantidad=parseInt($('#cProducto').val());
+    var cantidadMax=parseInt($('#cProducto').prop('max'));
     nextinput++;
-    campo = '<div id="campo'+nextinput+'"><div class="form-group col-lg-8 md-8 sm-8"><label  class="col-lg-4 control-label form-label">Producto '+(nextinput)+':</label><div class="col-lg-8"><input type="text" id="producto'+nextinput+'" name="producto'+nextinput+'" value="'+producto.substring(producto.indexOf('-')+1)+'" class="form-control form-control-radius" disabled > <input type="hidden" name="producto'+nextinput+'" value="'+producto.substring(0,producto.indexOf('-'))+'"></div></div><div class="form-group col-lg-4 md-4 sm-4"><div class="col-lg-12"><input type="number" value="'+cantidad+'" name="cantidad'+nextinput+'"  class="form-control form-control-radius" required ></div></div><div class="form-group col-lg-2 md-2 sm-2"></div>  </div>';
+    $("#tipo").attr('readonly',true);
+    if($('#tipo').val()==2 && cantidad>cantidadMax){
+        cantidad=cantidadMax;
+    }
+     cantidadUnidad();
+    campo = '<div id="campo'+nextinput+'"><div class="form-group col-lg-8 md-8 sm-8"><label  class="col-lg-4 control-label form-label">Producto '+(nextinput)+':</label><div class="col-lg-8"><input type="text" id="producto'+nextinput+'" name="producto'+nextinput+'" value="'+producto.substring(producto.indexOf('-')+1)+'" class="form-control form-control-radius" disabled > <input type="hidden" name="producto'+nextinput+'" value="'+producto.substring(0,producto.indexOf('-'))+'"></div></div><div class="form-group col-lg-4 md-4 sm-4"><div class="col-lg-12"><input type="number" value="'+cantidad+'" min="1" max="'+cantidadMax+'" name="cantidad'+nextinput+'" min="1" class="form-control form-control-radius" required ></div></div><div class="form-group col-lg-2 md-2 sm-2"></div>  </div>';
      
     if(producto!=null){
         $('#totalProductos').val(nextinput);
@@ -232,10 +245,30 @@ $(document).ready(function() {
       text: producto.val()
       }));
       $('#campo'+i).remove();
+      $("#tipo").attr('readonly',false);
     }
     nextinput=0;
     
   }
+  function cantidadUnidad() {
+if(parseInt($('#tipo').val())==2){
+    var producto=$("#nProducto").val();
+      $.ajax({
+        type: "GET",
+        url:'cantidadUnidad/'+producto.substring(0,producto.indexOf('-')),
+        success: llegada,
+      });
+    function llegada(data){
+     
+      $("#cProducto").attr('max',data);
+       $("#cProducto").val(1);
+    }
+  }
+  else{
+    $("#cProducto").attr('max',100);
+       $("#cProducto").val(1);
+  }
+ }
  
 </script>
 

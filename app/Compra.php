@@ -13,6 +13,10 @@ class Compra extends Model
 
     public function productos()
     {
-        return $this->belongsToMany('App\Producto', 'pedido_productos')->withPivot('cantidad');
+        return $this->belongsToMany('App\Producto', 'producto_compras')->withPivot('cantidad','precio');
+    }
+    public function proveedor()
+    {
+        return $this->belongsTo('App\Proveedor');
     }
 }

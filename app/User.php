@@ -15,7 +15,7 @@ class User extends Authenticatable
      protected $primaryKey = 'id';
 
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','telefono','estatus','foto','unidad_id','tipo',
     ];
 
     /**
@@ -57,4 +57,15 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Compra');
     }
+
+    public function unidad()
+    {
+        return $this->belongsTo('App\Unidad');
+    }
+
+    public function notificaciones()
+    {
+        return $this->hasMany('App\Notificacion');
+    }
+
 }

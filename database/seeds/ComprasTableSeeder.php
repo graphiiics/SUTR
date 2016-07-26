@@ -1,9 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Faker\Factory as Faker;
-
-class Producto_proveedorsTableSeeder extends Seeder
+use Faker\Factory as Faker; 
+class ComprasTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,18 +11,20 @@ class Producto_proveedorsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
         $faker = Faker::create();
 
-  		for($i=0; $i<80; $i++)
+  		for($i=0; $i<100; $i++)
   		{ 
-  			DB::table('producto_proveedors')->insert([
+  			DB::table('compras')->insert([
+  				'user_id' => rand(1,5),
+  				'fecha' => $faker->date($format = 'Y-m-d', $max = 'now'),
   				'proveedor_id' => rand(1,15),
-  				'producto_id' => rand(1,50),
-          'precio' =>$faker->randomFloat($nbMaxDecimals = 0, $min = 50, $max = 999),
+  				'importe'=> $faker->randomFloat($nbMaxDecimals = 0, $min = 50, $max = 999),
+  				
   				'created_at' => $faker->dateTime,
     		  	'updated_at' => $faker->dateTime
           	]);
   		}
+    
     }
 }

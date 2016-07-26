@@ -18,10 +18,14 @@
 @section('tituloModulo')
 Proveedores <i class="fa fa-home"></i>
 @section ('botones')
+<a href="{{route('productosProveedores')}}" class="btn btn-light"><i class="fa fa-dollar"></i>Precios de Productos</a>
 
 <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light"><i class="fa fa-plus"></i> Crear Nuevo</a>
 @endsection
 @section('panelBotones')
+<li class="checkbox checkbox-primary">
+    <a href="{{route('productosProveedores')}}" class="btn btn-light"><i class="fa fa-dollar"></i>Precios de Productos</a>
+  </li>
   <li class="checkbox checkbox-primary">
     <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light"><i class="fa fa-plus"></i> Crear Nuevo</a>
   </li>
@@ -87,7 +91,7 @@ Proveedores <i class="fa fa-home"></i>
                                              <div class="form-group">
                                                 <label " class="col-sm-2 control-label form-label">Teléfono: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="text"  name="telefono" value="{{$proveedor->telefono}}" class="form-control form-control-radius">
+                                                  <input type="tel" pattern="[0-9]{10}" name="telefono" value="{{$proveedor->telefono}}" class="form-control form-control-radius">
                                                 </div>
                                             </div>
                                              <div class="form-group">
@@ -154,7 +158,7 @@ Proveedores <i class="fa fa-home"></i>
                        <div class="form-group">
                           <label " class="col-sm-2 control-label form-label">Teléfono: </label>
                           <div class="col-sm-10">
-                            <input type="text"  name="telefono" placeholder="Incluir clave lada" class="form-control form-control-radius">
+                            <input type="tel" pattern="[0-9]{10}"  name="telefono" placeholder="10 dígitos" class="form-control form-control-radius">
                           </div>
                       </div>
                        <div class="form-group">

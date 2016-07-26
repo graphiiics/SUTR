@@ -20,16 +20,17 @@ Productos <i class="fa fa-home"></i>
 @endsection
 
 @section ('botones')
-<a href="{{route('productosProveedores')}}" class="btn btn-light"><i class="fa fa-dollar"></i>Precios de Productos</a>
-<a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light"><i class="fa fa-plus"></i> Crear Nuevo</a>
+@if(Auth::user()->tipo<=2)
+  <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light"><i class="fa fa-plus"></i> Crear Nuevo</a>
+  <a href="#" onclick="descargarPDF()"  class="btn btn-light"><i class="fa fa-plus"></i> Imprimi</a>
+@endif
 @endsection
 @section('panelBotones')
-   <li class="checkbox checkbox-primary">
-    <a href="{{route('productosProveedores')}}" class="btn btn-light"><i class="fa fa-dollar"></i>Precios de Productos</a>
-  </li>
-        
+
   <li class="checkbox checkbox-primary">
+  @if(Auth::user()->tipo<=2)
     <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light"><i class="fa fa-plus"></i> Crear Nuevo</a>
+  @endif
   </li>
 @endsection
  @section('contenido')
@@ -53,14 +54,21 @@ Productos <i class="fa fa-home"></i>
                         <th>Nombre</th>
                         <th>Precio</th>
                         <th>Categoría</th>
-                        <th>Real de Minas</th>
-                        <th>San Agustín</th>
-                        <th>Jerez</th>
-                        <th>Rio Grande</th>
-                        <th>Medica Norte</th>
-                        <th>Tlaltenango</th>
-                        <th>Almacén</th>
+                         @if(Auth::user()->tipo<=2)
+                        <th>Stock</th>
+                        @endif
+                          @foreach($unidades as $unidad)
+                             @if(Auth::user()->tipo<=2)
+                                 <th>{{$unidad->nombre}}</th>
+                             @else 
+                                  @if(Auth::user()->unidad_id==$unidad->id)
+                                    <th>{{$unidad->nombre}}</th>
+                                 @endif
+                             @endif
+                          @endforeach
+                        @if(Auth::user()->tipo<=2)
                         <th>Acciones</th>
+                        @endif
                     </tr>
                 </thead>
              
@@ -69,11 +77,30 @@ Productos <i class="fa fa-home"></i>
                       <tr>
                         <td>{{$producto->id}}</td>
                         <td>{{$producto->nombre}}</td>
-                        <td>${{$producto->precio}}</td>
+                         @if(Auth::user()->tipo<=2)
+                          <td>${{$producto->precio}}</td>
+                        @else
+                          @if($producto->categoria=="Suplemento")
+                            <td>${{$producto->precio}}</td>
+                          @else
+                            <td>No disponible</td>
+                          @endif
+                        @endif
                         <td>{{$producto->categoria}}</td>
-                        @foreach($producto->unidades as $pUnidad)
-                             <th>{{$pUnidad->pivot->cantidad}}</th>
-                        @endforeach
+                         @if(Auth::user()->tipo<=2)
+                        <td>{{$producto->stock}}</td>
+                        @endif
+                          @foreach($producto->unidades as $pUnidad)
+                            @if(Auth::user()->tipo<=2)
+                              <th>{{$pUnidad->pivot->cantidad}}</th>
+                            @else
+                                 @if(Auth::user()->unidad_id==$pUnidad->id)
+                                    <th>{{$pUnidad->pivot->cantidad}}</th>
+                                 @endif
+                            @endif
+
+                          @endforeach
+                      @if(Auth::user()->tipo<=2)
                          <td><a  href="#" data-toggle="modal" data-target="#modal{{$producto->id}}" class="btn btn-rounded btn-light">Editar</a>
                             <!-- Modal -->
                                 <div class="modal fade" id="modal{{$producto->id}}" tabindex="-1" role="dialog" aria-hidden="true">
@@ -95,7 +122,7 @@ Productos <i class="fa fa-home"></i>
                                             <div class="form-group">
                                                 <label " class="col-sm-2 control-label form-label">Precio: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="number" step="any" name="precio" value="{{$producto->precio}}" class="form-control form-control-radius">
+                                                  <input type="number" name="precio" min="0" value="{{$producto->precio}}" class="form-control form-control-radius">
                                                 </div>
                                             </div>
                                              
@@ -121,50 +148,19 @@ Productos <i class="fa fa-home"></i>
                                                     <option>Material</option>
                                                   @endif
                                                   </select>                  
-                                              </div>
+                                              </div>  
                                             </div>
+                                             
+                                            @foreach($unidades as $key=> $unidad)
+                                           
                                             <div class="form-group col-lg-6 md-12">
-                                                <label " class="col-sm-4 control-label form-label">Real de Minas: </label>
+                                                <label " class="col-sm-4 control-label form-label">{{$unidad->nombre}}: </label>
                                                 <div class="col-sm-8">
-                                                  <input type="number" name="unidad{{$producto->unidades[0]->pivot->unidad_id}}" value="{{$producto->unidades[0]->pivot->cantidad}}" class="form-control form-control-radius" >
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-lg-6 md-12">
-                                                <label " class="col-sm-4 control-label form-label">San Agustin: </label>
-                                                <div class="col-sm-8">
-                                                  <input type="number" name="unidad{{$producto->unidades[1]->pivot->unidad_id}}" value="{{$producto->unidades[1]->pivot->cantidad}}" class="form-control form-control-radius" >
-                                                </div>
-                                            </div> 
-                                            <div class="form-group col-lg-6 md-12">
-                                                <label " class="col-sm-4 control-label form-label">Jerez: </label>
-                                                <div class="col-sm-8">
-                                                  <input type="number" name="unidad{{$producto->unidades[2]->pivot->unidad_id}}" value="{{$producto->unidades[2]->pivot->cantidad}}" class="form-control form-control-radius" >
-                                                </div>
-                                            </div> 
-                                            <div class="form-group col-lg-6 md-12">
-                                                <label " class="col-sm-4 control-label form-label">Rio Grande: </label>
-                                                <div class="col-sm-8">
-                                                  <input type="number" name="unidad{{$producto->unidades[3]->pivot->unidad_id}}" value="{{$producto->unidades[3]->pivot->cantidad}}" class="form-control form-control-radius" >
-                                                </div>
-                                            </div> 
-                                            <div class="form-group col-lg-6 md-12">
-                                                <label " class="col-sm-4 control-label form-label">Medica Norte: </label>
-                                                <div class="col-sm-8">
-                                                  <input type="number" name="unidad{{$producto->unidades[4]->pivot->unidad_id}}" value="{{$producto->unidades[4]->pivot->cantidad}}" class="form-control form-control-radius" >
-                                                </div>
-                                            </div> 
-                                            <div class="form-group col-lg-6 md-12">
-                                                <label " class="col-sm-4 control-label form-label">Tlatenango: </label>
-                                                <div class="col-sm-8">
-                                                  <input type="number" name="unidad{{$producto->unidades[5]->pivot->unidad_id}}" value="{{$producto->unidades[5]->pivot->cantidad}}" class="form-control form-control-radius">
+                                                  <input type="number" name="unidad{{$unidad->id}}" value="{{$producto->unidades[$key]->pivot->cantidad}}" class="form-control form-control-radius" min="0">
                                                 </div>
                                             </div>
-                                            <div class="form-group col-lg-6 md-12">
-                                                <label " class="col-sm-4 control-label form-label">Almacén: </label>
-                                                <div class="col-sm-8">
-                                                  <input type="number" name="unidad{{$producto->unidades[6]->pivot->unidad_id}}" value="{{$producto->unidades[6]->pivot->cantidad}}" class="form-control form-control-radius">
-                                                </div>
-                                            </div>  
+                                             @endforeach
+                                           
                                         </div>
                                         <div class="modal-footer">
                                           <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
@@ -178,6 +174,7 @@ Productos <i class="fa fa-home"></i>
                               <!-- End Modal Code -->
 
                         </td>
+                        @endif
                         </tr>
                   @endforeach
                 </tbody>
@@ -189,7 +186,8 @@ Productos <i class="fa fa-home"></i>
       </div>
     </div>
     <!-- End Panel -->
-    <!-- Modal -->
+        @if(Auth::user()->tipo<=2)
+                  <!-- Modal -->
                                 <div class="modal fade" id="modal_nuevo" tabindex="-1" role="dialog" aria-hidden="true">
                                   <div class="modal-dialog modal-md">
                                     <div class="modal-content">
@@ -209,7 +207,7 @@ Productos <i class="fa fa-home"></i>
                                             <div class="form-group">
                                                 <label " class="col-sm-2 control-label form-label">Precio: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="number" step="any" name="precio"  class="form-control form-control-radius" required >
+                                                  <input type="number" min="0" name="precio"  class="form-control form-control-radius" required >
                                                 </div>
                                             </div>
                                              
@@ -223,48 +221,22 @@ Productos <i class="fa fa-home"></i>
                                                   </select>                  
                                               </div>
                                             </div>
-                                            <div class="form-group col-lg-6 md-12">
-                                                <label " class="col-sm-4 control-label form-label">Real de Minas: </label>
-                                                <div class="col-sm-8">
-                                                  <input type="number" name="unidad1" value="0" class="form-control form-control-radius" >
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-lg-6 md-12">
-                                                <label " class="col-sm-4 control-label form-label">San Agustin: </label>
-                                                <div class="col-sm-8">
-                                                  <input type="number" name="unidad2" value="0" class="form-control form-control-radius" >
-                                                </div>
-                                            </div> 
-                                            <div class="form-group col-lg-6 md-12">
-                                                <label " class="col-sm-4 control-label form-label">Jerez: </label>
-                                                <div class="col-sm-8">
-                                                  <input type="number" name="unidad3" value="0" class="form-control form-control-radius" >
-                                                </div>
-                                            </div> 
-                                            <div class="form-group col-lg-6 md-12">
-                                                <label " class="col-sm-4 control-label form-label">Rio Grande: </label>
-                                                <div class="col-sm-8">
-                                                  <input type="number" name="unidad4" value="0" class="form-control form-control-radius" >
-                                                </div>
-                                            </div> 
-                                            <div class="form-group col-lg-6 md-12">
-                                                <label " class="col-sm-4 control-label form-label">Medica Norte: </label>
-                                                <div class="col-sm-8">
-                                                  <input type="number" name="unidad5" value="0" class="form-control form-control-radius" >
-                                                </div>
-                                            </div> 
-                                            <div class="form-group col-lg-6 md-12">
-                                                <label " class="col-sm-4 control-label form-label">Tlatenango: </label>
-                                                <div class="col-sm-8">
-                                                  <input type="number" name="unidad6" value="0" class="form-control form-control-radius" >
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-lg-6 md-12">
-                                                <label " class="col-sm-4 control-label form-label">Almacén: </label>
-                                                <div class="col-sm-8">
-                                                  <input type="number" name="unidad7" value="0" class="form-control form-control-radius" >
-                                                </div>
-                                            </div>  
+                                            <div class="form-group">
+                                                  <label " class="col-sm-2 control-label form-label">Stock mínimo: </label>
+                                                  <div class="col-sm-10">
+                                                    <input type="number" name="stock" value="0" min="0" class="form-control form-control-radius" pattern="/^\d*$/">
+                                                  </div>
+                                              </div>
+                                            @foreach($unidades as $unidad)
+                                               <div class="form-group col-lg-6 md-12">
+                                                  <label " class="col-sm-4 control-label form-label">{{$unidad->nombre}}: </label>
+                                                  <div class="col-sm-8">
+                                                    <input type="number" name="unidad{{$unidad->id}}" value="0" min="0" class="form-control form-control-radius" >
+                                                  </div>
+                                              </div>
+                                            @endforeach
+                                           
+                                            
                                         </div>
                                         <div class="modal-footer">
                                           <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
@@ -276,6 +248,7 @@ Productos <i class="fa fa-home"></i>
                                 </div>
 
                               <!-- End Modal Code -->
+                              @endif
  @endsection
 
  @section ('js')
@@ -285,5 +258,6 @@ $(document).ready(function() {
     $('#example0').DataTable();
 } );
 </script>
+
 
 @stop

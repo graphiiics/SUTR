@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Proveedor;
+use App\Producto;
 use Session;
 class ProveedorController extends Controller
 {
@@ -17,7 +18,10 @@ class ProveedorController extends Controller
     	$proveedores = Proveedor::orderBy('id', 'asc')->get();
     	return view('proveedores/index',compact('proveedores'));
     }
-
+    public function productosProveedores(){
+        $productos = Producto::orderBy('id', 'asc')->get();
+        return view('proveedores/productosProveedores',compact('productos'));
+    }
     public function editarProveedor(Proveedor $proveedor, Request $request)
     {
     	if($proveedor->update(['nombre'=>$request->input('nombre'),'gerente'=>$request->input('gerente'),'telefono'=>$request->input('telefono'),'correo'=>$request->input('correo')])){

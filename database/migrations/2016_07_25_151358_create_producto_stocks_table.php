@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateComprasTable extends Migration
+class CreateProductoStocksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,11 @@ class CreateComprasTable extends Migration
      */
     public function up()
     {
-        Schema::create('compras', function (Blueprint $table) {
+        Schema::create('producto_stoks', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
-            $table->date('fecha');
-            $table->double('importe');
-            $table->string('proveedor_id')->unsigned();
+            $table->integer('unidad_id')->unsigned();
+            $table->integer('producto_id')->unsigned();
+            $table->integer('cantidad');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateComprasTable extends Migration
      */
     public function down()
     {
-        Schema::drop('compras');
+        Schema::drop('producto_stoks');
     }
 }

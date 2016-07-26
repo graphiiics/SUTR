@@ -75,36 +75,82 @@ Route::group(['middleware' => 'admin','prefix'=>'admin'], function() {
    Route::get('/',['as'=>'inicio','uses'=>'HomeController@index']);
    //Rutas Productos
    Route::get('productos',['as'=>'productos','uses'=>'ProductoController@index']);
-   Route::get('productosProveedores',['as'=>'productosProveedores','uses'=>'ProductoController@productosProveedores']);
    Route::post('editarProducto/{producto}',['as'=>'editarProducto','uses'=> 'ProductoController@editarProducto'])->where('producto', '[0-9]+');
    Route::post('guardarProducto',['as'=>'guardarProducto','uses'=>'ProductoController@guardarProducto']);
-
+   Route::get('cantidadAlmacen/{producto}',['as'=>'cantidadAlmacen','uses'=>'ProductoController@cantidadAlmacen'])->where('producto', '[0-9]+');
+   Route::get('cantidadUnidad/{producto}',['as'=>'cantidadUnidad','uses'=>'ProductoController@cantidadUnidad'])->where('producto', '[0-9]+');
    //Rutas Proveedores
    Route::get('proveedores',['as'=>'proveedores','uses'=>'ProveedorController@index']);
    Route::post('guardarProveedor',['as'=>'guardarProveedor','uses'=>'ProveedorController@guardarProveedor']);
    Route::post('editarProveedor/{proveedor}',['as'=>'editarProveedor','uses'=> 'ProveedorController@editarProveedor'])->where('proveedor', '[0-9]+');
    Route::get('eliminarProveedor/{proveedor}',['as'=>'eliminarProveedor','uses'=>'ProveedorController@eliminarProveedor'])->where('proveedor', '[0-9]+');
-
-
+   Route::get('productosProveedores',['as'=>'productosProveedores','uses'=>'ProveedorController@productosProveedores']);
    //Rutas Registros
    Route::get('registros',['as'=>'registros','uses'=>'RegistroController@index']);
    Route::post('guardarRegistro',['as'=>'guardarRegistro','uses'=>'RegistroController@guardarRegistro']);
    Route::get('eliminarRegistro/{registro}',['as'=>'eliminarRegistro','uses'=>'RegistroController@eliminarRegistro'])->where('registro', '[0-9]+');
-
    //Rutas Pedidos
    Route::get('pedidos',['as'=>'pedidos', 'uses'=>'PedidoController@index']);
    Route::post('guardarPedido',['as'=>'guardarPedido','uses'=>'PedidoController@guardarPedido']);
    Route::get('eliminarPedido/{pedido}',['as'=>'eliminarPedido','uses'=>'PedidoController@eliminarPedido'])->where('pedido', '[0-9]+');
+   Route::get('recibirPedido/{pedido}',['as'=>'recibirPedido','uses'=>'PedidoController@recibirPedido'])->where('pedido', '[0-9]+');
+   Route::post('emitirPedido/{pedido}',['as'=>'emitirPedido','uses'=>'PedidoController@emitirPedido'])->where('pedido', '[0-9]+');
 
    //Rutas Ventas
    Route::get('ventas',['as'=>'ventas', 'uses'=>'VentaController@index']);
    Route::post('guardarVenta',['as'=>'guardarVenta','uses'=>'VentaController@guardarVenta']);
-});
-    //
+   Route::get('liquidarVenta/{venta}',['as'=>'liquidarVenta','uses'=>'VentaController@liquidarVenta'])->where('venta', '[0-9]+');
+   //Rutas Compras
+   Route::get('compras',['as'=>'compras', 'uses'=>'CompraController@index']);
+   Route::post('guardarCompra',['as'=>'guardarCompra','uses'=>'CompraController@guardarCompra']);
+   Route::get('obtenerProveedor/{proveedor}',['as'=>'obtenerProveedor','uses'=>'CompraController@obtenerProveedor'])->where('proveedor', '[0-9]+');
+   //Rutas Usuarios
+   Route::get('usuarios',['as'=>'usuarios', 'uses'=>'UserController@index']);
+   Route::post('editarUsuario/{usuario}',['as'=>'editarUsuario','uses'=>'UserController@editarUsuario'])->where('usuario', '[0-9]+');
+   Route::post('guardarUsuario',['as'=>'guardarUsuario','uses'=>'UserController@guardarUsuario']);
+
+   //Rutas Notificaciones
+    Route::get('notificaciones',['as'=>'notificaciones', 'uses'=>'NotificacionController@index']);
+    Route::get('suspenderNotificacion/{notificacion}',['as'=>'suspenderNotificacion', 'uses'=>'NotificacionController@suspenderNotificacion'])->where('notificacion', '[0-9]+');
+
+ });
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  #Rutas Gerente
+Route::group(['middleware' => 'gerente','prefix'=>'gerente'], function() {
+   Route::get('/',['as'=>'inicioGerente','uses'=>'HomeController@index']);
+   //Rutas Productos
+   Route::get('productos',['as'=>'productosGerente','uses'=>'ProductoController@index']);
+   Route::get('cantidadAlmacen/{producto}',['as'=>'cantidadAlmacenGerente','uses'=>'ProductoController@cantidadAlmacen'])->where('producto', '[0-9]+');
+   Route::get('cantidadUnidad/{producto}',['as'=>'cantidadUnidadGerente','uses'=>'ProductoController@cantidadUnidad'])->where('producto', '[0-9]+');
+   //Rutas Registros
+   Route::get('registros',['as'=>'registrosGerente','uses'=>'RegistroController@index']);
+   Route::post('guardarRegistro',['as'=>'guardarRegistroGerente','uses'=>'RegistroController@guardarRegistro']);
+   
+   //Rutas Pedidos
+   Route::get('pedidos',['as'=>'pedidosGerente', 'uses'=>'PedidoController@index']);
+   Route::post('guardarPedido',['as'=>'guardarPedidoGerente','uses'=>'PedidoController@guardarPedido']);
+   Route::get('eliminarPedido/{pedido}',['as'=>'eliminarPedidoGerente','uses'=>'PedidoController@eliminarPedido'])->where('pedido', '[0-9]+');
+   Route::get('recibirPedido/{pedido}',['as'=>'recibirPedidoGerente','uses'=>'PedidoController@recibirPedido'])->where('pedido', '[0-9]+');
+    Route::get('agregarComentarioPedido/{pedido}',['as'=>'agregarComentarioPedido','uses'=>'PedidoController@agregarComentario'])->where('pedido', '[0-9]+');
+
+   //Rutas Ventas
+   Route::get('ventas',['as'=>'ventasGerente', 'uses'=>'VentaController@index']);
+   Route::post('guardarVenta',['as'=>'guardarVentaGerente','uses'=>'VentaController@guardarVenta']);
+   Route::get('liquidarVenta/{venta}',['as'=>'liquidarVentaGerente','uses'=>'VentaController@liquidarVenta'])->where('venta', '[0-9]+');
+
+   //Rutas Notificaciones
+    Route::get('notificaciones',['as'=>'notificacionesGerente', 'uses'=>'NotificacionController@index']);
+    Route::get('suspenderNotificacion/{notificacion}',['as'=>'suspenderNotificacionGerente', 'uses'=>'NotificacionController@suspenderNotificacion'])->where('notificacion', '[0-9]+');
+
+   
+ });
+
+  ///////////////////////////////////////////////////////
 });
 
 
-// //>>>>>>>>>>>>>>>>>>>>>>>PRUEBAS DE RELACIONES<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<php
+// //>>>>>>>>>>>>>>>>>>>>>>>PRUEBAS DE RELACIONES<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 // // Relacion one to many Sesion-Signo
 // Route::get('signos_de_sesion/{id}', function ($id) {

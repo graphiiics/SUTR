@@ -34,9 +34,11 @@
    
     <!-- Start Top Right -->
     <ul class="top-right">
-
+      <li class="link">
+      <a href="{{route('notificacionesGerente')}}" class="notifications">{{count(Auth::user()->notificaciones->where('estado',2))}}</a>
+    </li>
     <li class="dropdown link">
-      <a href="#" data-toggle="dropdown" class="dropdown-toggle profilebox"><img src="http://lorempixel.com/240/260/cats/?96448" alt="img"><b>Gerente</b><span class="caret"></span></a>
+      <a href="#" data-toggle="dropdown" class="dropdown-toggle profilebox"><img src="http://lorempixel.com/240/260/cats/?96448" alt="img"><b>{{Auth::user()->name}} (Gerente)</b><span class="caret"></span></a>
         <ul class="dropdown-menu dropdown-menu-list dropdown-menu-right">
          
           <li><a href="href="{{url('/logout')}}"><i class="fa falist fa-power-off"></i> Cerrar Sesión</a></li>
@@ -60,13 +62,15 @@
   
   <li><a href="#"><span class="icon color12"><i class="fa fa-tags"></i></span>Recibos</a>
   <li><a href="#"><span class="icon color12"><i class="fa fa-suitcase"></i></span>Beneficios</a>
-  <li><a href="#"><span class="icon color12"><i class="fa fa-dollar"></i></span>Ventas</a>
-  <li><a href="#"><span class="icon color12"><i class="fa fa-flask"></i></span>Productos</a>
-  <li><a href="#"><span class="icon color12"><i class="fa fa-pencil-square-o"></i></span>Pedidos</a>
-  <li><a href="#"><span class="icon color12"><i class="fa fa-bar-chart"></i></span>Registros</a>
+  <li><a href="{{route('ventasGerente')}}"><span class="icon color12"><i class="fa fa-dollar"></i></span>Ventas</a>
+  <li><a href="{{route('productosGerente')}}"><span class="icon color12"><i class="fa fa-flask"></i></span>Productos</a>
+  <li><a href="{{route('pedidosGerente')}}"><span class="icon color12"><i class="fa fa-pencil-square-o"></i></span>Pedidos</a>
+  <li><a href="{{route('registrosGerente')}}"><span class="icon color12"><i class="fa fa-bar-chart"></i></span>Registros</a>
   <li><a href="#"><span class="icon color12"><i class="fa fa-users"></i></span>Pacientes</a>
   <li><a href="#"><span class="icon color12"><i class="fa fa-stethoscope"></i></span>Sesiones</a>
-  <li><a href="#"><span class="icon color12"><i class="fa fa-male"></i></span>Usuarios</a>
+  <li><a href=""><span class="icon color12"><i class="fa fa-male"></i></span>Usuarios</a>
+  <li><a href="{{route('notificacionesGerente')}}"><span class="icon color12"><i class="fa fa-envelope-o"></i></span>Notificaciones</a>
+
 </ul>
 
 <ul class="sidebar-panel nav">

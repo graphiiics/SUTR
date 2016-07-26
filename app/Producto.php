@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Producto extends Model
 {
     protected $fillable = [
-        'nombre', 'precio', 'categoria',
+        'nombre', 'precio', 'categoria','stock'
     ];
     //
     public function unidades()
@@ -34,7 +34,10 @@ class Producto extends Model
     {
         return $this->belongsToMany('App\Proveedor', 'producto_proveedors')->withPivot('precio');
     }
-
+    public function stock()
+    {
+        return $this->belongsToMany('App\Unidad', 'producto_stoks')->withPivot('cantidas');
+    }
    
 
 }
