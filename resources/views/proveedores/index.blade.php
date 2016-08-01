@@ -43,7 +43,6 @@ Proveedores <i class="fa fa-home"></i>
          
         </div>
         <div class="panel-body table-responsive">
-
             <table id="example0" class="table display">
                 <thead>
                     <tr>

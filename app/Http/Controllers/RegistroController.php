@@ -84,7 +84,7 @@ class RegistroController extends Controller
                                 }
                             }else{
                                 $cantidadFinal=$cantidadActual-$cantidadSolicitada;
-                                if($cantidadFinal<$producto->stock){
+                                if($cantidadFinal<$producto->stock()->find(Auth::user()->unidad_id)->pivot->cantidad){
                                     foreach (User::where('tipo',1)->orWhere('tipo',2)->get() as $user) {
                                         $notificacion= new Notificacion;
                                         $notificacion->user_id=$user->id;
@@ -95,13 +95,23 @@ class RegistroController extends Controller
                                         $notificacion->estado=2;
                                         $notificacion->save();
                                     }
+                                    $notificacion= new Notificacion;
+                                        $notificacion->user_id=Auth::user()->id;
+                                        $notificacion->emisor="Sistema de control de productos";
+                                        $notificacion->mensaje ="El stock del producto: ".$producto->nombre." en la unidad: ".$registro->unidad->nombre." esta por debajo del limite, se recomienda surtir lo antes posible.";
+                                        $notificacion->tipo="Productos";
+                                        $notificacion->link="productos";
+                                        $notificacion->estado=2;
+                                        $notificacion->save();
                                 }
                             }
                              $producto->unidades()->updateExistingPivot($registro->unidad_id,['cantidad' =>$cantidadFinal,'updated_at'=>date('Y-m-d H:i:s')]);
 
                         }//termina salida
                          $registro->productos()->attach($registro->id,['producto_id' =>$producto->id,'cantidad' =>$cantidadSolicitada,'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')]);
+                             $this->actualizarStock($producto->id);
 	    		}
+              
 	    		Session::flash('message','Registro realizado correctamente');
 		        Session::flash('class','success');
 	    	}else{
@@ -155,4 +165,14 @@ class RegistroController extends Controller
     	
     	return redirect('admin/registros');
     }
+     public function actualizarStock($id){
+        $producto=Producto::find($id);
+       
+          $stock=0;
+            foreach ($producto->unidades as $pUnidad) {
+              $stock=$stock+$pUnidad->pivot->cantidad;
+            }
+          $producto->update(['stock'=>$stock]);
+    }
 }
+

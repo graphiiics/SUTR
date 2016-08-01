@@ -138,7 +138,12 @@ class PedidoController extends Controller
         $registro->tipo=1;
         if($registro->save()){
            foreach ($productos as $producto) {
+                $cantidadActual=$producto->unidades()->find(Auth::user()->unidad_id)->pivot->cantidad;
+                $cantidadSolicitada=$producto->pivot->cantidad;
+                $cantidadFinal=$cantidadActual+$cantidadSolicitada;
+                $producto->unidades()->updateExistingPivot(Auth::user()->unidad_id,['cantidad' =>$cantidadFinal,'updated_at'=>date('Y-m-d H:i:s')]);
                 $registro->productos()->attach($registro->id,['producto_id' =>$producto->id,'cantidad' =>$producto->pivot->cantidad,'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')]);
+                 $this->actualizarStock($producto->id);
             }
             $pedido->estatus=3;
             if($pedido->save()){
@@ -146,8 +151,7 @@ class PedidoController extends Controller
                 Session::flash('message','Pedido emitido correctamente');
                 Session::flash('class','success');
             }
-            
-
+          
         }else{
             Session::flash('message','Error al emitir pedido');
             Session::flash('class','danger');
@@ -173,7 +177,7 @@ class PedidoController extends Controller
             }
     }
     public function emitirPedido( Pedido $pedido, Request $request){
-        $productos=$pedido->productos;
+            $productos=$pedido->productos;
             for ($i=0; $i <count($productos) ; $i++) { 
                 $pedido->productos()->updateExistingPivot($request->input('productoEditar'.$i),['cantidad'=>$request->input('cantidadEditar'.$i),'updated_at'=>date('Y-m-d H:i:s')]); 
             }
@@ -189,7 +193,15 @@ class PedidoController extends Controller
             $registro->tipo=2;
             if($registro->save()){
                foreach ($productos as $producto) {
-                    $registro->productos()->attach($registro->id,['producto_id' =>$producto->id,'cantidad' =>$producto->pivot->cantidad,'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')]);
+                    $cantidadActual=$producto->unidades()->find(Auth::user()->unidad_id)->pivot->cantidad;
+                    $cantidadSolicitada=$producto->pivot->cantidad;
+                    $cantidadFinal=$cantidadActual-$cantidadSolicitada;
+                    if($cantidadSolicitada>$cantidadActual){
+                        $cantidadFinal=$cantidadActual;
+                    }
+                    $registro->productos()->attach($registro->id,['producto_id' =>$producto->id,'cantidad' =>$cantidadSolicitada,'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')]);
+                    $producto->unidades()->updateExistingPivot(Auth::user()->unidad_id,['cantidad' =>$cantidadFinal,'updated_at'=>date('Y-m-d H:i:s')]);
+                     $this->actualizarStock($producto->id);
                 }
                 $pedido->estatus=2;
                 if($pedido->save()){
@@ -204,7 +216,7 @@ class PedidoController extends Controller
                     Session::flash('message','Pedido emitido correctamente');
                     Session::flash('class','success');
                 }
-                
+              
 
             }else{
                 Session::flash('message','Error al emitir pedido');
@@ -221,6 +233,15 @@ class PedidoController extends Controller
                 return redirect('gerente/pedidos');
             break;
        }
+    }
+    public function actualizarStock($id){
+        $producto=Producto::find($id);
+       
+          $stock=0;
+            foreach ($producto->unidades as $pUnidad) {
+              $stock=$stock+$pUnidad->pivot->cantidad;
+            }
+          $producto->update(['stock'=>$stock]);
     }
     
 }

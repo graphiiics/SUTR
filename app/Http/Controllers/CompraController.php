@@ -9,7 +9,6 @@ use App\Proveedor;
 use App\Producto;
 use Auth;
 use Session;
-use App\Http\ProdutoController;
 
 
 class CompraController extends Controller
@@ -45,12 +44,11 @@ class CompraController extends Controller
                         $cantidadFinal=$cantidadActual+$cantidadSolicitada;
                          $producto->unidades()->updateExistingPivot(Auth::user()->unidad_id,['cantidad' =>$cantidadFinal,'updated_at'=>date('Y-m-d H:i:s')]); 
                          $producto->update(['precio'=>$request->input('precio'.$i)]);
-
+                         $this->actualizarStock($producto->id);
 	    		}
-                $productoController=ProdutoController::Class;
-                $productoController->actualizarStock();
 	    		Session::flash('message','Compra registrada correctamente');
 		        Session::flash('class','success');
+                
 	    	}else{
 	    		Session::flash('message','Error al registra compra');
 		        Session::flash('class','danger');
@@ -67,5 +65,14 @@ class CompraController extends Controller
     public function obtenerProveedor(Proveedor $proveedor)
     {
         return $proveedor->productos;
+    }
+    public function actualizarStock($id){
+        $producto=Producto::find($id);
+       
+          $stock=0;
+            foreach ($producto->unidades as $pUnidad) {
+              $stock=$stock+$pUnidad->pivot->cantidad;
+            }
+          $producto->update(['stock'=>$stock]);
     }
 }

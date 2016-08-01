@@ -110,12 +110,16 @@ Pedidos <i class="fa fa-home"></i>
                                                     <td>{{$num+1}}</td>
                                                     <td>{{$producto->id}}</td>
                                                     <td>{{$producto->nombre}}</td>
-                                                    <td>${{$producto->precio}}</td>
+                                                    <td>${{$producto->precio_venta}}</td>
                                                     @if(Auth::user()->tipo<3 && $pedido->estatus==1)
                                                     <td><input type="number" value="{{$producto->pivot->cantidad}}" name="cantidadEditar{{$num}}"></td>
                                                     <input type="hidden" name="productoEditar{{$num}}" value="{{$producto->id}}">
                                                      @else
-                                                     <td>{{$producto->pivot->cantidad}}</td>
+                                                      @if($producto->pivot->cantidad==1)
+                                                         <td>{{$producto->pivot->cantidad}} {{$producto->tipo}}</td>
+                                                      @else
+                                                         <td>{{$producto->pivot->cantidad}} {{$producto->tipo}}s</td>
+                                                      @endif
                                                      @endif
                                                     <td>{{$producto->categoria}}</td>
                                                 </tr>

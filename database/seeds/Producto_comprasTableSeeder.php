@@ -13,7 +13,7 @@ class Producto_comprasTableSeeder extends Seeder
     {
         $faker = Faker::create();
 
-  		for($i=0; $i<1500; $i++)
+  		for($i=0; $i<500; $i++)
   		{ 
   			DB::table('producto_compras')->insert([
   				'compra_id' => rand(1,100),

@@ -12,7 +12,7 @@ class CreateProductoStocksTable extends Migration
      */
     public function up()
     {
-        Schema::create('producto_stoks', function (Blueprint $table) {
+        Schema::create('producto_stocks', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('unidad_id')->unsigned();
             $table->integer('producto_id')->unsigned();
@@ -28,6 +28,6 @@ class CreateProductoStocksTable extends Migration
      */
     public function down()
     {
-        Schema::drop('producto_stoks');
+        Schema::drop('producto_stocks');
     }
 }

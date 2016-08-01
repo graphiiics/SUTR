@@ -68,21 +68,21 @@ class VentaController extends Controller
             }
     		if($venta->save()){
 	    		for ($i=1; $i <=intval($request->input('totalProductos')); $i++) { 
-                        $producto=Producto::find($request->input('producto'.($i)));
-                        $cantidadActual=$producto->unidades()->find(Auth::user()->unidad_id)->pivot->cantidad;
-                        $cantidadSolicitada=$request->input('cantidad'.$i);
-	    			    if($cantidadSolicitada<$cantidadActual){
-                            $cantidadFinal=$cantidadActual-$cantidadSolicitada;
-                            $producto->unidades()->updateExistingPivot(Auth::user()->unidad_id,['cantidad' =>$cantidadFinal,'updated_at'=>date('Y-m-d H:i:s')]);
-                            $venta->productos()->attach($venta->id,['producto_id' =>$producto->id,'cantidad' =>$cantidadSolicitada,'precio'=>$request->input('precio'.$i),'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')]);
-                        }
-                        else{
-                            $venta->delete();
-                            Session::flash('message','El producto no cuenta con esa cantidad disponible');
-                            Session::flash('class','danger');
-                            break;
-                        }
-
+                    $producto=Producto::find($request->input('producto'.($i)));
+                    $cantidadActual=$producto->unidades()->find(Auth::user()->unidad_id)->pivot->cantidad;
+                    $cantidadSolicitada=$request->input('cantidad'.$i);
+    			    if($cantidadActual>=$cantidadSolicitada){
+                        $cantidadFinal=$cantidadActual-$cantidadSolicitada;
+                        $producto->unidades()->updateExistingPivot(Auth::user()->unidad_id,['cantidad' =>$cantidadFinal,'updated_at'=>date('Y-m-d H:i:s')]);
+                        $venta->productos()->attach($venta->id,['producto_id' =>$producto->id,'cantidad' =>$cantidadSolicitada,'precio'=>$request->input('precio'.$i),'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')]);
+                    }
+                    else{
+                        $venta->delete();
+                        Session::flash('message','El producto no cuenta con esa cantidad disponible');
+                        Session::flash('class','danger');
+                        break;
+                    }
+                    $this->actualizarStock($producto->id);
 	    		}
 	    		Session::flash('message','Venta realizada correctamente');
 		        Session::flash('class','success');
@@ -90,10 +90,10 @@ class VentaController extends Controller
 	    		Session::flash('message','Error al crear la venta');
 		        Session::flash('class','danger');
 	    	}
-    	}else{
-    		session::flash('message','La venta no contiene ningún producto');
-		    Session::flash('class','danger');
-    	}
+        	}else{
+        		session::flash('message','La venta no contiene ningún producto');
+    		    Session::flash('class','danger');
+        	}
     	
     
     	 // return $request->all();
@@ -142,5 +142,14 @@ class VentaController extends Controller
                 return redirect('gerente/ventas');
                 break;
         }
+    }
+   public function actualizarStock($id){
+        $producto=Producto::find($id);
+       
+          $stock=0;
+            foreach ($producto->unidades as $pUnidad) {
+              $stock=$stock+$pUnidad->pivot->cantidad;
+            }
+          $producto->update(['stock'=>$stock]);
     }
 }

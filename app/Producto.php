@@ -32,11 +32,11 @@ class Producto extends Model
 
     public function proveedores()
     {
-        return $this->belongsToMany('App\Proveedor', 'producto_proveedors')->withPivot('precio');
+        return $this->belongsToMany('App\Proveedor', 'producto_proveedors')->withPivot('precio','updated_at');
     }
     public function stock()
     {
-        return $this->belongsToMany('App\Unidad', 'producto_stoks')->withPivot('cantidas');
+        return $this->belongsToMany('App\Unidad', 'producto_stocks')->withPivot('cantidad');
     }
    
 

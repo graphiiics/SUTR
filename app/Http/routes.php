@@ -83,6 +83,8 @@ Route::group(['middleware' => 'admin','prefix'=>'admin'], function() {
    Route::get('proveedores',['as'=>'proveedores','uses'=>'ProveedorController@index']);
    Route::post('guardarProveedor',['as'=>'guardarProveedor','uses'=>'ProveedorController@guardarProveedor']);
    Route::post('editarProveedor/{proveedor}',['as'=>'editarProveedor','uses'=> 'ProveedorController@editarProveedor'])->where('proveedor', '[0-9]+');
+   Route::post('guardarProductoProveedor',['as'=>'guardarProductoProveedor','uses'=>'ProveedorController@guardarProductoProveedor']);
+
    Route::get('eliminarProveedor/{proveedor}',['as'=>'eliminarProveedor','uses'=>'ProveedorController@eliminarProveedor'])->where('proveedor', '[0-9]+');
    Route::get('productosProveedores',['as'=>'productosProveedores','uses'=>'ProveedorController@productosProveedores']);
    //Rutas Registros

@@ -15,12 +15,13 @@ class Producto_ventasTableSeeder extends Seeder
         //
         $faker = Faker::create();
 
-  		for($i=0; $i<1500; $i++)
+  		for($i=0; $i<500; $i++)
   		{ 
   			DB::table('producto_ventas')->insert([
   				'venta_id' => rand(1,100),
   				'producto_id' => rand(1,15),
   				'cantidad' => rand(1,4),
+          'precio'=> rand(50,400),
   				'created_at' => $faker->dateTime,
     		  	'updated_at' => $faker->dateTime
           	]);

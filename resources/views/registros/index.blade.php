@@ -90,8 +90,12 @@ Registro <i class="fa fa-home"></i>
                                                     <td>{{$num+1}}</td>
                                                     <td>{{$producto->id}}</td>
                                                     <td>{{$producto->nombre}}</td>
-                                                    <td>${{$producto->precio}}</td>
-                                                    <td>{{$producto->pivot->cantidad}}</td>
+                                                    <td>${{$producto->precio_venta}}</td> 
+                                                      @if($producto->pivot->cantidad==1)
+                                                         <td>{{$producto->pivot->cantidad}} {{$producto->tipo}}</td>
+                                                      @else
+                                                         <td>{{$producto->pivot->cantidad}} {{$producto->tipo}}s</td>
+                                                      @endif
                                                     <td>{{$producto->categoria}}</td>
                                                 </tr>
                                               @endforeach
@@ -176,7 +180,7 @@ Registro <i class="fa fa-home"></i>
                               </div>
                               <div class="form-group col-lg-4 md-4 sm-4">
                                   <div class="col-lg-12">
-                                    <input type="number"   id="cProducto"  value="1"  min="0"  max="100" class="form-control form-control-radius" >
+                                    <input type="number"   id="cProducto"  value="0"  min="0"  max="100" class="form-control form-control-radius" >
                                   </div>
                               </div>
                                <a  href="#" id="agregar" onclick="AgregarCampos();" type="button" class="btn btn-rounded btn-success   btn-icon"><i class="fa fa-plus"></i></a>
@@ -214,6 +218,7 @@ $(document).ready(function() {
 </script>
 <script type="text/javascript">
   var nextinput = 0;
+
   function AgregarCampos(){
     var producto=$('#nProducto').val();
     var cantidad=parseInt($('#cProducto').val());
@@ -223,7 +228,7 @@ $(document).ready(function() {
     if($('#tipo').val()==2 && cantidad>cantidadMax){
         cantidad=cantidadMax;
     }
-     cantidadUnidad();
+     
     campo = '<div id="campo'+nextinput+'"><div class="form-group col-lg-8 md-8 sm-8"><label  class="col-lg-4 control-label form-label">Producto '+(nextinput)+':</label><div class="col-lg-8"><input type="text" id="producto'+nextinput+'" name="producto'+nextinput+'" value="'+producto.substring(producto.indexOf('-')+1)+'" class="form-control form-control-radius" disabled > <input type="hidden" name="producto'+nextinput+'" value="'+producto.substring(0,producto.indexOf('-'))+'"></div></div><div class="form-group col-lg-4 md-4 sm-4"><div class="col-lg-12"><input type="number" value="'+cantidad+'" min="1" max="'+cantidadMax+'" name="cantidad'+nextinput+'" min="1" class="form-control form-control-radius" required ></div></div><div class="form-group col-lg-2 md-2 sm-2"></div>  </div>';
      
     if(producto!=null){
@@ -232,6 +237,7 @@ $(document).ready(function() {
         $("#bodyModal").prepend(campo);
         $('#cProducto').val();
         $('#nProducto').val();
+        cantidadUnidad();
     }
     else{
       $('#agregar').attr("disabled", true);
@@ -259,14 +265,20 @@ if(parseInt($('#tipo').val())==2){
         success: llegada,
       });
     function llegada(data){
-     
+     if(data>0){
       $("#cProducto").attr('max',data);
        $("#cProducto").val(1);
+     }
+    else{
+  
+      $("#nProducto option[value='"+producto+"']").remove();
+    }
+
     }
   }
   else{
     $("#cProducto").attr('max',100);
-       $("#cProducto").val(1);
+    $("#cProducto").val(1);
   }
  }
  

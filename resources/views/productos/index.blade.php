@@ -46,13 +46,15 @@ Productos <i class="fa fa-home"></i>
          
         </div>
         <div class="panel-body table-responsive">
-
             <table id="example0" class="table display">
                 <thead>
                     <tr>
                         <th>Id</th>
                         <th>Nombre</th>
-                        <th>Precio</th>
+                        <th>Precio venta</th>
+                        @if(Auth::user()->tipo<=2)
+                        <th>Precio compra</th>
+                        @endif
                         <th>Categoría</th>
                          @if(Auth::user()->tipo<=2)
                         <th>Stock</th>
@@ -78,24 +80,31 @@ Productos <i class="fa fa-home"></i>
                         <td>{{$producto->id}}</td>
                         <td>{{$producto->nombre}}</td>
                          @if(Auth::user()->tipo<=2)
+                          <td>${{$producto->precio_venta}}</td>
                           <td>${{$producto->precio}}</td>
                         @else
                           @if($producto->categoria=="Suplemento")
-                            <td>${{$producto->precio}}</td>
+                            <td>${{$producto->precio_venta}}</td>
                           @else
                             <td>No disponible</td>
                           @endif
                         @endif
                         <td>{{$producto->categoria}}</td>
                          @if(Auth::user()->tipo<=2)
-                        <td>{{$producto->stock}}</td>
+                        <td>{{$producto->stock}} {{$producto->tipo}}s</td>
                         @endif
                           @foreach($producto->unidades as $pUnidad)
                             @if(Auth::user()->tipo<=2)
                               <th>{{$pUnidad->pivot->cantidad}}</th>
                             @else
                                  @if(Auth::user()->unidad_id==$pUnidad->id)
-                                    <th>{{$pUnidad->pivot->cantidad}}</th>
+                                    <th>{{$pUnidad->pivot->cantidad}}
+                                    @if($pUnidad->pivot->cantidad==1)
+                                      {{$producto->tipo}}
+                                    @else
+                                      {{$producto->tipo}}s
+                                    @endif
+                                    </th>
                                  @endif
                             @endif
 
@@ -120,9 +129,9 @@ Productos <i class="fa fa-home"></i>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Precio: </label>
+                                                <label " class="col-sm-2 control-label form-label">Precio Venta: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="number" name="precio" min="0" value="{{$producto->precio}}" class="form-control form-control-radius">
+                                                  <input type="number" name="precio_venta" min="0" value="{{$producto->precio_venta}}" class="form-control form-control-radius">
                                                 </div>
                                             </div>
                                              
@@ -152,12 +161,19 @@ Productos <i class="fa fa-home"></i>
                                             </div>
                                              
                                             @foreach($unidades as $key=> $unidad)
-                                           
-                                            <div class="form-group col-lg-6 md-12">
-                                                <label " class="col-sm-4 control-label form-label">{{$unidad->nombre}}: </label>
-                                                <div class="col-sm-8">
-                                                  <input type="number" name="unidad{{$unidad->id}}" value="{{$producto->unidades[$key]->pivot->cantidad}}" class="form-control form-control-radius" min="0">
-                                                </div>
+                                            <div class="form-group col-lg-12 md-12">
+                                              <div class="form-group col-lg-6 md-12">
+                                                  <label " class="col-sm-4 control-label form-label">{{$unidad->nombre}}: </label>
+                                                  <div class="col-sm-8">
+                                                    <input type="number" name="cantidadUnidad{{$unidad->id}}" value="{{$producto->unidades->find($unidad->id)->pivot->cantidad}}" class="form-control form-control-radius" min="0">
+                                                  </div>
+                                              </div>
+                                               <div class="form-group col-lg-6 md-12">
+                                                  <label " class="col-sm-4 control-label form-label">Stock minimo: </label>
+                                                  <div class="col-sm-8">
+                                                    <input type="number" name="productoMinimoUnidad{{$unidad->id}}" value="{{$producto->stock()->find($unidad->id)->pivot->cantidad}}" class="form-control form-control-radius" min="0">
+                                                  </div>
+                                              </div>
                                             </div>
                                              @endforeach
                                            
@@ -205,9 +221,9 @@ Productos <i class="fa fa-home"></i>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Precio: </label>
+                                                <label " class="col-sm-2 control-label form-label">Precio venta: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="number" min="0" name="precio"  class="form-control form-control-radius" required >
+                                                  <input type="number" min="0" name="precio_venta"  class="form-control form-control-radius" required >
                                                 </div>
                                             </div>
                                              
@@ -222,18 +238,32 @@ Productos <i class="fa fa-home"></i>
                                               </div>
                                             </div>
                                             <div class="form-group">
-                                                  <label " class="col-sm-2 control-label form-label">Stock mínimo: </label>
-                                                  <div class="col-sm-10">
-                                                    <input type="number" name="stock" value="0" min="0" class="form-control form-control-radius" pattern="/^\d*$/">
-                                                  </div>
+                                              <label class="col-sm-2 control-label form-label">Tipo: </label>
+                                              <div class="col-sm-10">
+                                                <select name="tipo" class="selectpicker form-control form-control-radius">
+                                                    <option>Paquete</option>
+                                                    <option>Caja</option>
+                                                    <option>Pieza</option>
+                                                  </select>                  
                                               </div>
+                                            </div>
+                                            
                                             @foreach($unidades as $unidad)
-                                               <div class="form-group col-lg-6 md-12">
+                                               
+                                              <div class="form-group col-lg-12 md-12">
+                                              <div class="form-group col-lg-6 md-12">
                                                   <label " class="col-sm-4 control-label form-label">{{$unidad->nombre}}: </label>
                                                   <div class="col-sm-8">
-                                                    <input type="number" name="unidad{{$unidad->id}}" value="0" min="0" class="form-control form-control-radius" >
+                                                    <input type="number" name="cantidadUnidad{{$unidad->id}}" value="0" class="form-control form-control-radius" min="0">
                                                   </div>
                                               </div>
+                                               <div class="form-group col-lg-6 md-12">
+                                                  <label " class="col-sm-4 control-label form-label">Stock minimo: </label>
+                                                  <div class="col-sm-8">
+                                                    <input type="number" name="productoMinimoUnidad{{$unidad->id}}" value="0" class="form-control form-control-radius" min="0">
+                                                  </div>
+                                              </div>
+                                            </div>
                                             @endforeach
                                            
                                             

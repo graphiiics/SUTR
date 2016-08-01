@@ -16,7 +16,7 @@ class Producto_registrosTableSeeder extends Seeder
         //
         $faker = Faker::create();
 
-  		for($i=0; $i<3500; $i++)
+  		for($i=0; $i<1000; $i++)
   		{ 
   			DB::table('producto_registros')->insert([
   				'registro_id' => rand(1,70),

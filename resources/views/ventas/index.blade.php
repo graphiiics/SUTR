@@ -1,4 +1,4 @@
-<?php
+x<?php
   if(Auth::user()->tipo==1)
   {
     $variable = "layouts.super_admin";
@@ -104,14 +104,18 @@ Ventas <i class="fa fa-home"></i>
                                             </thead>
                                             <tbody id="modalTableBody" class="">
                                                 @foreach ($venta->productos as $num =>$producto)
-                                                  <tr>
-                                                    <td>{{$num+1}}</td>
-                                                    <td>{{$producto->id}}</td>
-                                                    <td>{{$producto->nombre}}</td>
-                                                    <td>${{$producto->pivot->precio}}</td>
-                                                    <td>{{$producto->pivot->cantidad}}</td>
-                                                    <td>{{$producto->categoria}}</td>
-                                                </tr>
+                                                    <tr>
+                                                      <td>{{$num+1}}</td>
+                                                      <td>{{$producto->id}}</td>
+                                                      <td>{{$producto->nombre}}</td>
+                                                      <td>${{$producto->pivot->precio}}</td>
+                                                       @if($producto->pivot->cantidad==1)
+                                                         <td>{{$producto->pivot->cantidad}} {{$producto->tipo}}</td>
+                                                      @else
+                                                         <td>{{$producto->pivot->cantidad}} {{$producto->tipo}}s</td>
+                                                      @endif
+                                                      <td>{{$producto->categoria}}</td>
+                                                   </tr>
                                               @endforeach
                                               <tr>
                                                     <td></td>
@@ -194,7 +198,9 @@ Ventas <i class="fa fa-home"></i>
                               <div class="col-lg-8 md-8">
                                 <select id="nProducto" onchange="actualizarPrecio();" class="selectpicker form-control form-control-radius">
                                   @foreach($productos as $producto)
-                                    <option value="{{$producto->id}}-{{$producto->nombre}}${{$producto->precio}}" >{{$producto->nombre}}</option>
+                                    @if($producto->unidades()->find(Auth::user()->unidad_id)->pivot->cantidad>0)
+                                    <option value="{{$producto->id}}-{{$producto->nombre}}${{$producto->precio_venta}}" >{{$producto->nombre}}</option>
+                                    @endif
                                   @endforeach
                                 </select>     
                               </div>
@@ -215,7 +221,7 @@ Ventas <i class="fa fa-home"></i>
 
                                  <div class="input-group">
                                     <div class="input-group-addon">$</div>
-                                     <input type="number" id="precio" min="1" value="{{$productos[0]->precio}}"  class="form-control form-control-radius" >
+                                     <input type="number" id="precio" min="1" value="{{$productos[0]->precio_venta}}"  class="form-control form-control-radius" >
                                     <div class="input-group-addon">.00</div>
                                   </div>
                             </div>

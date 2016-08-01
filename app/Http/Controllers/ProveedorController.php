@@ -20,7 +20,24 @@ class ProveedorController extends Controller
     }
     public function productosProveedores(){
         $productos = Producto::orderBy('id', 'asc')->get();
-        return view('proveedores/productosProveedores',compact('productos'));
+        $proveedores = Proveedor::orderBy('id', 'asc')->get();
+        return view('proveedores/productosProveedores',compact('productos','proveedores'));
+    }
+    public function guardarProductoProveedor(Request $request)
+    {
+        $proveedor=Proveedor::find($request->input('proveedor'));
+        
+        if($proveedor){
+            $proveedor->productos()->attach($proveedor->id,['producto_id' =>$request->input('producto'),'precio' =>$request->input('precio'),'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')]);
+            Session::flash('message','Producto asociado correctamente');
+            Session::flash('class','success');
+        }
+        else{
+            Session::flash('message','Erroal asoociar el producto con el proveedor');
+            Session::flash('class','danger');
+        }
+    return redirect('admin/productosProveedores');
+    
     }
     public function editarProveedor(Proveedor $proveedor, Request $request)
     {

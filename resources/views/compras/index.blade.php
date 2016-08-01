@@ -88,7 +88,13 @@ Compras <i class="fa fa-home"></i>
                                                     <td>{{$producto->id}}</td>
                                                     <td>{{$producto->nombre}}</td>
                                                     <td>${{$producto->pivot->precio}}.00</td>
-                                                    <td>{{$producto->pivot->cantidad}}</td>
+                                                    <td>{{$producto->pivot->cantidad}}
+                                                    @if($producto->pivot->cantidad==1)
+                                                      {{$producto->tipo}}
+                                                    @else
+                                                      {{$producto->tipo}}s
+                                                    @endif
+                                                    </td>
                                                     <td>{{$producto->categoria}}</td>
                                                 </tr>
                                               @endforeach
