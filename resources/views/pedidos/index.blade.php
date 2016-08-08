@@ -167,7 +167,7 @@ Pedidos <i class="fa fa-home"></i>
                                              </form>
                                             @endif
                                         @endif
-                                        <a type="button" class="btn btn-default">Imprimir</a>
+                                        <a type="button"  href="{{ route('pedidoPdf',$pedido->id) }}" target="_blank" class="btn btn-default">Imprimir</a>
                                       </div>
                                     </div>
                                   </div>
@@ -257,7 +257,7 @@ Pedidos <i class="fa fa-home"></i>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
                           <button type="button" onclick="eliminarCampos();" class="btn btn-danger">Limpiar</button>
-                          <button type="submit" class="btn btn-default">Guardar</button>
+                          <button type="submit" class="btn btn-default" onclick="enviar();">Guardar</button>
                         </div>
                       </form>
                     </div>
@@ -340,6 +340,12 @@ $(document).ready(function() {
         url:'agregarComentarioPedido/'+id+'?comentarios='+comentarios,
       });
  }
+ function enviar(){
+  $('form').submit(function(){
+  $(this).find(':submit').remove();
+  $('#loading').append('<img class="img responsive" width="30" src="{{asset('img/loading.gif')}}">');
+});
+}
 </script>
 
 @stop

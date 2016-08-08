@@ -114,7 +114,7 @@ Route::group(['middleware' => 'admin','prefix'=>'admin'], function() {
    //Rutas Notificaciones
     Route::get('notificaciones',['as'=>'notificaciones', 'uses'=>'NotificacionController@index']);
     Route::get('suspenderNotificacion/{notificacion}',['as'=>'suspenderNotificacion', 'uses'=>'NotificacionController@suspenderNotificacion'])->where('notificacion', '[0-9]+');
-
+    Route::get('productosPdf',['as'=>'productosPdf', 'uses'=>'PdfController@productosPdf']);
  });
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -145,10 +145,20 @@ Route::group(['middleware' => 'gerente','prefix'=>'gerente'], function() {
     Route::get('notificaciones',['as'=>'notificacionesGerente', 'uses'=>'NotificacionController@index']);
     Route::get('suspenderNotificacion/{notificacion}',['as'=>'suspenderNotificacionGerente', 'uses'=>'NotificacionController@suspenderNotificacion'])->where('notificacion', '[0-9]+');
 
+ 
    
  });
 
   ///////////////////////////////////////////////////////
+
+  //////Rutas para todos
+  //Rutas PDF
+    Route::get('pedidoPdf/{pedido}',['as'=>'pedidoPdf', 'uses'=>'PdfController@pedidoPdf'])->where('pedido', '[0-9]+');
+    Route::get('ventaPdf/{venta}',['as'=>'ventaPdf', 'uses'=>'PdfController@ventaPdf'])->where('venta', '[0-9]+');
+    Route::get('registroPdf/{registro}',['as'=>'registroPdf', 'uses'=>'PdfController@registroPdf'])->where('registro', '[0-9]+');
+    Route::get('compraPdf/{compra}',['as'=>'compraPdf', 'uses'=>'PdfController@compraPdf'])->where('compra', '[0-9]+');
+    Route::get('productosPdf',['as'=>'productosPdf', 'uses'=>'PdfController@productosPdf']);
+
 });
 
 

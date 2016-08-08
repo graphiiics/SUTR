@@ -22,7 +22,7 @@ Productos <i class="fa fa-home"></i>
 @section ('botones')
 @if(Auth::user()->tipo<=2)
   <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light"><i class="fa fa-plus"></i> Crear Nuevo</a>
-  <a href="#" onclick="descargarPDF()"  class="btn btn-light"><i class="fa fa-plus"></i> Imprimi</a>
+  <a href="{{route('productosPdf')}}"  target="_blank"  class="btn btn-light"><i class="fa fa-plus"></i> Imprimi</a>
 @endif
 @endsection
 @section('panelBotones')
@@ -180,7 +180,7 @@ Productos <i class="fa fa-home"></i>
                                         </div>
                                         <div class="modal-footer">
                                           <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
-                                          <button type="submit" class="btn btn-default">Guardar</button>
+                                          <button type="submit" class="btn btn-default"  >Guardar</button>
                                         </div>
                                       </form>
                                     </div>
@@ -211,7 +211,7 @@ Productos <i class="fa fa-home"></i>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                         <h4 class="modal-title">Nuevo Producto</h4>
                                       </div>
-                                      <form class="form-horizontal" role="form" method="POST" action="{{ route('guardarProducto') }}">
+                                      <form class="form-horizontal" role="form"  method="POST" action="{{ route('guardarProducto') }}">
                                         {!! csrf_field() !!}  
                                         <div class="modal-body">
                                             <div class="form-group">
@@ -223,7 +223,7 @@ Productos <i class="fa fa-home"></i>
                                             <div class="form-group">
                                                 <label " class="col-sm-2 control-label form-label">Precio venta: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="number" min="0" name="precio_venta"  class="form-control form-control-radius" required >
+                                                  <input type="number" min="0" name="precio_venta" value="0" class="form-control form-control-radius" required >
                                                 </div>
                                             </div>
                                              
@@ -268,9 +268,10 @@ Productos <i class="fa fa-home"></i>
                                            
                                             
                                         </div>
-                                        <div class="modal-footer">
-                                          <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
-                                          <button type="submit" class="btn btn-default">Guardar</button>
+                                        <div id="loading" class="modal-footer">
+                                          <button type="button"   class="btn btn-white" data-dismiss="modal">Cerrar</button>
+                                          <button type="submit" class="btn btn-default" onclick="enviar();">Guardar</button>
+                                         
                                         </div>
                                       </form>
                                     </div>
@@ -287,6 +288,13 @@ Productos <i class="fa fa-home"></i>
 $(document).ready(function() {
     $('#example0').DataTable();
 } );
+
+function enviar(){
+  $('form').submit(function(){
+  $(this).find(':submit').remove();
+  $('#loading').append('<img class="img responsive" width="30" src="{{asset('img/loading.gif')}}">');
+});
+}
 </script>
 
 

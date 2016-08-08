@@ -131,7 +131,7 @@ Productos <i class="fa fa-home"></i>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-default">Guardar</button>
+                    <button type="submit" class="btn btn-default" onclick="enviar();">Guardar</button>
                   </div>
                 </form>
               </div>
@@ -148,6 +148,12 @@ Productos <i class="fa fa-home"></i>
 $(document).ready(function() {
     $('#example0').DataTable();
 } );
+function enviar(){
+  $('form').submit(function(){
+  $(this).find(':submit').remove();
+  $('#loading').append('<img class="img responsive" width="30" src="{{asset('img/loading.gif')}}">');
+});
+}
 </script>
 
 @stop

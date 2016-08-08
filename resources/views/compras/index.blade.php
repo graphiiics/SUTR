@@ -111,7 +111,7 @@ Compras <i class="fa fa-home"></i>
                                       </div>
                                       <div class="modal-footer">
                                         <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
-                                        <button type="button" class="btn btn-default">Imprimir</button>
+                                        <a href="{{route('compraPdf',$compra->id)}}" target="_blanck" ype="button" class="btn btn-default">Imprimir</a>
                                       </div>
                                     </div>
                                   </div>
@@ -227,7 +227,7 @@ Compras <i class="fa fa-home"></i>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
                           <button type="button" onclick="limpiar();" class="btn btn-danger">Limpiar</button>
-                          <button type="submit" class="btn btn-default">Guardar</button>
+                          <button type="submit" class="btn btn-default" onclick="enviar();">Guardar</button>
                         </div>
                       </form>
                     </div>
@@ -331,6 +331,12 @@ var productosTotal =0;
     }
 
  }
+ function enviar(){
+  $('form').submit(function(){
+  $(this).find(':submit').remove();
+  $('#loading').append('<img class="img responsive" width="30" src="{{asset('img/loading.gif')}}">');
+});
+}
 </script>
 
 

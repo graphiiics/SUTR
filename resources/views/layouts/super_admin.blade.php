@@ -39,7 +39,7 @@
     <ul class="top-right">
 
     <li class="dropdown link">
-      <a href="#" data-toggle="dropdown" class="dropdown-toggle profilebox"><img src="{{ Auth::user()->foto }}" alt="img"><b>{{ Auth::user()->name }}</b><span class="caret"></span></a>
+      <a href="#" data-toggle="dropdown" class="dropdown-toggle profilebox"><img src="{{asset('img/perfil/'.Auth::user()->foto)}}" alt="{{ Auth::user()->name }}"><b>{{ Auth::user()->name }}</b><span class="caret"></span></a>
         <ul class="dropdown-menu dropdown-menu-list dropdown-menu-right">
           
           <li><a href="{{ url('/logout') }}"><i class="fa falist fa-power-off"></i> Cerrar Sesión</a></li>
@@ -119,7 +119,7 @@
 <!-- Start Footer -->
 <div class="row footer">
   <div class="col-md-12 text-center">
-  Unidad de Terapia Renal Zacatecas S.A. de C.V.
+ Unidad de Terapia Renal S. C.
   </div>
 </div>
 <!-- End Footer -->

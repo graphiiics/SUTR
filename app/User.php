@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
+use File;
 class User extends Authenticatable
 {
     /**
@@ -17,7 +17,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password','telefono','estatus','foto','unidad_id','tipo',
     ];
-
+ 
     /**
      * The attributes excluded from the model's JSON form.
      *

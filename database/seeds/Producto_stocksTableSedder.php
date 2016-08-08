@@ -15,17 +15,17 @@ class Producto_stocksTableSedder extends Seeder
         $faker = Faker::create();
         $unidad=1;
         $producto=1;
-  		for($i=0; $i<350; $i++)
+  		for($i=0; $i<560; $i++)
   		{
        
-        if($producto>50){
+        if($producto>80){
           $producto=1;
           $unidad++;
         }
   			DB::table('producto_stocks')->insert([
   				'unidad_id' => $unidad,
   				'producto_id' => $producto,
-  				'cantidad' => rand(5,10),
+  				'cantidad' => 5,
   				'created_at' => $faker->dateTime,
     		    'updated_at' => $faker->dateTime
           	]);

@@ -43,7 +43,7 @@
       <a href="{{route('notificaciones')}}" class="notifications">{{count(Auth::user()->notificaciones->where('estado',2))}}</a>
        </li>
     <li class="dropdown link">
-      <a href="#" data-toggle="dropdown" class="dropdown-toggle profilebox"><img src="http://lorempixel.com/240/260/cats/?96448" alt="img"><b>{{Auth::user()->name}}  (Administrador)</b><span class="caret"></span></a>
+      <a href="#" data-toggle="dropdown" class="dropdown-toggle profilebox"><img src="{{asset('img/perfil/'.Auth::user()->foto)}}" alt="img"><b>{{Auth::user()->name}}  (Administrador)</b><span class="caret"></span></a>
         <ul class="dropdown-menu dropdown-menu-list dropdown-menu-right">
          
           <li><a href="{{url('/logout')}}"><i class="fa falist fa-power-off"></i> Cerrar Sesión</a></li>
@@ -126,7 +126,7 @@
 <!-- Start Footer -->
 <div class="row footer">
   <div class="col-md-12 text-center">
-  Unidad de Terapia Renal Zacatecas S.A. de C.V.
+  Unidad de Terapia Renal S. C.
   </div>
 </div>
 <!-- End Footer -->

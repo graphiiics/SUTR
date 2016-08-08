@@ -104,7 +104,7 @@ Registro <i class="fa fa-home"></i>
                                       </div>
                                       <div class="modal-footer">
                                         <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
-                                        <button type="button" class="btn btn-default">Imprimir</button>
+                                        <a href="{{route('registroPdf',$registro->id)}}"  target="_blank" type="button" class="btn btn-default">Imprimir</a>
                                       </div>
                                     </div>
                                   </div>
@@ -195,7 +195,7 @@ Registro <i class="fa fa-home"></i>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
                           <button type="button" onclick="eliminarCampos();" class="btn btn-danger">Limpiar</button>
-                          <button type="submit" class="btn btn-default">Guardar</button>
+                          <button type="submit" class="btn btn-default" onclick="enviar();">Guardar</button>
                         </div>
                       </form>
                     </div>
@@ -281,7 +281,12 @@ if(parseInt($('#tipo').val())==2){
     $("#cProducto").val(1);
   }
  }
- 
+ function enviar(){
+  $('form').submit(function(){
+  $(this).find(':submit').remove();
+  $('#loading').append('<img class="img responsive" width="30" src="{{asset('img/loading.gif')}}">');
+});
+}
 </script>
 
 @stop

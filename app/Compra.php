@@ -19,4 +19,5 @@ class Compra extends Model
     {
         return $this->belongsTo('App\Proveedor');
     }
+   
 }

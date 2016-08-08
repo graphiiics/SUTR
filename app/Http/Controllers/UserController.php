@@ -8,6 +8,7 @@ use App\User;
 use App\Unidad;
 use Auth;
 use Session;
+use Storage;
 
 
 class UserController extends Controller
@@ -44,11 +45,11 @@ class UserController extends Controller
     	$usuario= new User($request->all());
     	$usuario->password=bcrypt('hemodialisis');
     	$usuario->estatus=1;
-    	if ($request->hasFile('foto')) {
-    		$foto=$request->file('foto');
-    		 $fileName='foto'.$usuario->nombre.'.'.$fileFirma->getClientOriginalExtension();
-            \Storage::disk('local')->put($fileName,  \File::get($foto));  
-    		$request->file('foto')->move($destinationPath, $fileName);
+        $foto=$request->file('foto');
+    	if ($foto) {
+    		
+    		 $fileName='foto'.$request->input('name').'.'.$foto->getClientOriginalExtension();
+            \Storage::disk('local')->put($fileName,  \File::get($foto)); 
     		$usuario->foto=$fileName;
 		}else{
 			$usuario->foto='default.png';

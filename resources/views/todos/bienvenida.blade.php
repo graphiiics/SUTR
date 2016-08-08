@@ -36,7 +36,7 @@ Inicio <i class="fa fa-home"></i>
         </div>
         <div class="widget profile-widget" style="height:380px;">
         <h1>Bienvenid@ <h1>
-        <img src="{{Auth::user()->foto}} " class="profile-image" alt="img">
+        <img src="{{asset('img/perfil/'.Auth::user()->foto)}}" class="profile-image" alt="img">
         <h1><strong>{{Auth::user()->name}} </strong></h1>
           <p><i class="fa fa-map-marker"></i> Sistema de Unidad de Terapia Renal.</p>
          
