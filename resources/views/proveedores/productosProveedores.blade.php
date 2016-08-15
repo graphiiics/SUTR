@@ -52,34 +52,87 @@ Productos <i class="fa fa-home"></i>
                         <th>Id</th>
                         <th>Nombre</th>
                         <th>Precio</th>
-                        <th>Categoría</th>
                         <th>Empresa</th>
                         <th>Teléfono</th>
-                        <th>Correo</th>
                         <th>última compra</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
              
                 <tbody>
-                    @foreach ($productos as $producto)
-                       @foreach($producto->proveedores as $proveedor)
+                    @foreach ($proveedores as $proveedor )
+                       @foreach($proveedor->productos as $producto)
                         <tr>
-                          <td>{{$producto->id}}</td>
-                          <td>{{$producto->nombre}}</td>
-                          <td>${{$proveedor->pivot->precio}}</td>
-                          <td>{{$producto->categoria}}</td>
+                          <td></td>
+                          <td>{{$producto->nombre}} ({{$producto->categoria}})</td>
+                          <td>${{$producto->pivot->precio}}</td>
                           <td>{{$proveedor->nombre}}</td>
                           <td>{{$proveedor->telefono}}</td>
-                          <td>{{$proveedor->correo}}</td>
-                          <td>{{$proveedor->pivot->updated_at}}</td>
-                                                  
+                          <td>{{$producto->pivot->updated_at}}</td>
+                          <td><a  href="#" data-toggle="modal" data-target="#modal{{$producto->id}}-{{$proveedor->id}}" class="btn btn-rounded btn-light">Editar</a>
+                            <!-- Modal -->
+                                <div class="modal fade" id="modal{{$producto->id}}-{{$proveedor->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                  <div class="modal-dialog modal-md">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title">Editar </h4>
+                                      </div>
+                                      <form class="form-horizontal" role="form" method="POST" action="{{ route('editarProductoProveedor') }}">
+                                        {!! csrf_field() !!}  
+                                        <div class="modal-body">
+                                            <div class="form-group col-lg-12 md-12 sm-812">
+                                                <label " class="col-lg-2 control-label form-label">Proveedores:</label>
+                                                <div class="col-lg-10">
+                                                  <select  name="proveedor"  class="selectpicker form-control form-control-radius">
+                                                   
+                                                      {{-- Solicita cantidad al almacen --}}
+                                                        <option value="{{$proveedor->id}}" >{{$proveedor->nombre}}</option>
+                                                    
+                                                  </select>     
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="productoActual" value="{{$producto->id}}">
+                                            <div class="form-group col-lg-12 md-812 sm-12">
+                                                <label " class="col-lg-2 control-label form-label productoClass">Producto:</label>
+                                                <div class="col-lg-10">
+                                                  <select  name="producto"  class="selectpicker form-control form-control-radius">
+                                                    @foreach($productos as $producto)
+                                                       {{-- Solicita cantidad al almacen --}}
+                                                        <option value="{{$producto->id}}" >{{$producto->nombre}}</option>
+                                             
+                                                    @endforeach
+                                                  </select>     
+                                                </div>
+                                            </div>
+                                              <div class="form-group">
+                                              <label " class="col-sm-2 control-label form-label">Precio: </label>
+                                              <div class="col-sm-10">
+                                                <input type="number" name="precio" placeholder="Empresa" step="0.01" min="0" value="0" class="form-control form-control-radius" >
+                                              </div>
+                                          </div>
+                                          <div class="form-group">
+                                            <label class="col-sm-4 control-label form-label">Eliminar:</label>
+                                            <div class="col-sm-8">
+                                              <input type="checkbox" class="toggle" name="eliminar" data-toggle="toggle" data-on=" " data-off=" ">
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
+                                          <button type="submit"  class="btn btn-default" >Guardar</button>
+                                        </div>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </div>
+                              <!-- End Modal Code -->
+                              </td>                     
                       </tr>
                       @endforeach
                   @endforeach
                 </tbody>
             </table>
-
-
         </div>
 
       </div>
@@ -91,7 +144,7 @@ Productos <i class="fa fa-home"></i>
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title">Nuevo proveedor</h4>
+                  <h4 class="modal-title">Nueva relación producto-proveedor</h4>
                 </div>
                 <form class="form-horizontal" role="form" method="POST" action="{{ route('guardarProductoProveedor') }}">
                   {!! csrf_field() !!}  
@@ -100,7 +153,7 @@ Productos <i class="fa fa-home"></i>
                       <div class="form-group col-lg-12 md-12 sm-812">
                           <label " class="col-lg-2 control-label form-label">Proveedores:</label>
                           <div class="col-lg-10">
-                            <select id="proveedor" name="proveedor" onchange="cantidadAlmacen();" class="selectpicker form-control form-control-radius">
+                            <select id="NuevoProveedor" name="proveedor" onchange="productosDisponibles();" class="selectpicker form-control form-control-radius">
                               @foreach($proveedores as $proveedor)
                                 {{-- Solicita cantidad al almacen --}}
                                   <option value="{{$proveedor->id}}" >{{$proveedor->nombre}}</option>
@@ -111,19 +164,15 @@ Productos <i class="fa fa-home"></i>
                       <div class="form-group col-lg-12 md-812 sm-12">
                           <label " class="col-lg-2 control-label form-label">Producto:</label>
                           <div class="col-lg-10">
-                            <select id="producto" name="producto" onchange="cantidadAlmacen();" class="selectpicker form-control form-control-radius">
-                              @foreach($productos as $producto)
-                                 {{-- Solicita cantidad al almacen --}}
-                                  <option value="{{$producto->id}}" >{{$producto->nombre}}</option>
-                       
-                              @endforeach
+                            <select id="NuevoProducto" name="producto"  class="selectpicker form-control form-control-radius">
+                              
                             </select>     
                           </div>
                       </div>
                       <div class="form-group">
                           <label " class="col-sm-2 control-label form-label">Precio: </label>
                           <div class="col-sm-10">
-                            <input type="number" name="precio" placeholder="Empresa" min="0" value="0" class="form-control form-control-radius" >
+                            <input type="number" name="precio" placeholder="Empresa" step="0.01" min="0" value="0" class="form-control form-control-radius" >
                           </div>
                       </div>
                       
@@ -148,12 +197,35 @@ Productos <i class="fa fa-home"></i>
 $(document).ready(function() {
     $('#example0').DataTable();
 } );
+ productosDisponibles();
 function enviar(){
   $('form').submit(function(){
   $(this).find(':submit').remove();
   $('#loading').append('<img class="img responsive" width="30" src="{{asset('img/loading.gif')}}">');
 });
 }
+
+function productosDisponibles(){
+  $('#NuevoProducto').empty();
+  var proveedor=$("#NuevoProveedor").val();
+    $.ajax({
+      type: "GET",
+      url:'productosDisponibles/'+proveedor,
+      success: llegada,
+    });
+  function llegada(data){
+   
+    $.each(data, function(i,p) {
+            $('#NuevoProducto').append($('<option>', {
+            value: p.id,
+            text: p.nombre
+             }));
+          //console.log(p.pivot.precio);
+        });
+  }
+}
+
+
 </script>
 
 @stop

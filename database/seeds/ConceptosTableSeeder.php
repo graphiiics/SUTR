@@ -18,7 +18,7 @@ class ConceptosTableSeeder extends Seeder
   		for($i=0; $i<4; $i++)
   		{ 
   			DB::table('conceptos')->insert([
-  				'nombre' => $faker->randomElement($array = array ('beneficio','efectivo','cortesia')),
+  				'nombre' => $faker->randomElement($array = array ('Efectivo','Beneficencia','Cortesia')),
   				'estatus' => rand(1,2),
   				'created_at' => $faker->dateTime,
     		  'updated_at' => $faker->dateTime

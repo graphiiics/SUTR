@@ -22,10 +22,10 @@ class CreateRecibosTable extends Migration
             $table->date('fecha');
             $table->integer('cantidad');
             $table->integer('estatus');
-            $table->foreign('unidad_id')->references('id')->on('unidads');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('paciente_id')->references('id')->on('pacientes');
-            $table->foreign('concepto_id')->references('id')->on('conceptos');
+            // $table->foreign('unidad_id')->references('id')->on('unidads');
+            // $table->foreign('user_id')->references('id')->on('users');
+            // $table->foreign('paciente_id')->references('id')->on('pacientes');
+            // $table->foreign('concepto_id')->references('id')->on('conceptos');
             $table->timestamps();
         });
     }

@@ -66,7 +66,7 @@
   <li><a href="{{route('productosGerente')}}"><span class="icon color12"><i class="fa fa-flask"></i></span>Productos</a>
   <li><a href="{{route('pedidosGerente')}}"><span class="icon color12"><i class="fa fa-pencil-square-o"></i></span>Pedidos</a>
   <li><a href="{{route('registrosGerente')}}"><span class="icon color12"><i class="fa fa-bar-chart"></i></span>Registros</a>
-  <li><a href="#"><span class="icon color12"><i class="fa fa-users"></i></span>Pacientes</a>
+  <li><a href="{{route('pacientesGerente')}}"><span class="icon color12"><i class="fa fa-users"></i></span>Pacientes</a>
   <li><a href="#"><span class="icon color12"><i class="fa fa-stethoscope"></i></span>Sesiones</a>
   <li><a href=""><span class="icon color12"><i class="fa fa-male"></i></span>Usuarios</a>
   <li><a href="{{route('notificacionesGerente')}}"><span class="icon color12"><i class="fa fa-envelope-o"></i></span>Notificaciones</a>

@@ -14,10 +14,10 @@ class PacientesTableSeeder extends Seeder
     {
        $faker = Faker::create();
 
-  		for($i=0; $i<30; $i++)
+  		for($i=0; $i<50; $i++)
   		{ 
   			DB::table('pacientes')->insert([
-  				'unidad_id' => rand(1,6),
+  				'unidad_id' => rand(2,7),
   				'nombre' => $faker->name,
   				'direccion' => $faker->address,
   				'telefono' => $faker->phoneNumber,

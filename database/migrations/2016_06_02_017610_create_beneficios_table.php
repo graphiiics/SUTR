@@ -18,6 +18,7 @@ class CreateBeneficiosTable extends Migration
             $table->integer('paciente_id')->unsigned();
             $table->integer('empresa_id')->unsigned();
             $table->integer('unidad_id')->unsigned();
+            $table->integer('concepto')->unsigned();
             $table->date('fecha');
             $table->integer('sesiones');
             $table->double('cantidad');

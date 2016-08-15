@@ -15,7 +15,10 @@ use App\Unidad;
 use App\Producto;
 class PdfController extends Controller
 {
-
+	 public function __construct()
+    {
+        $this->middleware('auth');
+    }
 		public function pedidoPdf(Pedido $pedido)
 	{
 		$contadorPaginas=1;

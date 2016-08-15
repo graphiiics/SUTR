@@ -233,7 +233,7 @@ Pedidos <i class="fa fa-home"></i>
                                   <div class="col-lg-8">
                                     <select id="nProducto" onchange="cantidadAlmacen();" class="selectpicker form-control form-control-radius">
                                       @foreach($productos as $producto)
-                                        @if($producto->unidades()->find(5)->pivot->cantidad>0) {{-- Solicita cantidad al almacen --}}
+                                        @if($producto->unidades()->first()->pivot->cantidad>0) {{-- Solicita cantidad al almacen --}}
                                           <option value="{{$producto->id}}-{{$producto->nombre}}" >{{$producto->nombre}}</option>
                                         @endif
                                       @endforeach

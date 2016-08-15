@@ -15,11 +15,11 @@ class BeneficiosTableSeeder extends Seeder
         //
         $faker = Faker::create();
 
-  		for($i=0; $i<120; $i++)
+  		for($i=0; $i<20; $i++)
   		{ 
   			$beneficio_id = DB::table('beneficios')->insertGetId([
-  				'user_id' => rand(1,5),
-  				'paciente_id' => rand(1,30),
+  				'user_id' => rand(1,2),
+  				'paciente_id' => rand(1,50),
   				'empresa_id' => rand(1,10),
   				'unidad_id' => rand(1,6),
   				'fecha' => $faker->date($format = 'Y-m-d', $max = 'now'),
@@ -35,7 +35,7 @@ class BeneficiosTableSeeder extends Seeder
 
           	DB::table('cbeneficios')->insert([
           		'beneficio_id' => $beneficio_id,
-      				'user_id' => rand(1,5),
+      				'user_id' => rand(1,2),
       				'paciente_id' => rand(1,30),
       				'empresa_id' => rand(1,10),
       				'unidad_id' => rand(1,6),

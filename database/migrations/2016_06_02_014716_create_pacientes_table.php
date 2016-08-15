@@ -20,7 +20,6 @@ class CreatePacientesTable extends Migration
             $table->string('telefono');
             $table->string('celular');
             $table->integer('estatus');
-            $table->foreign('unidad_id')->references('id')->on('unidads');
             $table->timestamps();
         });
     }

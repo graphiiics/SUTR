@@ -68,7 +68,7 @@ Route::group(['middleware'=>'web'],function(){
 
 #Rutas para todos
   // Route::post('cambiarContrasena',['as' => 'cambiarContrasena', 'uses' => 'UserController@cambiarContrasena' ]);
-    // Route::post('actualizarDatos',['as' => 'actualizarDatos', 'uses' => 'UserController@actualizarDatos' ]);
+  // Route::post('actualizarDatos',['as' => 'actualizarDatos', 'uses' => 'UserController@actualizarDatos' ]);
 
 #Ruta Administrador
 Route::group(['middleware' => 'admin','prefix'=>'admin'], function() {
@@ -84,6 +84,8 @@ Route::group(['middleware' => 'admin','prefix'=>'admin'], function() {
    Route::post('guardarProveedor',['as'=>'guardarProveedor','uses'=>'ProveedorController@guardarProveedor']);
    Route::post('editarProveedor/{proveedor}',['as'=>'editarProveedor','uses'=> 'ProveedorController@editarProveedor'])->where('proveedor', '[0-9]+');
    Route::post('guardarProductoProveedor',['as'=>'guardarProductoProveedor','uses'=>'ProveedorController@guardarProductoProveedor']);
+   Route::get('productosDisponibles/{proveedor}',['as'=>'productosDisponibles','uses'=>'ProveedorController@productosDisponibles'])->where('proveedor', '[0-9]+');
+   Route::post('editarProductoProveedor',['as'=>'editarProductoProveedor','uses'=>'ProveedorController@editarProductoProveedor']);
 
    Route::get('eliminarProveedor/{proveedor}',['as'=>'eliminarProveedor','uses'=>'ProveedorController@eliminarProveedor'])->where('proveedor', '[0-9]+');
    Route::get('productosProveedores',['as'=>'productosProveedores','uses'=>'ProveedorController@productosProveedores']);
@@ -114,7 +116,10 @@ Route::group(['middleware' => 'admin','prefix'=>'admin'], function() {
    //Rutas Notificaciones
     Route::get('notificaciones',['as'=>'notificaciones', 'uses'=>'NotificacionController@index']);
     Route::get('suspenderNotificacion/{notificacion}',['as'=>'suspenderNotificacion', 'uses'=>'NotificacionController@suspenderNotificacion'])->where('notificacion', '[0-9]+');
-    Route::get('productosPdf',['as'=>'productosPdf', 'uses'=>'PdfController@productosPdf']);
+   //Rutas Pacientes
+    Route::get('pacientes',['as'=>'pacientes','uses'=>'PacienteController@index']);
+    Route::post('editarPaciente/{paciente}',['as'=>'editarPaciente','uses'=>'PacienteController@editarPaciente'])->where('paciente', '[0-9]+');
+    Route::post('guardarPaciente',['as'=>'guardarPaciente','uses'=>'PacienteController@guardarPaciente']);
  });
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -144,7 +149,10 @@ Route::group(['middleware' => 'gerente','prefix'=>'gerente'], function() {
    //Rutas Notificaciones
     Route::get('notificaciones',['as'=>'notificacionesGerente', 'uses'=>'NotificacionController@index']);
     Route::get('suspenderNotificacion/{notificacion}',['as'=>'suspenderNotificacionGerente', 'uses'=>'NotificacionController@suspenderNotificacion'])->where('notificacion', '[0-9]+');
-
+  //Rutas Pacientes
+    Route::get('pacientes',['as'=>'pacientesGerente','uses'=>'PacienteController@index']);
+    Route::post('editarPaciente/{paciente}',['as'=>'editarPacienteGerente','uses'=>'PacienteController@editarPaciente'])->where('paciente', '[0-9]+');
+    Route::post('guardarPaciente',['as'=>'guardarPacienteGerente','uses'=>'PacienteController@guardarPaciente']);
  
    
  });

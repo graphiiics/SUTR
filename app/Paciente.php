@@ -8,7 +8,9 @@ class Paciente extends Model
 {
      protected $table = 'pacientes';
      protected $primaryKey = 'id';
-
+    protected $fillable = [
+        'unidad_id','nombre', 'direccion','celular','telefono'
+    ];
    public function sesiones()
     {
         return $this->hasMany('App\Sesion');

@@ -16,8 +16,6 @@ class CreateConceptosTable extends Migration
             $table->increments('id');
             $table->string('nombre');
             $table->integer('estatus');
-            $table->integer('beneficio_id')->unsigned();
-            $table->foreign('beneficio_id')->references('id')->on('beneficios');
             $table->timestamps();
         });
     }

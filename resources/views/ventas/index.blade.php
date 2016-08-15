@@ -221,7 +221,7 @@ Ventas <i class="fa fa-home"></i>
 
                                  <div class="input-group">
                                     <div class="input-group-addon">$</div>
-                                     <input type="number" id="precio" min="1" value="{{$productos[0]->precio_venta}}"  class="form-control form-control-radius" >
+                                     <input type="number" id="precio" min="1" value="0"  class="form-control form-control-radius" >
                                     <div class="input-group-addon">.00</div>
                                   </div>
                             </div>
@@ -276,6 +276,7 @@ Ventas <i class="fa fa-home"></i>
 $(document).ready(function() {
     $('#example0').DataTable();
     cantidadUnidad();
+    actualizarPrecio();
 } );
 
 </script>

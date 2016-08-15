@@ -270,8 +270,8 @@ if(parseInt($('#tipo').val())==2){
        $("#cProducto").val(1);
      }
     else{
-  
       $("#nProducto option[value='"+producto+"']").remove();
+      cantidadUnidad();
     }
 
     }

@@ -178,8 +178,7 @@ Compras <i class="fa fa-home"></i>
 
                                  <div class="input-group">
                                     <div class="input-group-addon">$</div>
-                                     <input type="number" id="precio"  min="1"  class="form-control form-control-radius" disabled>
-                                    <div class="input-group-addon">.00</div>
+                                     <input type="number" id="precio"  min="1" step=".01" class="form-control form-control-radius" disabled>
                                   </div>
                             </div>
                           </div>
@@ -256,7 +255,7 @@ var productosTotal =0;
      $('#proveedor').attr("readonly", true);
     var producto=$('#nProducto').val();
     var cantidad=parseInt($('#cProducto').val());
-    var precio=parseInt($('#precio').val());
+    var precio=parseFloat($('#precio').val());
     if(cantidad>0 && precio>0){
         nextinput++;
         campo = '<tr id="campo'+nextinput+'"><td >'+(nextinput)+'</td><td><input type="text" id="producto'+nextinput+'"  value="'+producto.substring(producto.indexOf('-')+1,producto.indexOf('$'))+'" class="form-control " disabled ><input type="hidden" id="prod'+nextinput+'" name="producto'+nextinput+'" value="'+producto.substring(0,producto.indexOf('-'))+'"><input type="hidden" id="pd'+nextinput+'" value="'+producto.substring(producto.indexOf('$')+1)+'"></td><td ><input type="text" value="'+cantidad+'" name="cantidad'+nextinput+'"  class="form-control  " readonly ></td><td><input type="text" value="'+precio+'" name="precio'+nextinput+'"  class="form-control " readonly ><input type="hidden" name="precio'+nextinput+'" value="'+precio+'"></td></tr>';
@@ -268,7 +267,7 @@ var productosTotal =0;
             $("#bodyModal").prepend(campo);
             $('#cProducto').val();
             $('#nProducto').val();
-            $('#tPrecio').val('$ '+precioTotal+'.00');
+            $('#tPrecio').val('$ '+precioTotal);
             $('#totalPrecio').val(precioTotal);
             $('#tProductos').val(productosTotal);
             producto=$('#nProducto').val();
