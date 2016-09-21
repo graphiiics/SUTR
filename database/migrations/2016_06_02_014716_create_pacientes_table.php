@@ -19,7 +19,8 @@ class CreatePacientesTable extends Migration
             $table->string('direccion');
             $table->string('telefono');
             $table->string('celular');
-            $table->integer('estatus');
+            $table->date('fecha_nacimiento');
+            $table->integer('estatus')->default(1); //1Activo //2 Desactivado
             $table->timestamps();
         });
     }

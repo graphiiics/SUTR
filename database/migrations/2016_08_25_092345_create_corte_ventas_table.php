@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddPrecioVentaToProductosTable extends Migration
+class CreateCorteVentasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,11 @@ class AddPrecioVentaToProductosTable extends Migration
      */
     public function up()
     {
-        Schema::table('productos', function (Blueprint $table) {
-            $table->double('precio_venta');
+        Schema::create('corte_ventas', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('corte_id')->unsigned();
+            $table->integer('venta_id')->unsigned();
+            $table->timestamps();
         });
     }
 
@@ -24,8 +27,6 @@ class AddPrecioVentaToProductosTable extends Migration
      */
     public function down()
     {
-        Schema::table('productos', function (Blueprint $table) {
-            //
-        });
+        Schema::drop('corte_ventas');
     }
 }

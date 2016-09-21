@@ -60,14 +60,14 @@
 <ul class="sidebar-panel nav">
   <li class="title">MENÚ</li>
   
-  <li><a href="#"><span class="icon color12"><i class="fa fa-tags"></i></span>Recibos</a>
-  <li><a href="#"><span class="icon color12"><i class="fa fa-suitcase"></i></span>Beneficios</a>
+  <li><a href="{{route('recibosGerente')}}"><span class="icon color12"><i class="fa fa-tags"></i></span>Recibos</a>
+  <li><a href="{{route('beneficiosGerente')}}"><span class="icon color12"><i class="fa fa-suitcase"></i></span>Beneficios</a>
   <li><a href="{{route('ventasGerente')}}"><span class="icon color12"><i class="fa fa-dollar"></i></span>Ventas</a>
   <li><a href="{{route('productosGerente')}}"><span class="icon color12"><i class="fa fa-flask"></i></span>Productos</a>
   <li><a href="{{route('pedidosGerente')}}"><span class="icon color12"><i class="fa fa-pencil-square-o"></i></span>Pedidos</a>
   <li><a href="{{route('registrosGerente')}}"><span class="icon color12"><i class="fa fa-bar-chart"></i></span>Registros</a>
   <li><a href="{{route('pacientesGerente')}}"><span class="icon color12"><i class="fa fa-users"></i></span>Pacientes</a>
-  <li><a href="#"><span class="icon color12"><i class="fa fa-stethoscope"></i></span>Sesiones</a>
+  <li><a href="{{route('sesionesGerente')}}"><span class="icon color12"><i class="fa fa-stethoscope"></i></span>Sesiones</a>
   <li><a href=""><span class="icon color12"><i class="fa fa-male"></i></span>Usuarios</a>
   <li><a href="{{route('notificacionesGerente')}}"><span class="icon color12"><i class="fa fa-envelope-o"></i></span>Notificaciones</a>
 

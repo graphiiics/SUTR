@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductoStocksTable extends Migration
+class CreateCortesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,15 @@ class CreateProductoStocksTable extends Migration
      */
     public function up()
     {
-        Schema::create('producto_stocks', function (Blueprint $table) {
+       Schema::create('cortes', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->unsigned();
             $table->integer('unidad_id')->unsigned();
-            $table->integer('producto_id')->unsigned();
-            $table->integer('cantidad');
+            $table->double('importe');
+            $table->date('fecha_corte');
+            $table->date('fecha_inicio');
+            $table->date('fecha_fin');
+            $table->string('observaciones');
             $table->timestamps();
         });
     }
@@ -28,6 +32,6 @@ class CreateProductoStocksTable extends Migration
      */
     public function down()
     {
-        Schema::drop('producto_stocks');
+         Schema::drop('cortes');
     }
 }

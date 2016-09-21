@@ -11,6 +11,7 @@
   {
     $variable = "layouts.gerente";
   }
+
 ?>
 @extends("$variable")
 @section('titulo') Productos 
@@ -21,16 +22,29 @@ Productos <i class="fa fa-home"></i>
 
 @section ('botones')
 @if(Auth::user()->tipo<=2)
+
   <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light"><i class="fa fa-plus"></i> Crear Nuevo</a>
-  <a href="{{route('productosPdf')}}"  target="_blank"  class="btn btn-light"><i class="fa fa-plus"></i> Imprimi</a>
+ 
+  
+    <button class="btn btn-light" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
+     <i class="fa fa-print"></i> Imprimir
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-list dropdown-menu-right">
+        <li> <a href="{{route('productosPdf','Suplemento')}}"  target="_blank"  class="btn btn-light"></i>  Suplementos</a></li>
+        <li> <a href="{{route('productosPdf','Medicamento')}}"  target="_blank"  class="btn btn-light"></i>  Medicamentos</a></li>
+        <li> <a href="{{route('productosPdf','Material')}}"  target="_blank"  class="btn btn-light"></i>  Materiales</a></li>
+        <li> <a href="{{route('productosPdf','Todos')}}"  target="_blank"  class="btn btn-light"></i>  Todos</a></li>
+    </ul>
+  
+   
 @endif
 @endsection
 @section('panelBotones')
-
   <li class="checkbox checkbox-primary">
-  @if(Auth::user()->tipo<=2)
-    <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light"><i class="fa fa-plus"></i> Crear Nuevo</a>
-  @endif
+    @if(Auth::user()->tipo<=2)
+      <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light"><i class="fa fa-plus"></i> Crear Nuevo</a>
+    @endif
   </li>
 @endsection
  @section('contenido')
@@ -48,67 +62,57 @@ Productos <i class="fa fa-home"></i>
         <div class="panel-body table-responsive">
             <table id="example0" class="table display">
                 <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Nombre</th>
-                        <th>Precio venta</th>
-                        @if(Auth::user()->tipo<=2)
-                        <th>Precio compra</th>
+                  <tr>
+                   
+                    <th>Nombre</th>
+                    <th>Presenteación</th>
+                    @if(Auth::user()->tipo<=2)
+                      <th>Precio compra</th>
+                    @endif
+                    @if(Auth::user()->tipo<=2)
+                      <th>Stock Total</th>
+                    @endif
+                    @foreach($unidades as $unidad)
+                      @if(Auth::user()->tipo<=2)
+                        <th>{{$unidad->nombre}}</th>
+                      @else 
+                        @if(Auth::user()->unidad_id==$unidad->id)
+                          <th>{{$unidad->nombre}}</th>
                         @endif
-                        <th>Categoría</th>
-                         @if(Auth::user()->tipo<=2)
-                        <th>Stock</th>
-                        @endif
-                          @foreach($unidades as $unidad)
-                             @if(Auth::user()->tipo<=2)
-                                 <th>{{$unidad->nombre}}</th>
-                             @else 
-                                  @if(Auth::user()->unidad_id==$unidad->id)
-                                    <th>{{$unidad->nombre}}</th>
-                                 @endif
-                             @endif
-                          @endforeach
-                        @if(Auth::user()->tipo<=2)
-                        <th>Acciones</th>
-                        @endif
-                    </tr>
+                      @endif
+                    @endforeach
+                    @if(Auth::user()->tipo<=2)
+                      <th>Acciones</th>
+                    @endif
+                  </tr>
                 </thead>
-             
                 <tbody>
-                    @foreach ($productos as $producto)
-                      <tr>
-                        <td>{{$producto->id}}</td>
-                        <td>{{$producto->nombre}}</td>
-                         @if(Auth::user()->tipo<=2)
-                          <td>${{$producto->precio_venta}}</td>
-                          <td>${{$producto->precio}}</td>
+                  @foreach ($productos as $producto)
+                    <tr>
+                      
+                      <td>{{$producto->nombre}} </td>
+                      <td>{{$producto->categoria}}</td>
+                      @if(Auth::user()->tipo<=2)
+                        <td>${{$producto->precio}}</td>
+                      @endif
+                      @if(Auth::user()->tipo<=2)
+                        <td>{{$producto->stock}} ({{$producto->presentacion}}s) </td>
+                      @endif
+                      @foreach($producto->unidades as $pUnidad)
+                        @if(Auth::user()->tipo<=2)
+                          <th>{{$pUnidad->pivot->cantidad}}</th>
                         @else
-                          @if($producto->categoria=="Suplemento")
-                            <td>${{$producto->precio_venta}}</td>
-                          @else
-                            <td>No disponible</td>
+                          @if(Auth::user()->unidad_id==$pUnidad->id)
+                            <th>{{$pUnidad->pivot->cantidad}}
+                              @if($pUnidad->pivot->cantidad==1)
+                                {{$producto->presentacion}}
+                              @else
+                                {{$producto->presentacion}}s
+                              @endif
+                            </th>
                           @endif
                         @endif
-                        <td>{{$producto->categoria}}</td>
-                         @if(Auth::user()->tipo<=2)
-                        <td>{{$producto->stock}} {{$producto->tipo}}s</td>
-                        @endif
-                          @foreach($producto->unidades as $pUnidad)
-                            @if(Auth::user()->tipo<=2)
-                              <th>{{$pUnidad->pivot->cantidad}}</th>
-                            @else
-                                 @if(Auth::user()->unidad_id==$pUnidad->id)
-                                    <th>{{$pUnidad->pivot->cantidad}}
-                                    @if($pUnidad->pivot->cantidad==1)
-                                      {{$producto->tipo}}
-                                    @else
-                                      {{$producto->tipo}}s
-                                    @endif
-                                    </th>
-                                 @endif
-                            @endif
-
-                          @endforeach
+                      @endforeach
                       @if(Auth::user()->tipo<=2)
                          <td><a  href="#" data-toggle="modal" data-target="#modal{{$producto->id}}" class="btn btn-rounded btn-light">Editar</a>
                             <!-- Modal -->
@@ -159,7 +163,30 @@ Productos <i class="fa fa-home"></i>
                                                   </select>                  
                                               </div>  
                                             </div>
-                                             
+                                            <div class="form-group">
+                                              <label class="col-sm-2 control-label form-label">Presentación: </label>
+                                              <div class="col-sm-10">
+                                                <select name="presentacion" value="{{$producto->presentacion}}" class="selectpicker form-control form-control-radius">
+                                                  @if($producto->presentacion=="Pieza")
+                                                    <option selected>Pieza</option>
+                                                    <option>Paquete</option>
+                                                    <option>Caja</option>
+                                                  @elseif($producto->presentacion=="Paquete")
+                                                    <option>Pieza</option>
+                                                    <option selected>Paquete</option>
+                                                    <option>Caja</option>
+                                                  @elseif($producto->presentacion=="Caja")
+                                                    <option>Pieza</option>
+                                                    <option>Paquete</option>
+                                                    <option selected>Caja</option>
+                                                  @else
+                                                    <option>Pieza</option>
+                                                    <option>Paquete</option>
+                                                    <option>Caja</option>
+                                                  @endif
+                                                  </select>                  
+                                              </div>  
+                                            </div> 
                                             @foreach($unidades as $key=> $unidad)
                                             <div class="form-group col-lg-12 md-12">
                                               <div class="form-group col-lg-6 md-12">
@@ -171,7 +198,7 @@ Productos <i class="fa fa-home"></i>
                                                <div class="form-group col-lg-6 md-12">
                                                   <label " class="col-sm-4 control-label form-label">Stock minimo: </label>
                                                   <div class="col-sm-8">
-                                                    <input type="number" name="productoMinimoUnidad{{$unidad->id}}" value="{{$producto->stock()->find($unidad->id)->pivot->cantidad}}" class="form-control form-control-radius" min="0">
+                                                    <input type="number" name="productoMinimoUnidad{{$unidad->id}}" value="{{$producto->unidades->find($unidad->id)->pivot->stock_minimo}}" class="form-control form-control-radius" min="0">
                                                   </div>
                                               </div>
                                             </div>
@@ -240,7 +267,7 @@ Productos <i class="fa fa-home"></i>
                                             <div class="form-group">
                                               <label class="col-sm-2 control-label form-label">Tipo: </label>
                                               <div class="col-sm-10">
-                                                <select name="tipo" class="selectpicker form-control form-control-radius">
+                                                <select name="presentacion" class="selectpicker form-control form-control-radius">
                                                     <option>Paquete</option>
                                                     <option>Caja</option>
                                                     <option>Pieza</option>

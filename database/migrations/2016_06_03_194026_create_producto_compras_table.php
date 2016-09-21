@@ -17,6 +17,7 @@ class CreateProductoComprasTable extends Migration
             $table->integer('compra_id')->unsigned();
             $table->integer('producto_id')->unsigned();
             $table->integer('cantidad');
+            $table->boolean('iva')->default(true);
             $table->timestamps();
         });
     }

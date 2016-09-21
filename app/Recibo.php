@@ -9,6 +9,10 @@ class Recibo extends Model
      protected $table = 'recibos';
      protected $primaryKey = 'id';
 
+     protected $fillable = [
+        'paciente_id','unidad_id','beneficio_id','cantidad','tipo_pago','estatus','folio',
+    ];
+
      public function paciente()
     {
         return $this->belongsTo('App\Paciente');

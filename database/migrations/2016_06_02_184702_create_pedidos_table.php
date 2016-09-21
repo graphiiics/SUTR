@@ -17,7 +17,8 @@ class CreatePedidosTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('unidad_id')->unsigned();
             $table->date('fecha');
-            $table->integer('estatus');
+            $table->integer('estatus')->default(1); //1Activo //2 Desactivado
+            $table->string('observaciones');
             $table->timestamps();
         });
     }

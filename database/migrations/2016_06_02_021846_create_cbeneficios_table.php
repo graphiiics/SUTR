@@ -24,7 +24,6 @@ class CreateCbeneficiosTable extends Migration
             $table->double('cantidad');
             $table->integer('estatus');
             $table->integer('sesiones_realizadas');
-            $table->foreign('beneficio_id')->references('id')->on('beneficios');
             $table->timestamps();
         });
     }

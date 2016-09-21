@@ -17,6 +17,8 @@ class CreateProductoUnidadsTable extends Migration
             $table->integer('unidad_id')->unsigned();
             $table->integer('producto_id')->unsigned();
             $table->integer('cantidad');
+            $table->integer('stock_minimo');
+            $table->integer('cantidad_paquete');
             $table->timestamps();
         });
     }

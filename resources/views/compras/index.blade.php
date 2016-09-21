@@ -59,7 +59,11 @@ Compras <i class="fa fa-home"></i>
                         <td>{{$compra->user->name}}</td>
                         <td>{{$compra->fecha}}</td>
                         <td>{{$compra->proveedor->nombre}}</td>
-                        <td>${{$compra->importe}}.00</td>
+                        @if(is_float($compra->importe))
+                          <td>${{$compra->importe}}</td>
+                        @else
+                          <td>${{$compra->importe}}.00</td>
+                        @endif
                         <td><a  href="#" data-toggle="modal" data-target="#modal{{$compra->id}}" class="btn btn-rounded btn-light">Ver detalles</a>
                             <!-- Modal -->
                                 <div class="modal fade" id="modal{{$compra->id}}" tabindex="-1" role="dialog" aria-hidden="true">
@@ -87,24 +91,32 @@ Compras <i class="fa fa-home"></i>
                                                     <td>{{$num+1}}</td>
                                                     <td>{{$producto->id}}</td>
                                                     <td>{{$producto->nombre}}</td>
-                                                    <td>${{$producto->pivot->precio}}.00</td>
+                                                    @if(is_float($producto->pivot->precio))
+                                                      <td>${{$producto->pivot->precio}}</td>
+                                                    @else
+                                                      <td>${{$producto->pivot->precio}}.00</td>
+                                                    @endif
                                                     <td>{{$producto->pivot->cantidad}}
                                                     @if($producto->pivot->cantidad==1)
-                                                      {{$producto->tipo}}
+                                                      {{$producto->presentacion}}
                                                     @else
-                                                      {{$producto->tipo}}s
+                                                      {{$producto->presentacion}}s
                                                     @endif
                                                     </td>
                                                     <td>{{$producto->categoria}}</td>
                                                 </tr>
                                               @endforeach
                                               <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td>Total</td>
+                                                  <td></td>
+                                                  <td></td>
+                                                  <td>Total</td>
+                                                  @if(is_float($compra->importe))
+                                                    <td>${{$compra->importe}}</td>
+                                                  @else
                                                     <td>${{$compra->importe}}.00</td>
-                                                    <td></td>
-                                                    <td></td>
+                                                  @endif
+                                                  <td></td>
+                                                  <td></td>
                                                 </tr>
                                             </tbody>
                                         </table>                  
@@ -169,8 +181,16 @@ Compras <i class="fa fa-home"></i>
                           <div class="form-group  ">
                             <div class="col-lg-6 md-6">
                                 <div class="input-group">
-                                    <div class="input-group-addon">Cantidad</div>
+                                    <div class="input-group-addon">Cant.</div>
                                       <input type="number"   id="cProducto" value="1" min="1"  class="form-control form-control-radius" disabled>
+                                   
+                                  </div>
+                            </div>
+                            
+                             <div class="col-lg-6 md-6">
+                                <div class="input-group">
+                                    <div class="input-group-addon"> contenido p/c:</div>
+                                      <input type="number"   id="cantidadCaja" value="1" min="1"  class="form-control form-control-radius" disabled>
                                    
                                   </div>
                             </div>
@@ -178,8 +198,16 @@ Compras <i class="fa fa-home"></i>
 
                                  <div class="input-group">
                                     <div class="input-group-addon">$</div>
-                                     <input type="number" id="precio"  min="1" step=".01" class="form-control form-control-radius" disabled>
+                                     <input type="number" id="precio"  min="0" step=".01" class="form-control form-control-radius" disabled>
                                   </div>
+                            </div>
+                            <div class="col-lg-6 md-6">
+                               <div class="checkbox checkbox-success">
+                                    <input id="iva" type="checkbox" value="1" checked>
+                                    <label for="iva">
+                                        IVA
+                                    </label>
+                                </div>                              
                             </div>
                           </div>
                           <div class="form-group ">
@@ -241,7 +269,6 @@ Compras <i class="fa fa-home"></i>
 
  @section ('js')
 <script src="{{asset('js/datatables/datatables.min.js')}}"></script>
-<script src="{{asset('js/compras.js')}}"></script>
 <script>
 $(document).ready(function() {
     $('#example0').DataTable();
@@ -252,13 +279,18 @@ $(document).ready(function() {
 var precioTotal = 0;
 var productosTotal =0;
   function AgregarCampos(){
-     $('#proveedor').attr("readonly", true);
+    var proveedor=$('#proveedor').val();
+     $('#proveedor').attr("disabled", true);
+     $('#bodyModal').append('<input type="hidden" name="proveedor" value="'+proveedor+'">');
     var producto=$('#nProducto').val();
     var cantidad=parseInt($('#cProducto').val());
     var precio=parseFloat($('#precio').val());
+    var iva=$('#iva:checked').val();
+    if(iva!=1) iva=0;
+    var cantidadCaja=$('#cantidadCaja').val();
     if(cantidad>0 && precio>0){
         nextinput++;
-        campo = '<tr id="campo'+nextinput+'"><td >'+(nextinput)+'</td><td><input type="text" id="producto'+nextinput+'"  value="'+producto.substring(producto.indexOf('-')+1,producto.indexOf('$'))+'" class="form-control " disabled ><input type="hidden" id="prod'+nextinput+'" name="producto'+nextinput+'" value="'+producto.substring(0,producto.indexOf('-'))+'"><input type="hidden" id="pd'+nextinput+'" value="'+producto.substring(producto.indexOf('$')+1)+'"></td><td ><input type="text" value="'+cantidad+'" name="cantidad'+nextinput+'"  class="form-control  " readonly ></td><td><input type="text" value="'+precio+'" name="precio'+nextinput+'"  class="form-control " readonly ><input type="hidden" name="precio'+nextinput+'" value="'+precio+'"></td></tr>';
+        campo = '<tr id="campo'+nextinput+'"><td >'+(nextinput)+'</td><td><input type="text" id="producto'+nextinput+'" value="'+producto.substring(producto.indexOf('-')+1,producto.indexOf('$'))+'" class="form-control " disabled ><input type="hidden" id="prod'+nextinput+'" name="producto'+nextinput+'" value="'+producto.substring(0,producto.indexOf('-'))+'"><input type="hidden" id="pd'+nextinput+'" value="'+producto.substring(producto.indexOf('$')+1)+'"></td><td ><input type="text" value="'+cantidad+'" name="cantidad'+nextinput+'"  class="form-control  " readonly ></td><td><input type="text" value="'+precio+'" name="precio'+nextinput+'"  class="form-control " readonly ><input type="hidden" name="precio'+nextinput+'" value="'+precio+'"></td><input type="hidden" value="'+iva+'" name="iva'+nextinput+'"><input type="hidden" value="'+cantidadCaja+'" name="cantidadCaja'+ nextinput+'"></tr>';
         if(producto!=null){
             productosTotal=productosTotal+cantidad;
             precioTotal=precioTotal+(precio*cantidad);
@@ -289,6 +321,7 @@ var productosTotal =0;
     $('#agregar').attr("disabled", true);
     $('#nProducto').attr("disabled", true);
     $('#cProducto').attr("disabled", true);
+    $('#cantidadCaja').attr("disabled", true);
     $('#precio').attr("disabled", true);
     $('#tPrecio').val(0);
     $('#tProductos').val(0);
@@ -306,8 +339,6 @@ var productosTotal =0;
 
     var proveedor=$("#proveedor").val();
       $('#nProducto').empty();
-
-
       $.ajax({
         type: "GET",
         url:'obtenerProveedor/'+proveedor,
@@ -317,6 +348,7 @@ var productosTotal =0;
       $('#agregar').attr("disabled", false);
       $('#nProducto').attr("disabled", false);
       $('#cProducto').attr("disabled", false);
+      $('#cantidadCaja').attr("disabled", false);
       $('#precio').attr("disabled", false);
         $.each(data, function(i,p) {
             $('#nProducto').append($('<option>', {

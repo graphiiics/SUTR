@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password', 60);
-            $table->integer('estatus');
+            $table->integer('estatus')->defalut(1); //1Activo //2 Suspendido
             $table->string('telefono');
             $table->string('foto');
             $table->integer('tipo');
@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
     }
+   
 
     /**
      * Reverse the migrations.

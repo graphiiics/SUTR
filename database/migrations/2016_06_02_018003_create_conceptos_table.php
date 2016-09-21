@@ -15,7 +15,7 @@ class CreateConceptosTable extends Migration
         Schema::create('conceptos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
-            $table->integer('estatus');
+            $table->integer('estatus')->default(1); //1Activo //2 Desactivado
             $table->timestamps();
         });
     }

@@ -120,6 +120,19 @@ Route::group(['middleware' => 'admin','prefix'=>'admin'], function() {
     Route::get('pacientes',['as'=>'pacientes','uses'=>'PacienteController@index']);
     Route::post('editarPaciente/{paciente}',['as'=>'editarPaciente','uses'=>'PacienteController@editarPaciente'])->where('paciente', '[0-9]+');
     Route::post('guardarPaciente',['as'=>'guardarPaciente','uses'=>'PacienteController@guardarPaciente']);
+
+    //Rutas Cortes
+    Route::get('cortes',['as'=>'cortes','uses'=>'CorteController@index']);
+
+    //Rutas Empresas
+    Route::get('empresas',['as'=>'empresas','uses'=>'EmpresaController@index']);
+    Route::post('editarEmpresa/{empresa}',['as'=>'editarEmpresa','uses'=> 'EmpresaController@editarEmpresa'])->where('empresa', '[0-9]+');
+    Route::post('guardarEmpresa',['as'=>'guardarEmpresa','uses'=>'EmpresaController@guardarEmpresa']);
+
+     //Rutas Beneficios
+    Route::get('beneficios',['as'=>'beneficios','uses'=>'BeneficioController@index']);
+    Route::post('editarBeneficio/{beneficio}',['as'=>'editarBeneficio','uses'=>'BeneficioController@editarBeneficio'])->where('beneficio', '[0-9]+');
+    Route::post('guardarBeneficio',['as'=>'guardarBeneficio','uses'=>'BeneficioController@guardarBeneficio']);
  });
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -153,20 +166,46 @@ Route::group(['middleware' => 'gerente','prefix'=>'gerente'], function() {
     Route::get('pacientes',['as'=>'pacientesGerente','uses'=>'PacienteController@index']);
     Route::post('editarPaciente/{paciente}',['as'=>'editarPacienteGerente','uses'=>'PacienteController@editarPaciente'])->where('paciente', '[0-9]+');
     Route::post('guardarPaciente',['as'=>'guardarPacienteGerente','uses'=>'PacienteController@guardarPaciente']);
- 
+
+  //Rutas Cortes
+    Route::get('cortes',['as'=>'cortesGerente','uses'=>'CorteController@index']);
+    Route::get('realizarCorte',['as'=>'realizarCorteGerente','uses'=>'CorteController@realizarCorte']);
+
+  //Rutas Recibos
+    Route::get('recibos',['as'=>'recibosGerente','uses'=>'ReciboController@index']);
+    Route::get('terminarRecibo/{recibo}',['as'=>'terminarReciboGerente','uses'=>'ReciboController@terminarRecibo'])->where('recibo', '[0-9]+');
+    Route::get('liquidarRecibo/{recibo}',['as'=>'liquidarReciboGerente','uses'=>'ReciboController@liquidarRecibo'])->where('recibo', '[0-9]+');
+    Route::post('guardarRecibo',['as'=>'guardarReciboGerente','uses'=>'ReciboController@guardarRecibo']);
+    Route::get('datosPaciente/{paciente}',['as'=>'datosPaciente','uses'=>'ReciboController@datosPaciente'])->where('paciente','[0-9]+');
+
+
+    //Rutas Beneficios
+    Route::get('beneficios',['as'=>'beneficiosGerente','uses'=>'BeneficioController@index']);
+    Route::post('editarBeneficio/{beneficio}',['as'=>'editarBeneficioGerente','uses'=>'BeneficioController@editarBeneficio'])->where('beneficio', '[0-9]+');
+    Route::post('guardarBeneficio',['as'=>'guardarBeneficioGerente','uses'=>'BeneficioController@guardarBeneficio']);
+
+    //Rutas Sesiones
+    Route::get('sesiones',['as'=>'sesionesGerente','uses'=>'SesionController@index']);
+   
    
  });
 
   ///////////////////////////////////////////////////////
 
-  //////Rutas para todos
   //Rutas PDF
+  //////Rutas para todos
     Route::get('pedidoPdf/{pedido}',['as'=>'pedidoPdf', 'uses'=>'PdfController@pedidoPdf'])->where('pedido', '[0-9]+');
     Route::get('ventaPdf/{venta}',['as'=>'ventaPdf', 'uses'=>'PdfController@ventaPdf'])->where('venta', '[0-9]+');
     Route::get('registroPdf/{registro}',['as'=>'registroPdf', 'uses'=>'PdfController@registroPdf'])->where('registro', '[0-9]+');
     Route::get('compraPdf/{compra}',['as'=>'compraPdf', 'uses'=>'PdfController@compraPdf'])->where('compra', '[0-9]+');
-    Route::get('productosPdf',['as'=>'productosPdf', 'uses'=>'PdfController@productosPdf']);
-
+    Route::get('productosPdf/{categoria}',['as'=>'productosPdf', 'uses'=>'PdfController@productosPdf']);
+    Route::post('precioProveedoresPdf',['as'=>'precioProveedoresPdf', 'uses'=>'PdfController@precioProveedoresPdf']);
+    Route::get('reciboPdf/{recibo}',['as'=>'reciboPdf','uses'=>'PdfController@reciboPdf'])->where('recibo', '[0-9]+');
+    Route::get('hojaControlPdf/{sesion}',['as'=>'hojaControlPdf','uses'=>'PdfController@hojaControlPdf'])->where('sesion', '[0-9]+');
+    Route::get('ventasTotalesCortePdf',['as'=>'ventasTotalesCortePdf', 'uses'=>'PdfController@ventasTotalesCortePdf']);
+    Route::get('suplementosPdf',['as'=>'suplementosPdf', 'uses'=>'PdfController@suplementosPdf']);
+    //Ruta Productos
+    Route::get('productosUnidad',['as'=>'productosUnidad','uses'=>'ProductoController@productosUnidad']);
 });
 
 

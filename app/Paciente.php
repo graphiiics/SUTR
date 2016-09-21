@@ -11,10 +11,7 @@ class Paciente extends Model
     protected $fillable = [
         'unidad_id','nombre', 'direccion','celular','telefono'
     ];
-   public function sesiones()
-    {
-        return $this->hasMany('App\Sesion');
-    }
+  
 
     public function recibos()
     {

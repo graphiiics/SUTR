@@ -14,7 +14,7 @@ class CreateSesionsTable extends Migration
     {
         Schema::create('sesions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('paciente_id')->unsigned();
+            $table->integer('recibo_id')->unsigned();
             $table->date('fecha');
             $table->string('t_a_pie');
             $table->integer('fc_pre');

@@ -20,7 +20,7 @@ Pacientes <i class="fa fa-home"></i>
 @endsection
 
 @section ('botones')
-@if(Auth::user()->tipo<=2)
+@if(Auth::user()->tipo==3)
   <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light"><i class="fa fa-plus"></i> Crear Nuevo</a>  
 @endif
 @endsection
@@ -70,9 +70,9 @@ Pacientes <i class="fa fa-home"></i>
                         <td>{{$paciente->nombre}}</td>
                         <td>{{$paciente->direccion}}</td>
                         <td>{{$paciente->celular}}</td>
-                        @if(count($paciente->sesiones)>0)
+                        @if(count($paciente->recibos)>0)
                           
-                          <td>{{$paciente->sesiones[count($paciente->sesiones)-1]->fecha}}</td>
+                          <td>{{$paciente->recibos[count($paciente->recibos)-1]->fecha}}</td>
                           
                         @else
                           <td>No tiene sesiones</td>
@@ -86,7 +86,7 @@ Pacientes <i class="fa fa-home"></i>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                         <h4 class="modal-title">Editar {{$paciente->nombre}}</h4>
                                       </div>
-                                      <form class="form-horizontal" role="form" method="POST" action="{{ route('editarPaciente',$paciente->id) }}">
+                                      <form class="form-horizontal" role="form" method="POST" action="{{ route('editarPacienteGerente',$paciente->id) }}">
                                         {!! csrf_field() !!}  
                                         <div class="modal-body">
                                             <div class="form-group">
@@ -120,7 +120,7 @@ Pacientes <i class="fa fa-home"></i>
                                             <div class="form-group">
                                                 <label " class="col-sm-2 control-label form-label">Teléfono: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="text" pattern="[0-9]{10}"  name="telefono"  placeholder="Telefono de casa" min="0" value="{{$paciente->telefono}}" class="form-control form-control-radius">
+                                                  <input type="text" pattern="[0-9]{10}"  name="telefono"  placeholder="Teléfono de casa" min="0" value="{{$paciente->telefono}}" class="form-control form-control-radius">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -165,9 +165,9 @@ Pacientes <i class="fa fa-home"></i>
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Nuevo Producto</h4>
+                <h4 class="modal-title">Nuevo paciente</h4>
               </div>
-              <form class="form-horizontal" role="form"  method="POST" action="{{ route('guardarPaciente') }}">
+              <form class="form-horizontal" role="form"  method="POST" action="{{ route('guardarPacienteGerente') }}">
                 {!! csrf_field() !!}  
                 <div class="modal-body">
                     <div class="modal-body">

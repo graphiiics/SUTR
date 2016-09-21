@@ -22,6 +22,7 @@ Productos <i class="fa fa-home"></i>
 <a href="{{route('proveedores')}}" class="btn btn-light"><i class="fa fa-dollar"></i>Mostrar proveedores</a>
 
 <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light"><i class="fa fa-plus"></i> Crear Nuevo</a>
+<a href="#" data-toggle="modal" data-target="#modal_imprimir"  class="btn btn-light"><i class="fa fa-print"></i> Imprimir</a>
 @endsection
 @section('panelBotones')
 <li class="checkbox checkbox-primary">
@@ -189,11 +190,52 @@ Productos <i class="fa fa-home"></i>
 
         <!-- End Modal Code -->
 
+        <!-- Modal -->
+          <div class="modal fade" id="modal_imprimir" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">Selecciona los proveedores a comparar</h4>
+                </div>
+                <form class="form-horizontal" role="form" method="POST" action="{{ route('precioProveedoresPdf') }}">
+                  {!! csrf_field() !!}  
+                  <div class="modal-body">
+                      
+                      <div class="form-group col-lg-12 md-12 sm-812">
+                          <label " class="col-lg-2 control-label form-label">Proveedores:</label>
+                          <div class="col-lg-9">
+                            <select id="proveedorImprimir" name="proveedor"  class="selectpicker form-control form-control-radius">
+                              @foreach($proveedores as $proveedor)
+                                {{-- Solicita cantidad al almacen --}}
+                                  <option value="{{$proveedor->id}}-{{$proveedor->nombre}}" >{{$proveedor->nombre}}</option>
+                              @endforeach
+                            </select>    
+                          </div>
+                         
+                          <button type="button" onclick="agregarProveedor();" class="btn btn-rounded btn-success btn-icon"><i class="fa fa-plus"></i></button>
+                      </div>
+                  </div>
+                  <div id="imprimirProveedores" class="form-group">
+                    <input type="hidden" id="totalProveedores" name="totalProveedores" >
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-default"  onclick="enviar();">Imprimir</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+        <!-- End Modal Code -->
+
  @endsection
 
  @section ('js')
 <script src="{{asset('js/datatables/datatables.min.js')}}"></script>
 <script>
+var contadorProveedor=0;
 $(document).ready(function() {
     $('#example0').DataTable();
 } );
@@ -203,6 +245,7 @@ function enviar(){
   $(this).find(':submit').remove();
   $('#loading').append('<img class="img responsive" width="30" src="{{asset('img/loading.gif')}}">');
 });
+
 }
 
 function productosDisponibles(){
@@ -225,6 +268,14 @@ function productosDisponibles(){
   }
 }
 
+function agregarProveedor(){
+  contadorProveedor++;
+  var proveedor=$('#proveedorImprimir').val();
+  $('#totalProveedores').val(contadorProveedor);
+  var input=' <div class="col-lg-10 col-lg-offset-1"><input type="text" class="form-control form-control-radius" readonly value="'+proveedor+'"><div><input type="hidden" name="proveedor'+contadorProveedor+'" value="'+proveedor.substring(0,proveedor.indexOf('-'))+'" >';
+  $('#imprimirProveedores').append(input);
+  $("#proveedorImprimir option[value='"+proveedor+"']").remove();
+}
 
 </script>
 

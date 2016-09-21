@@ -13,19 +13,17 @@
   }
 ?>
 @extends("$variable")
-@section('titulo') Proveedores 
+@section('titulo') Empresas  
 @endsection
 @section('tituloModulo')
-Proveedores <i class="fa fa-home"></i>
+Empresas <i class="fa fa-home"></i>
 @section ('botones')
-<a href="{{route('productosProveedores')}}" class="btn btn-light"><i class="fa fa-dollar"></i>Precios de Productos</a>
+
 
 <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light"><i class="fa fa-plus"></i> Crear Nuevo</a>
 @endsection
 @section('panelBotones')
-<li class="checkbox checkbox-primary">
-    <a href="{{route('productosProveedores')}}" class="btn btn-light"><i class="fa fa-dollar"></i>Precios de Productos</a>
-  </li>
+
   <li class="checkbox checkbox-primary">
     <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light"><i class="fa fa-plus"></i> Crear Nuevo</a>
   </li>
@@ -48,72 +46,77 @@ Proveedores <i class="fa fa-home"></i>
                     <tr>
                         <th>Id</th>
                         <th>Nombre</th>
-                        <th>Contacto</th>
-                        <th>Teléfono</th>
+                        <th>RFC</th>
+                        <th>Telefóno</th>
                         <th>Correo</th>
+                        <th>Dirección</th>
+                        <th>Contacto</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
              
                 <tbody>
-                    @foreach ($proveedores as $proveedor)
+                    @foreach ($empresas as $empresa)
                       <tr>
-                        <td>{{$proveedor->id}}</td>
-                        <td>{{$proveedor->nombre}}</td>
-                        <td>{{$proveedor->contacto}}</td>
-                        <td>{{$proveedor->telefono}}</td>
-                        <td>{{$proveedor->correo}}</td>
-                         <td><a  href="#" data-toggle="modal" data-target="#modal{{$proveedor->id}}" class="btn btn-rounded btn-light">Editar</a>
+                        <td>{{$empresa->id}}</td>
+                        <td>{{$empresa->razon_social}}</td>
+                        <td>{{$empresa->rfc}}</td>
+                        <td>{{$empresa->telefono}}</td>
+                        <td>{{$empresa->correo}}</td>
+                        <td>{{$empresa->direccion}}</td>
+                        <td>{{$empresa->persona_contacto}}</td>
+                         <td><a  href="#" data-toggle="modal" data-target="#modal{{$empresa->id}}" class="btn btn-rounded btn-light">Editar</a>
                             <!-- Modal -->
-                                <div class="modal fade" id="modal{{$proveedor->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal fade" id="modal{{$empresa->id}}" tabindex="-1" role="dialog" aria-hidden="true">
                                   <div class="modal-dialog modal-md">
                                     <div class="modal-content">
                                       <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title">Editar {{$proveedor->nombre}}</h4>
+                                        <h4 class="modal-title">Editar {{$empresa->razon_social}}</h4>
                                       </div>
-                                      <form class="form-horizontal" role="form" method="POST" action="{{ route('editarProveedor',$proveedor->id) }}">
+                                      <form class="form-horizontal" role="form" method="POST" action="{{ route('editarEmpresa',$empresa->id) }}">
                                         {!! csrf_field() !!}  
                                         <div class="modal-body">
                                             <div class="form-group">
                                                 <label " class="col-sm-2 control-label form-label">Nombre: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="text" name="nombre" value="{{$proveedor->nombre}}" class="form-control form-control-radius" >
+                                                  <input type="text" name="razon_social" value="{{$empresa->razon_social}}" class="form-control form-control-radius" >
                                                 </div>
                                             </div>
-                                              <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Iniciales: </label>
+                                            <div class="form-group">
+                                                <label " class="col-sm-2 control-label form-label">RFC: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="text"  name="iniciales" value="{{$proveedor->iniciales}}" class="form-control form-control-radius">
+                                                  <input type="text" name="rfc" value="{{$empresa->rfc}}" class="form-control form-control-radius" >
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label " class="col-sm-2 control-label form-label">Telefono: </label>
+                                                <div class="col-sm-10">
+                                                  <input type="text" name="telefono" value="{{$empresa->telefono}}" class="form-control form-control-radius" >
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label " class="col-sm-2 control-label form-label">Correo: </label>
+                                                <div class="col-sm-10">
+                                                  <input type="text" name="correo" value="{{$empresa->correo}}" class="form-control form-control-radius" >
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label " class="col-sm-2 control-label form-label">Dirección: </label>
+                                                <div class="col-sm-10">
+                                                  <input type="text" name="direccion" value="{{$empresa->direccion}}" class="form-control form-control-radius" >
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label " class="col-sm-2 control-label form-label">Contacto: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="text"  name="contacto" value="{{$proveedor->gerente}}" class="form-control form-control-radius">
+                                                  <input type="text" name="persona_contacto" value="{{$empresa->persona_contacto}}" class="form-control form-control-radius" >
                                                 </div>
                                             </div>
-                                             <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Teléfono: </label>
-                                                <div class="col-sm-10">
-                                                  <input type="tel" name="telefono" value="{{$proveedor->telefono}}" class="form-control form-control-radius">
-                                                </div>
-                                            </div>
-                                             <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Correo: </label>
-                                                <div class="col-sm-10">
-                                                  <input type="email"  name="correo" value="{{$proveedor->correo}}" class="form-control form-control-radius">
-                                                </div>
-                                            </div>
-                                             
-                                            
-                                             
                                         </div>
                                         <div class="modal-footer">
                                           <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
-                                          @if(Auth::user()->tipo!=1)
-                                            <a  href="{{Route('eliminarProveedor',$proveedor->id)}}" type="button" class="btn btn-danger" >Eliminar</a>
-                                          @endif
+                                          
                                           <button type="submit" class="btn btn-default">Guardar</button>
                                         </div>
                                       </form>
@@ -145,42 +148,45 @@ Proveedores <i class="fa fa-home"></i>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                   <h4 class="modal-title">Nuevo proveedor</h4>
                 </div>
-                <form class="form-horizontal" role="form" method="POST" action="{{ route('guardarProveedor') }}">
+                <form class="form-horizontal" role="form" method="POST" action="{{ route('guardarEmpresa') }}">
                   {!! csrf_field() !!}  
                   <div class="modal-body">
                       <div class="form-group">
                           <label " class="col-sm-2 control-label form-label">Nombre: </label>
                           <div class="col-sm-10">
-                            <input type="text" name="nombre" placeholder="Empresa" class="form-control form-control-radius" >
+                            <input type="text" name="razon_social"  placeholder="Razón social de la empresa" class="form-control form-control-radius" >
                           </div>
                       </div>
                       <div class="form-group">
-                          <label " class="col-sm-2 control-label form-label">Iniciales: </label>
+                          <label " class="col-sm-2 control-label form-label">RFC: </label>
                           <div class="col-sm-10">
-                            <input type="text"  name="iniciales" placeholder="Nombre completo" class="form-control form-control-radius">
+                            <input type="text" name="rfc" placeholder="RFC con homoclave" class="form-control form-control-radius" >
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label " class="col-sm-2 control-label form-label">Telefono: </label>
+                          <div class="col-sm-10">
+                            <input type="text" name="telefono" placeholder="Número completo" class="form-control form-control-radius" >
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label " class="col-sm-2 control-label form-label">Correo: </label>
+                          <div class="col-sm-10">
+                            <input type="email" name="correo"   placeholder="Correo electrónico" class="form-control form-control-radius" >
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label " class="col-sm-2 control-label form-label">Dirección: </label>
+                          <div class="col-sm-10">
+                            <input type="text" name="direccion"  placeholder="Calle,Número,CP,Colonia,Municipio,Estado" class="form-control form-control-radius" >
                           </div>
                       </div>
                       <div class="form-group">
                           <label " class="col-sm-2 control-label form-label">Contacto: </label>
                           <div class="col-sm-10">
-                            <input type="text"  name="contacto" placeholder="Nombre completo" class="form-control form-control-radius">
+                            <input type="text" name="persona_contacto" placeholder="Persona con quien contactarse"  class="form-control form-control-radius" >
                           </div>
                       </div>
-                       <div class="form-group">
-                          <label " class="col-sm-2 control-label form-label">Teléfono: </label>
-                          <div class="col-sm-10">
-                            <input type="tel" pattern="[0-9]{10}"  name="telefono" placeholder="10 dígitos" class="form-control form-control-radius">
-                          </div>
-                      </div>
-                       <div class="form-group">
-                          <label " class="col-sm-2 control-label form-label">Correo: </label>
-                          <div class="col-sm-10">
-                            <input type="email"  name="correo" placeholder="Correo electrónico" class="form-control form-control-radius">
-                          </div>
-                      </div>
-                       
-                      
-                       
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>

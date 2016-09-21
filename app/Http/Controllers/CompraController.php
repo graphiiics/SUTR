@@ -33,15 +33,17 @@ class CompraController extends Controller
             $compra->importe=$request->input('importe');
 	    	$compra->proveedor_id=$request->input('proveedor');
             $proveedor=Proveedor::find($request->input('proveedor'));
-
     		if($compra->save()){
 	    		for ($i=1; $i <=intval($request->input('totalProductos')); $i++) { 
                         $producto=Producto::find($request->input('producto'.$i));
                         $cantidadActual=$producto->unidades()->find(Auth::user()->unidad_id)->pivot->cantidad;
                         $cantidadSolicitada=$request->input('cantidad'.$i);
-	    			    $compra->productos()->attach($compra->id,['producto_id' =>$producto->id,'cantidad' =>$request->input('cantidad'.($i)),'precio'=>$request->input('precio'.($i)),'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')]);
-                        $proveedor->productos()->updateExistingPivot($producto->id,['precio' =>$request->input('precio'.($i)),'updated_at'=>date('Y-m-d H:i:s')]);
-                        $cantidadFinal=$cantidadActual+$cantidadSolicitada;
+                        $precio=$request->input('precio'.($i));
+                        $cantidad_paquete=$request->input('cantidadCaja'.($i));
+                        $iva=$request->input('iva'.($i));
+	    			    $compra->productos()->attach($compra->id,['producto_id' =>$producto->id,'cantidad'=>$cantidadSolicitada,'cantidad_paquete' =>$cantidad_paquete,'iva' =>$iva,'precio'=>$precio,'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')]);
+                        $proveedor->productos()->updateExistingPivot($producto->id,['precio' =>$precio,'precio_pieza' =>($precio/$cantidad_paquete),'updated_at'=>date('Y-m-d H:i:s')]);
+                        $cantidadFinal=$cantidadActual+($cantidadSolicitada*$cantidad_paquete);
                          $producto->unidades()->updateExistingPivot(Auth::user()->unidad_id,['cantidad' =>$cantidadFinal,'updated_at'=>date('Y-m-d H:i:s')]); 
                          $producto->update(['precio'=>$request->input('precio'.$i)]);
                          $this->actualizarStock($producto->id);

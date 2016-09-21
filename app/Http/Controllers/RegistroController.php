@@ -33,7 +33,7 @@ class RegistroController extends Controller
                 break;
         }
     	
-    	$productos = Producto::orderBy('id', 'asc')->get();
+    	$productos = Producto::orderBy('nombre', 'asc')->get();
         $unidades= Unidad::orderBy('id', 'asc')->get();
     	return view('registros/index',compact('registros','productos','unidades'));
     }
@@ -46,6 +46,7 @@ class RegistroController extends Controller
 	    	$registro->unidad_id=$request->input('unidad');
 	    	$registro->fecha=date('Y-m-d H:i:s');
 	    	$registro->tipo=$request->input('tipo');
+            $registro->observaciones=$request->input('observaciones');
     		if($registro->save()){
 	    		for ($i=1; $i <=intval($request->input('totalProductos')); $i++) { 
 	    			    $producto=Producto::find($request->input('producto'.$i));
@@ -84,7 +85,7 @@ class RegistroController extends Controller
                                 }
                             }else{
                                 $cantidadFinal=$cantidadActual-$cantidadSolicitada;
-                                if($cantidadFinal<$producto->stock()->find(Auth::user()->unidad_id)->pivot->cantidad){
+                                if($cantidadFinal<$producto->unidades()->find(Auth::user()->unidad_id)->pivot->stock_minimo){
                                     foreach (User::where('tipo',1)->orWhere('tipo',2)->get() as $user) {
                                         $notificacion= new Notificacion;
                                         $notificacion->user_id=$user->id;
@@ -136,12 +137,12 @@ class RegistroController extends Controller
        }
     	// return $request->all();
     }
-
+    
     public function eliminarRegistro( Registro $registro){
     	if(count($registro->productos)>0){
     		if($registro->productos()->detach()){
     			if($registro->delete()){
-    				Session::flash('message','Pedido eliminado correctamente');
+    				Session::flash('message','Registro eliminado correctamente');
 	            	Session::flash('class','success');
 	    		}else{
 	    			Session::flash('message','Error al eliminar el registro');

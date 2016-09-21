@@ -20,7 +20,15 @@ Ventas <i class="fa fa-home"></i>
 @endsection
 @section ('botones')
 
-<a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light"><i class="fa fa-plus"></i>Nueva venta</a>
+  <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light"><i class="fa fa-plus"></i>Nueva venta</a>
+  @if(Auth::user()->tipo==3)
+    <a href="#" data-toggle="modal" data-target="#modal"  class="btn btn-light"><i class="fa fa-money"></i>Corte de caja</a>
+    <a href="{{route('cortesGerente')}}"  class="btn btn-light"><i class="fa fa-archive"></i>Mostrar cortes realizados</a>
+  @elseif(Auth::user()->tipo<3)
+     <a href="{{route('cortes')}}"  class="btn btn-light"><i class="fa fa-archive"></i>Mostrar cortes realizados</a>
+     <a href="#" data-toggle="modal" data-target="#modalActual"  class="btn btn-light"><i class="fa fa-money"></i>Ventas Actuales</a>
+  @endif
+ 
 @endsection
 @section('panelBotones')
   <li class="checkbox checkbox-primary">
@@ -30,137 +38,223 @@ Ventas <i class="fa fa-home"></i>
  @section('contenido')
         <!-- Start Panel -->
     <div class="col-md-12 col-lg-12">
-     @if(Session::has('message'))
-          <div  class="alert alert-{{ Session::get('class') }} alert-dismissable kode-alert-click">
-                <strong>{{ Session::get('message')}} </strong>
-          </div>
-        @endif
+      @if(Session::has('message'))
+        <div  class="alert alert-{{ Session::get('class') }} alert-dismissable kode-alert-click">
+          <strong>{{ Session::get('message')}} </strong>
+        </div>
+      @endif
       <div class="panel panel-default">
         <div class="panel-title">
          
         </div>
         <div class="panel-body table-responsive">
+          <table id="example0" class="table display">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Usuario</th>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Importe</th>
+                <th>Pago</th>
+                <th>Estado</th>
+                <th>Comentario</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach ($ventas as $venta)
+                @if($venta->estatus==1)
+                  <tr>
+                @elseif($venta->estatus==2)
+                  <tr class="danger">
+                @endif
+                  <td>{{$venta->id}}</td>
+                  <td>{{$venta->user->name}}</td>
+                  <td>{{$venta->fecha}}</td>
+                  <td>{{$venta->cliente}}</td>
+                  <td>${{$venta->importe}}.00</td>
+                  @if($venta->pago==1)
+                    <td>Efectivo</td>
+                  @elseif($venta->pago==2)
+                    <td>Credito</td>
+                  @endif
+                   @if($venta->estatus==1)
+                    <td>Liquidado</td>
+                  @elseif($venta->estatus==2)
+                    <td>Pendiente</td>
+                  @endif
+                  @if($venta->comentarios==null)
+                    <td >Ningún comentario</td>
+                  @else
+                    <td><i title="{{$venta->comentarios}}">Mensaje</i</td>
+                  @endif
+                  <td><a  href="#" data-toggle="modal" data-target="#modal{{$venta->id}}" class="btn btn-rounded btn-light">Ver detalles</a>
+                      <!-- Modal -->
+                        <div class="modal fade" id="modal{{$venta->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                          <div class="modal-dialog modal-md">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">Detalles de la venta de {{$venta->cliente}}</h4>
+                              </div>
+                              <div class="modal-body">
+                                 <table class="table-striped ">
+                                    <thead>
+                                      <tr>
+                                        <th>#</th>
+                                        <th>Id</th>
+                                        <th>Nombre</th>
+                                        <th>precio</th>
+                                        <th>Cantidad</th>
+                                        <th>Categoría</th>                            
+                                      </tr>
+                                    </thead>
+                                    <tbody id="modalTableBody" class="">
+                                        @foreach ($venta->productos as $num =>$producto)
+                                          <tr>
+                                            <td>{{$num+1}}</td>
+                                            <td>{{$producto->id}}</td>
+                                            <td>{{$producto->nombre}}</td>
+                                            <td>${{$producto->pivot->precio}}</td>
+                                             @if($producto->pivot->cantidad==1)
+                                               <td>{{$producto->pivot->cantidad}} {{$producto->presentacion}}</td>
+                                            @else
+                                               <td>{{$producto->pivot->cantidad}} {{$producto->presentacion}}s</td>
+                                            @endif
+                                            <td>{{$producto->categoria}}</td>
+                                         </tr>
+                                      @endforeach
+                                      <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td>Total</td>
+                                        <td>${{$venta->importe}}</td>
+                                        <td></td>
+                                        <td></td>
+                                      </tr>
+                                    </tbody>
+                                </table>                  
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
+                                @if(Auth::user()->id==$venta->user_id && $venta->estatus==2)
+                                  @if(Auth::user()->tipo==1)
+                                    <a href="{{ route('liquidarVenta',$venta->id) }}" type="button" class="btn btn-danger">Liquidar</a>
+                                  @elseif(Auth::user()->tipo==2)
+                                    <a href="{{ route('liquidarVenta',$venta->id) }}" type="button" class="btn btn-danger">Liquidar</a>
+                                  @elseif(Auth::user()->tipo==3)
+                                    <a href="{{ route('liquidarVentaGerente',$venta->id) }}" type="button" class="btn btn-danger">Liquidar</a>
+                                 @endif
+                                @endif
+                                
+                                <a  href="{{ route('ventaPdf',$venta->id) }}" target="_blank" type="button" class="btn btn-default">Imprimir</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- End Modal Code -->
 
-            <table id="example0" class="table display">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Usuario</th>
-                        <th>Fecha</th>
-                        <th>Cliente</th>
-                        <th>Importe</th>
-                        <th>Pago</th>
-                        <th>Estado</th>
-                        <th>Comentario</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($ventas as $venta)
-                      @if($venta->estatus==1)
-                        <tr>
-                      @elseif($venta->estatus==2)
-                        <tr class="danger">
-                      @endif
-                        <td>{{$venta->id}}</td>
-                        <td>{{$venta->user->name}}</td>
-                        <td>{{$venta->fecha}}</td>
-                        <td>{{$venta->cliente}}</td>
-                        <td>${{$venta->importe}}.00</td>
-                        @if($venta->pago==1)
-                          <td>Efectivo</td>
-                        @elseif($venta->pago==2)
-                          <td>Credito</td>
-                        @endif
-                         @if($venta->estatus==1)
-                          <td>Liquidado</td>
-                        @elseif($venta->estatus==2)
-                          <td>Pendiente</td>
-                        @endif
-                        @if($venta->comentarios==null)
-                          <td >Ningún comentario</td>
-                        @else
-                         <td><i title="{{$venta->comentarios}}">Mensaje</i</td>
-                        @endif
-                        <td><a  href="#" data-toggle="modal" data-target="#modal{{$venta->id}}" class="btn btn-rounded btn-light">Ver detalles</a>
-                            <!-- Modal -->
-                                <div class="modal fade" id="modal{{$venta->id}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                  <div class="modal-dialog modal-md">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title">Detalles de la venta</h4>
-                                      </div>
-                                      <div class="modal-body">
-                                         <table class="table-striped ">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Id</th>
-                                                    <th>Nombre</th>
-                                                    <th>precio</th>
-                                                    <th>Cantidad</th>
-                                                    <th>Categoría</th>                            </tr>
-                                            </thead>
-                                            <tbody id="modalTableBody" class="">
-                                                @foreach ($venta->productos as $num =>$producto)
-                                                    <tr>
-                                                      <td>{{$num+1}}</td>
-                                                      <td>{{$producto->id}}</td>
-                                                      <td>{{$producto->nombre}}</td>
-                                                      <td>${{$producto->pivot->precio}}</td>
-                                                       @if($producto->pivot->cantidad==1)
-                                                         <td>{{$producto->pivot->cantidad}} {{$producto->tipo}}</td>
-                                                      @else
-                                                         <td>{{$producto->pivot->cantidad}} {{$producto->tipo}}s</td>
-                                                      @endif
-                                                      <td>{{$producto->categoria}}</td>
-                                                   </tr>
-                                              @endforeach
-                                              <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td>Total</td>
-                                                    <td>${{$venta->importe}}</td>
-                                                    <td></td>
-                                                    <td></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>                  
-                                      </div>
-                                      <div class="modal-footer">
-                                        <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
-                                        @if(Auth::user()->id==$venta->user_id && $venta->estatus==2)
-                                          @if(Auth::user()->tipo==1)
-                                            <a href="{{ route('liquidarVenta',$venta->id) }}" type="button" class="btn btn-danger">Liquidar</a>
-                                          @elseif(Auth::user()->tipo==2)
-                                            <a href="{{ route('liquidarVenta',$venta->id) }}" type="button" class="btn btn-danger">Liquidar</a>
-                                          @elseif(Auth::user()->tipo==3)
-                                            <a href="{{ route('liquidarVentaGerente',$venta->id) }}" type="button" class="btn btn-danger">Liquidar</a>
-                                         @endif
-                                        @endif
-                                        
-                                        <a  href="{{ route('ventaPdf',$venta->id) }}" target="_blank" type="button" class="btn btn-default">Imprimir</a>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-
-                              <!-- End Modal Code -->
-
-                        </td>
-                    </tr>
-
-                  @endforeach
-                </tbody>
+                  </td>
+                  </tr>
+                @endforeach
+              </tbody>
             </table>
-
-
+          </div>
         </div>
-
       </div>
-    </div>
     <!-- End Panel -->
+       <!-- Modal -->
+                 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-hidden="true">
+                  <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Corte caja</h4>
+                      </div>
+                      <div  class="modal-body">    
+                        <table class="table-striped"  WIDTH="100%">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>Nombre</th>
+                                <th>Monto</th>
+                                <th>Fecha</th>                          
+                              </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($ventas as $venta)
+                                  @if(!$venta->corte && $venta->estatus==1)
+                                    <tr>
+                                      <td>{{$venta->id}}</td>
+                                      <td>{{$venta->cliente}}</td>
+                                      <td>${{$venta->importe}}</td>
+                                      <td>{{$venta->fecha}}</td>
+                                   </tr>
+                                   @endif
+                                @endforeach
+                                <tr>
+                                  <td></td>
+                                  <td>Total</td>
+                                  <td>${{$totalCorte}}</td>
+                                  <td></td>                                
+                                </tr>
+                            </tbody>
+                        </table>       
+                      </div>      
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
+                          <a href="{{route('realizarCorteGerente')}}" class="btn btn-default" onclick="enviar();">Raalizar Corte</a>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+      <!-- End Modal Code -->
+       <!-- Modal -->
+                 <div class="modal fade" id="modalActual" tabindex="-1" role="dialog" aria-hidden="true">
+                  <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Totales de cada unidad</h4>
+                      </div>
+                      <div  class="modal-body">    
+                        <table class="table-striped"  WIDTH="100%">
+                            <thead>
+                              <tr>
+                               
+                                <th>Nombre</th>
+                                <th>Monto en Efectivo</th>  
+                                <th>Monto Pendiente</th>                     
+                              </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($usuarios as $usuario)
+                                    <tr>
+                                      
+                                      <td>{{$usuario->name}}</td>
+                                      <td>${{$usuario->totalVentas}}</td>
+                                      <td>${{$usuario->totalPendientes}}</td>
+                                   </tr>
+                                @endforeach
+                                <tr>
+                                  <td>Total</td>
+                                  <td>${{$totalCorte}}</td> 
+                                  <td>${{$totalAdeudo}}</td>                         
+                                </tr>
+                            </tbody>
+                        </table>       
+                      </div>      
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
+                           <a href="{{route('ventasTotalesCortePdf')}}" class="btn btn-default" target="_blank" ">Imprimir</a>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+      <!-- End Modal Code -->
       <!-- Modal -->
                 <div class="modal fade" id="modal_nuevo" tabindex="-1" role="dialog" aria-hidden="true">
                   <div class="modal-dialog modal-md">
@@ -170,11 +264,11 @@ Ventas <i class="fa fa-home"></i>
                         <h4 class="modal-title">Nueva venta</h4>
                       </div>
                       @if(Auth::user()->tipo==1)
-                      <form class="form-horizontal" role="form" method="POST" action="{{ route('guardarVenta') }}">
+                        <form class="form-horizontal" role="form" method="POST" action="{{ route('guardarVenta') }}">
                       @elseif(Auth::user()->tipo==2)
-                      <form class="form-horizontal" role="form" method="POST" action="{{ route('guardarVenta') }}">
+                        <form class="form-horizontal" role="form" method="POST" action="{{ route('guardarVenta') }}">
                       @elseif(Auth::user()->tipo==3)
-                      <form class="form-horizontal" role="form" method="POST" action="{{ route('guardarVentaGerente') }}">
+                        <form class="form-horizontal" role="form" method="POST" action="{{ route('guardarVentaGerente') }}">
                       @endif
                         {!! csrf_field() !!}  
                         <div  class="modal-body">                                          
@@ -221,8 +315,7 @@ Ventas <i class="fa fa-home"></i>
 
                                  <div class="input-group">
                                     <div class="input-group-addon">$</div>
-                                     <input type="number" id="precio" min="1" value="0"  class="form-control form-control-radius" >
-                                    <div class="input-group-addon">.00</div>
+                                     <input type="number" id="precio" min="0" value="0" step=".01" class="form-control form-control-radius" >
                                   </div>
                             </div>
                           </div>
@@ -265,6 +358,8 @@ Ventas <i class="fa fa-home"></i>
                 </div>
 
       <!-- End Modal Code -->
+
+     
     
       
  
@@ -288,7 +383,7 @@ $(document).ready(function() {
     var producto=$('#nProducto').val();
     var cantidad=parseInt($('#cProducto').val());
     var cantidadMax=parseInt($('#cProducto').prop('max'));
-    var precio=parseInt($('#precio').val());
+    var precio=parseFloat($('#precio').val());
      if(producto.substring(0,producto.indexOf('-'))==19){
       campoCatheter='<div class="col-lg-12 md-12"><label  class="col-lg-4 md-4 control-label form-label">Instaldor:</label><div class="col-lg-8 md-8"><input type="text"   id="instalador" name="instalador"  class="form-control form-control-radius" ></div></div>';
        $("#catheter").prepend(campoCatheter);
@@ -301,7 +396,7 @@ $(document).ready(function() {
         campo = '<tr id="campo'+nextinput+'"><td >'+(nextinput)+'</td><td><input type="text" id="producto'+nextinput+'"  value="'+producto.substring(producto.indexOf('-')+1,producto.indexOf('$'))+'" class="form-control " disabled ><input type="hidden" id="prod'+nextinput+'" name="producto'+nextinput+'" value="'+producto.substring(0,producto.indexOf('-'))+'"><input type="hidden" id="pd'+nextinput+'" value="'+producto.substring(producto.indexOf('$')+1)+'"></td><td ><input type="text" value="'+cantidad+'" name="cantidad'+nextinput+'"  class="form-control  " readonly ></td><td><input type="text" value="'+precio+'" name="precio'+nextinput+'"  class="form-control " readonly ></td></tr>';
         if(producto!=null){
             productosTotal=productosTotal+cantidad;
-            precioTotal=precioTotal+(precio*cantidad);
+            precioTotal=Math.round(precioTotal+(precio*cantidad));
             $('#totalProductos').val(nextinput);
             $("#nProducto option[value='"+producto+"']").remove();
             $("#bodyModal").prepend(campo);

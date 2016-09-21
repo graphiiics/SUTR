@@ -18,6 +18,7 @@ class CreateRegistrosTable extends Migration
             $table->integer('unidad_id')->unsigned();
             $table->date('fecha');
             $table->integer('tipo');
+             $table->string('observaciones');
             $table->timestamps();
         });
     }

@@ -13,9 +13,9 @@ class Sesion extends Model
     {
         return $this->hasMany('App\Signo');
     }
-
-     public function paciente()
-    {
-        return $this->belongsTo('App\Paciente');
+    public function recibo(){
+    	return $this->belongsTo('App\Recibo');
     }
+
+    
 }

@@ -18,18 +18,12 @@ class CreateBeneficiosTable extends Migration
             $table->integer('paciente_id')->unsigned();
             $table->integer('empresa_id')->unsigned();
             $table->integer('unidad_id')->unsigned();
-            $table->integer('concepto')->unsigned();
+            $table->integer('concepto_id')->unsigned();
             $table->date('fecha');
             $table->integer('sesiones');
             $table->double('cantidad');
-            $table->integer('estatus');
+            $table->integer('estatus')->default(1); //1Activo //2 Desactivado
             $table->integer('sesiones_realizadas');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('paciente_id')->references('id')->on('pacientes');
-            $table->foreign('empresa_id')->references('id')->on('empresas');
-               
-
-
             $table->timestamps();
         });
     }

@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Producto extends Model
 {
     protected $fillable = [
-        'nombre', 'precio','precio_venta', 'categoria','stock','tipo'
+        'nombre', 'precio','precio_venta', 'categoria','stock','presentacion','cantidad_paquete'
     ];
     //
     public function unidades()
     {
-        return $this->belongsToMany('App\Unidad', 'producto_unidads')->withPivot('cantidad');
+        return $this->belongsToMany('App\Unidad', 'producto_unidads')->withPivot('cantidad','cantidad_paquete','stock_minimo');
     }
 
     public function pedidos()
@@ -34,10 +34,7 @@ class Producto extends Model
     {
         return $this->belongsToMany('App\Proveedor', 'producto_proveedors')->withPivot('precio','updated_at');
     }
-    public function stock()
-    {
-        return $this->belongsToMany('App\Unidad', 'producto_stocks')->withPivot('cantidad');
-    }
+    
    
 
 }

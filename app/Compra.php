@@ -13,7 +13,7 @@ class Compra extends Model
 
     public function productos()
     {
-        return $this->belongsToMany('App\Producto', 'producto_compras')->withPivot('cantidad','precio');
+        return $this->belongsToMany('App\Producto', 'producto_compras')->withPivot('cantidad','iva','cantidad_paquete','precio');
     }
     public function proveedor()
     {

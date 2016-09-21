@@ -17,6 +17,7 @@ class CreateProductoVentasTable extends Migration
             $table->integer('venta_id')->unsigned();
             $table->integer('producto_id')->unsigned();
             $table->integer('cantidad');
+            $table->double('precio');
             $table->timestamps();
         });
     }

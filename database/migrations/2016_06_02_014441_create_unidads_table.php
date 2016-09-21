@@ -16,7 +16,7 @@ class CreateUnidadsTable extends Migration
             $table->increments('id');
             $table->string('nombre');
             $table->string('direccion');
-            $table->integer('estatus');
+            $table->integer('estatus')->default(1); //1Activo //2 Desactivado
             $table->timestamps();
         });
     }

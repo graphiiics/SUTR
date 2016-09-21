@@ -17,6 +17,7 @@ class CreateProductoProveedorsTable extends Migration
             $table->integer('proveedor_id')->unsigned();
             $table->integer('producto_id')->unsigned();
             $table->integer('precio');
+            $table->integer('precio_pieza');
             $table->timestamps();
         });
     }

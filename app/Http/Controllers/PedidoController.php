@@ -31,7 +31,7 @@ class PedidoController extends Controller
                 $pedidos = Pedido::where('user_id',Auth::user()->id)->get();
                 break;
         }
-    	$productos= Producto::orderBy('id', 'asc')->get();
+    	$productos= Producto::orderBy('nombre', 'asc')->get();
         $unidades=Unidad::orderBy('id', 'asc')->get();
     	return view('pedidos/index',compact('pedidos','productos','unidades'));
     }
@@ -48,7 +48,7 @@ class PedidoController extends Controller
 	    		for ($i=1; $i <=intval($request->input('totalProductos')); $i++) { 
 
                         $producto=Producto::find($request->input('producto'.$i));
-                        $cantidadActual=$producto->unidades()->find(5)->pivot->cantidad;
+                        $cantidadActual=$producto->unidades()->find(1)->pivot->cantidad;
                         $cantidadSolicitada=$request->input('cantidad'.$i);
                         if($cantidadActual<$cantidadSolicitada){
                             $cantidadSolicitada=$cantidadActual;
@@ -136,6 +136,7 @@ class PedidoController extends Controller
         $registro->unidad_id=Auth::user()->unidad_id;
         $registro->fecha=date('Y-m-d H:i:s');
         $registro->tipo=1;
+        $registro->observaciones='Entrada de pedido desde el almacén';
         if($registro->save()){
            foreach ($productos as $producto) {
                 $cantidadActual=$producto->unidades()->find(Auth::user()->unidad_id)->pivot->cantidad;
@@ -185,21 +186,24 @@ class PedidoController extends Controller
                 $pedido->comentarios=$pedido->comentarios."\n".Auth::user()->name.": ".$request->input('comentarios');
                 $pedido->save();
             }
-      
+            
             $registro= new Registro;
             $registro->user_id=Auth::user()->id;
             $registro->unidad_id=Auth::user()->unidad_id;
             $registro->fecha=date('Y-m-d H:i:s');
             $registro->tipo=2;
+            $registro->observaciones='Salida de pedido hacia la unidad '.$pedido->unidad->nombre;
             if($registro->save()){
-               foreach ($productos as $producto) {
+              for ($i=0; $i <count($productos) ; $i++) { 
+                    $producto=Producto::find($request->input('productoEditar'.$i));
                     $cantidadActual=$producto->unidades()->find(Auth::user()->unidad_id)->pivot->cantidad;
-                    $cantidadSolicitada=$producto->pivot->cantidad;
+                    $cantidadSolicitada=$request->input('cantidadEditar'.$i);
                     $cantidadFinal=$cantidadActual-$cantidadSolicitada;
                     if($cantidadSolicitada>$cantidadActual){
                         $cantidadFinal=$cantidadActual;
+                         $pedido->productos()->updateExistingPivot($request->input('productoEditar'.$i),['cantidad'=>$cantidadFinal,'updated_at'=>date('Y-m-d H:i:s')]); 
                     }
-                    $registro->productos()->attach($registro->id,['producto_id' =>$producto->id,'cantidad' =>$cantidadSolicitada,'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')]);
+                    $registro->productos()->attach($registro->id,['producto_id' =>$request->input('productoEditar'.$i),'cantidad' =>$cantidadFinal,'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')]);
                     $producto->unidades()->updateExistingPivot(Auth::user()->unidad_id,['cantidad' =>$cantidadFinal,'updated_at'=>date('Y-m-d H:i:s')]);
                      $this->actualizarStock($producto->id);
                 }
@@ -234,14 +238,25 @@ class PedidoController extends Controller
             break;
        }
     }
-    public function actualizarStock($id){
+   public function actualizarStock($id){
         $producto=Producto::find($id);
-       
           $stock=0;
             foreach ($producto->unidades as $pUnidad) {
               $stock=$stock+$pUnidad->pivot->cantidad;
+              if($pUnidad->unidad_id==Auth::user()->unidad_id){
+                if($producto->stocks()->find(Auth::user()->unidad_id)->pivot->cantidad>$pUnidad->pivot->cantidad){
+                    $notificacion= new Notificacion;
+                    $notificacion->user_id=Auth::user()->id;
+                    $notificacion->emisor='Sistema de control de inventarios';
+                    $notificacion->mensaje ="El productos ".$producto->nombre." ya esta por debajo del limite indispensable  para la unidad: ".Auth::user()->unidad->nombre;
+                    $notificacion->tipo="Productos";
+                    $notificacion->link="productos";
+                    $notificacion->estado=2;
+                    $notificacion->save();
+                }
+              }
             }
-          $producto->update(['stock'=>$stock]);
+        $producto->update(['stock'=>$stock]);
     }
     
 }

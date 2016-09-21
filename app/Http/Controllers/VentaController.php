@@ -20,21 +20,45 @@ class VentaController extends Controller
     }
 
     public function index(){
+        $totalCorte=0;
+        $totalAdeudo=0;
         switch (Auth::user()->tipo) {
             case 1:
                 $ventas = Venta::orderBy('id', 'asc')->get();
                 break;
             case 2:
-                $ventas = Venta::orderBy('id', 'asc')->get();
+                $ventas = Venta::where('corte',0)->orderBy('id', 'asc')->get();
+                $usuarios=User::where('tipo',3)->get();
+                    foreach ($usuarios as $usuario) {
+                        foreach ($usuario->ventas as $venta) {
+                           if(!$venta->corte && $venta->estatus==1){
+                            $usuario->totalVentas+=$venta->importe;
+                           }
+                           if(!$venta->corte && $venta->estatus==2){
+                            $usuario->totalPendientes+=$venta->importe;
+                            }
+                        }
+                       $totalCorte+=$usuario->totalVentas;
+                       $totalAdeudo+=$usuario->totalPendientes;
+
+                   
+                }
+                
                 break;
             case 3:
                 $ventas = Venta::where('user_id',Auth::user()->id)->orderBy('id', 'asc')->get();
+                foreach ($ventas as $venta) {
+                   if(!$venta->corte && $venta->estatus==1){
+                    $totalCorte+=$venta->importe;
+                   }
+                }
+               $usuarios=User::where('tipo',7)->get();
                 break;
         }
     	
     	$productos = Producto::where('categoria','suplemento')->orderBy('id', 'asc')->get();
        
-        return view('ventas/index',compact('ventas','productos'));
+        return view('ventas/index',compact('ventas','productos','totalCorte','usuarios','totalAdeudo'));
        
     }
 
@@ -52,6 +76,7 @@ class VentaController extends Controller
             }
             if($venta->pago==1){
                 $venta->estatus=1;
+                $venta->fecha_liquidacion=date('Y-m-d H:i:s');
             }
             else{
                 $venta->estatus=2;
@@ -113,7 +138,7 @@ class VentaController extends Controller
 
     public function liquidarVenta(Venta $venta)
     {
-        if($venta->update(['estatus'=>1])){
+        if($venta->update(['estatus'=>1,'fecha_liquidacion'=>date('Y-m-d')])){
             Session::flash('message','Venta liquidada correctamente');
             Session::flash('class','success');
             foreach (User::where('tipo',1)->orWhere('tipo',2)->get() as $user) {

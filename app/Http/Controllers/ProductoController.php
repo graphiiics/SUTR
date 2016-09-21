@@ -8,6 +8,7 @@ use App\Producto;
 use Session;
 use Auth;
 use App\Unidad;
+use App\Notificacion;
 
 class ProductoController extends Controller
 {
@@ -17,17 +18,17 @@ class ProductoController extends Controller
     }
 
     public function index(){
-    	$productos = Producto::orderBy('id', 'asc')->get();
+    	$productos = Producto::orderBy('nombre', 'asc')->get();
         $unidades=Unidad::all();
     	return view('productos/index',compact('productos','unidades'));
     }
 
     public function editarProducto(Request $request, Producto $producto){
-       if($producto->update(['nombre'=>$request->input('nombre'),'precio_venta'=>$request->input('precio_venta'),'categoria'=>$request->input('categoria')])){
+       if($producto->update(['nombre'=>$request->input('nombre'),'precio_venta'=>$request->input('precio_venta'),'categoria'=>$request->input('categoria'),'presentacion'=>$request->input('presentacion')])){
            
             foreach (Unidad::all() as $key=>$unidad) {
-               $producto->unidades()->updateExistingPivot($unidad->id,['cantidad' =>$request->input('cantidadUnidad'.($key+1)),'updated_at'=>date('Y-m-d H:i:s')]);//checar funcion
-                $producto->stock()->updateExistingPivot($unidad->id,['cantidad' =>$request->input('productoMinimoUnidad'.($key+1)),'updated_at'=>date('Y-m-d H:i:s')]); 
+               $producto->unidades()->updateExistingPivot($unidad->id,['cantidad' =>$request->input('cantidadUnidad'.($key+1)),'stock_minimo' =>$request->input('productoMinimoUnidad'.($key+1)),'updated_at'=>date('Y-m-d H:i:s')]);//checar funcion
+                
             }
             Session::flash('message','Datos actualizados correctamente');
             Session::flash('class','success');
@@ -56,8 +57,8 @@ class ProductoController extends Controller
         $producto= new Producto($request->all());
         if($producto->save()){   
             foreach (Unidad::all() as $key=>$unidad) {
-               $producto->unidades()->attach($unidad->id,['cantidad' =>$request->input('cantidadUnidad'.($key+1)),'producto_id'=>$producto->id,'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')]);
-               $producto->stock()->attach($unidad->id,['cantidad' =>$request->input('productoMinimoUnidad'.($key+1)),'producto_id'=>$producto->id,'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')]);
+               $producto->unidades()->attach($unidad->id,['cantidad' =>$request->input('cantidadUnidad'.($key+1)),'stock_minimo' =>$request->input('productoMinimoUnidad'.($key+1)),'producto_id'=>$producto->id,'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')]);
+            
             }         
             Session::flash('message','Producto creado correctamente');
             Session::flash('class','success');
@@ -84,14 +85,31 @@ class ProductoController extends Controller
     {
         return $producto->unidades()->find(Auth::user()->unidad_id)->pivot->cantidad;
     }
+    public function productosUnidad()
+    {
+         $productos=Producto::orderBy('nombre', 'asc')->get();
+         
+        return $productos;
+    }
 
     public function actualizarStock($id){
         $producto=Producto::find($id);
-       
           $stock=0;
             foreach ($producto->unidades as $pUnidad) {
               $stock=$stock+$pUnidad->pivot->cantidad;
+              if($pUnidad->unidad_id==Auth::user()->unidad_id){
+                if($producto->stocks()->find(Auth::user()->unidad_id)->pivot->cantidad>$pUnidad->pivot->cantidad){
+                    $notificacion= new Notificacion;
+                    $notificacion->user_id=Auth::user()->id;
+                    $notificacion->emisor='Sistema de control de inventarios';
+                    $notificacion->mensaje ="El productos ".$producto->nombre." ya esta por debajo del limite indispensable  para la unidad: ".Auth::user()->unidad->nombre;
+                    $notificacion->tipo="Productos";
+                    $notificacion->link="productos";
+                    $notificacion->estado=2;
+                    $notificacion->save();
+                }
+              }
             }
-          $producto->update(['stock'=>$stock]);
+        $producto->update(['stock'=>$stock]);
     }
 }
