@@ -19,11 +19,21 @@
 Cortes <i class="fa fa-home"></i>
 @endsection
 @section ('botones')
- <a href="{{route('ventasGerente')}}"  class="btn btn-light"><i class="fa fa-dollar"></i>Ventas</a>
+<li class="checkbox checkbox-primary">
+   @if(Auth::user()->tipo==2)
+    <a href="{{route('ventas')}}"  class="btn btn-light"><i class="fa fa-dollar"></i>Ventas</a>
+  @elseif(Auth::user()->tipo==3)
+    <a href="{{route('ventasGerente')}}"  class="btn btn-light"><i class="fa fa-dollar"></i>Ventas</a>
+  @endif
+  </li>
 @endsection
 @section('panelBotones')
   <li class="checkbox checkbox-primary">
-   <a href="{{route('ventasGerente')}}"  class="btn btn-light"><i class="fa fa-dollar"></i>Ventas</a>
+   @if(Auth::user()->tipo==2)
+    <a href="{{route('ventas')}}"  class="btn btn-light"><i class="fa fa-dollar"></i>Ventas</a>
+  @elseif(Auth::user()->tipo==3)
+    <a href="{{route('ventasGerente')}}"  class="btn btn-light"><i class="fa fa-dollar"></i>Ventas</a>
+  @endif
   </li>
 @endsection
 @section('contenido')

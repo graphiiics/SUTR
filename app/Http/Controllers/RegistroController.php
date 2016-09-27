@@ -23,13 +23,13 @@ class RegistroController extends Controller
     public function index(){
         switch (Auth::user()->tipo) {
             case '1':
-               $registros = Registro::orderBy('id', 'asc')->get();
+               $registros = Registro::where('fecha','>=',date("Y-m-d", strtotime("-2 month")))->orderBy('id', 'asc')->get();
                 break;
             case '2':
-                $registros = Registro::orderBy('id', 'asc')->get();
+                $registros = Registro::where('fecha','>=',date("Y-m-d", strtotime("-2 month")))->orderBy('id', 'asc')->get();
                 break;
             case '3':
-               $registros = Registro::where('user_id',Auth::user()->id)->orderBy('id', 'asc')->get();
+               $registros = Registro::where('fecha','>=',date("Y-m-d", strtotime("-2 month")))->where('user_id',Auth::user()->id)->orderBy('id', 'asc')->get();
                 break;
         }
     	
@@ -55,7 +55,15 @@ class RegistroController extends Controller
 
                         if($registro->tipo==1){//Entrada
                             $cantidadFinal=$cantidadSolicitada+$cantidadActual;
-                            $producto->unidades()->updateExistingPivot($registro->unidad_id,['cantidad' =>$cantidadFinal,'updated_at'=>date('Y-m-d H:i:s')]); 
+                            if($producto->unidades()->updateExistingPivot($registro->unidad_id,['cantidad' =>$cantidadFinal,'updated_at'=>date('Y-m-d H:i:s')])){
+                            Session::flash('message','Registro realizado correctamente');
+                            Session::flash('class','success');
+                            $this->actualizarStock($producto->id);
+                            }else{
+                                $registro->delete();
+                                Session::flash('message','Error al crear el registro');
+                                Session::flash('class','danger');
+                            } 
                            
                         }
                         elseif ($registro->tipo==2) {//Salida
@@ -106,11 +114,21 @@ class RegistroController extends Controller
                                         $notificacion->save();
                                 }
                             }
-                             $producto->unidades()->updateExistingPivot($registro->unidad_id,['cantidad' =>$cantidadFinal,'updated_at'=>date('Y-m-d H:i:s')]);
+                            if($producto->unidades()->updateExistingPivot($registro->unidad_id,['cantidad' =>$cantidadFinal,'updated_at'=>date('Y-m-d H:i:s')])){
+                            Session::flash('message','Registro realizado correctamente');
+                            Session::flash('class','success');
+                            $this->actualizarStock($producto->id);
+                            }else{
+                                $registro->delete();
+                                Session::flash('message','Error al crear el registro');
+                                Session::flash('class','danger');
+                            } 
 
                         }//termina salida
-                         $registro->productos()->attach($registro->id,['producto_id' =>$producto->id,'cantidad' =>$cantidadSolicitada,'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')]);
-                             $this->actualizarStock($producto->id);
+                        $registro->productos()->attach($registro->id,['producto_id' =>$producto->id,'cantidad' =>$cantidadSolicitada,'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')]);
+                            $this->actualizarStock($producto->id);
+                        
+                       
 	    		}
               
 	    		Session::flash('message','Registro realizado correctamente');

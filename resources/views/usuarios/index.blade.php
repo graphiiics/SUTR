@@ -20,7 +20,7 @@ Usuarios <i class="fa fa-home"></i>
 @endsection
 @section('panelBotones')
   <li class="checkbox checkbox-primary">
-    <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light"><i class="fa fa-plus"></i>Nuevo usuario</a>
+    <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light cerrarPanel"><i class="fa fa-plus"></i>Nuevo usuario</a>
   </li>
 @endsection
  @section('contenido')
@@ -86,6 +86,12 @@ Usuarios <i class="fa fa-home"></i>
                                         {!! csrf_field() !!}  
                                         <div class="modal-body">
                                             
+                                            <div class="form-group">
+                                                <label " class="col-sm-2 control-label form-label">Nombre: </label>
+                                                <div class="col-sm-10">
+                                                  <input type="text"  name="name" value="{{$usuario->name}}" class="form-control form-control-radius">
+                                                </div>
+                                            </div>
                                             <div class="form-group">
                                                 <label " class="col-sm-2 control-label form-label">Telefóno: </label>
                                                 <div class="col-sm-10">

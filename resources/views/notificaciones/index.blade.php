@@ -62,6 +62,7 @@ Notificaciones <i class="fa fa-home"></i>
 
               <div class="panel-body">
                 {{$notificacion->mensaje}}
+                <p>Fecha: {{$notificacion->created_at}}</p>
                 <div class="left">
                   @if(Auth::user()->tipo==1)
                     <a type="button" class="btn btn-info" href="{{url('superAdmin/'.$notificacion->link)}}">Ir a {{$notificacion->tipo}}</a>

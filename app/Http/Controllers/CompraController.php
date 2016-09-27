@@ -19,7 +19,7 @@ class CompraController extends Controller
     }
 
     public function index(){
-    	$compras = Compra::orderBy('id', 'asc')->get();
+    	$compras = Compra::where('fecha','>=',date("Y-m-d", strtotime("-2 month")))->orderBy('id', 'asc')->get();
         $proveedores = Proveedor::orderBy('id', 'asc')->get();
     	return view('compras/index',compact('compras','proveedores'));
     }

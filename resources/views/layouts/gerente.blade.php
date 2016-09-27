@@ -122,7 +122,32 @@
 
 
 </div>
+<div role="tabpanel" class="sidepanel">
 
+ 
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+
+    <!-- Start Today -->
+    <div role="tabpanel" class="tab-pane active" >
+
+      <div class="gn-title">Opciones</div>
+
+      <ul >
+        @yield('panelBotones')
+        
+
+      </ul>
+
+    </div>
+    <!-- End Today -->
+
+    
+
+  </div>
+
+  </div>
 
 
 

@@ -16,7 +16,7 @@ class NotificacionController extends Controller
     }
 
     public function index(){
-    	$notificaciones=Auth::user()->notificaciones->where('estado',2);
+    	$notificaciones=Notificacion::where('user_id',Auth::user()->id)->where('estado',2)->get();
     	return view('notificaciones/index',compact('notificaciones'));
     }
 

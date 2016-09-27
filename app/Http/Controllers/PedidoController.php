@@ -22,13 +22,13 @@ class PedidoController extends Controller
     public function index(){
         switch (Auth::user()->tipo) {
             case 1:
-               $pedidos = Pedido::orderBy('id', 'desc')->get();
+               $pedidos = Pedido::where('fecha','>=',date("Y-m-d", strtotime("-2 month")))->orderBy('id', 'desc')->get();
                 break;
             case 2:
-               $pedidos = Pedido::orderBy('id', 'desc')->get();
+               $pedidos = Pedido::where('fecha','>=',date("Y-m-d", strtotime("-2 month")))->orderBy('id', 'desc')->get();
                 break;
             case 3:
-                $pedidos = Pedido::where('user_id',Auth::user()->id)->get();
+                $pedidos = Pedido::where('fecha','>=',date("Y-m-d", strtotime("-2 month")))->where('user_id',Auth::user()->id)->get();
                 break;
         }
     	$productos= Producto::orderBy('nombre', 'asc')->get();
@@ -53,7 +53,8 @@ class PedidoController extends Controller
                         if($cantidadActual<$cantidadSolicitada){
                             $cantidadSolicitada=$cantidadActual;
                         }
-	    			    $pedido->productos()->attach($pedido->id,['producto_id' =>$producto->id,'cantidad' =>$cantidadSolicitada,'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')]);
+	    			   $pedido->productos()->attach($pedido->id,['producto_id' =>$producto->id,'cantidad' =>$cantidadSolicitada,'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')]);
+                        
 	    		}
                 foreach (User::where('tipo',1)->orWhere('tipo',2)->get() as $user) {
                     $notificacion= new Notificacion;

@@ -416,7 +416,7 @@ class PdfController extends Controller
 			Fpdf::SetFont('times','I',9);
 				for($i=1;$i<=$totalProveedores;$i++){
 					$proveedor=Proveedor::find($request->input('proveedor'.$i));
-					Fpdf::Cell($ancho,6,utf8_decode($proveedor->gerente),1,0,'C',true);
+					Fpdf::Cell($ancho,6,utf8_decode($proveedor->iniciales),1,0,'C',true);
 				
 				}
 				
@@ -430,20 +430,9 @@ class PdfController extends Controller
 			$key=0;
 			foreach (Producto::orderBy('nombre', 'asc')->get() as $producto) {
 				
-				if($key%39==0 && $key!=0){
-					Fpdf::SetFont('times','B',10);
-					Fpdf::SetFillColor(200,220,255);
-					Fpdf::Cell(5,6,'#',1,0,'C',true);
-					Fpdf::Cell(40,6,'Producto',1,0,'C',true);
-					Fpdf::SetFont('times','I',9);
-						for($i=0;$i<2;$i++){
-							$proveedor=Proveedor::find(3);
-							Fpdf::Cell($ancho,6,utf8_decode($proveedor->gerente),1,0,'C',true);						}
-					Fpdf::Ln();
-					Fpdf::SetFont('arial','I',8);
-			      	Fpdf::SetFillColor(229,229,229);
-				}
+				
 				if($producto->proveedores()->count()>0){
+
 					$key++;
 					if($key%2==0){
 						Fpdf::Cell(5,6,$key,1,0,'C',true);
@@ -473,6 +462,21 @@ class PdfController extends Controller
 					
 					Fpdf::Ln();
 					
+				}
+				if($key%39==0 && $key!=0){
+					Fpdf::SetFont('times','B',10);
+					Fpdf::SetFillColor(200,220,255);
+					Fpdf::Cell(5,6,'#',1,0,'C',true);
+					Fpdf::Cell(40,6,'Producto',1,0,'C',true);
+					Fpdf::SetFont('times','I',9);
+						for($i=1;$i<$totalProveedores+1;$i++){
+							$proveedor=Proveedor::find($request->input('proveedor'.$i));
+							Fpdf::Cell($ancho,6,utf8_decode($proveedor->iniciales),1,0,'C',true);						
+						}
+					Fpdf::Ln();
+					Fpdf::SetFont('arial','I',8);
+			      	Fpdf::SetFillColor(229,229,229);
+			      	$key++;
 				}
 
 
@@ -596,7 +600,8 @@ class PdfController extends Controller
 					
 					
 					if($producto->id==70 && $producto->pivot->precio==166.66){
-						$eritro1000Credito++;
+
+						$eritro1000Credito+=($producto->pivot->cantidad/6);
 					}
 					elseif($producto->id==70 && $producto->pivot->precio==120){
 						$eritro120Credito+=$producto->pivot->cantidad;

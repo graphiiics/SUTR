@@ -65,7 +65,7 @@ class User extends Authenticatable
 
     public function notificaciones()
     {
-        return $this->hasMany('App\Notificacion');
+        return $this->hasMany('App\Notificacion')->where('estado',2);
     }
 
 }

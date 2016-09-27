@@ -26,10 +26,13 @@ Productos <i class="fa fa-home"></i>
 @endsection
 @section('panelBotones')
 <li class="checkbox checkbox-primary">
-    <a href="{{route('proveedores')}}" class="btn btn-light"><i class="fa fa-dollar"></i>Mostrar proveedores</a>
+    <a href="{{route('proveedores')}}" class="btn btn-light cerrarPanel"><i class="fa fa-dollar"></i>Mostrar proveedores</a>
   </li>
   <li class="checkbox checkbox-primary">
-    <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light"><i class="fa fa-plus"></i> Crear Nuevo</a>
+    <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light cerrarPanel"><i class="fa fa-plus"></i> Crear Nuevo</a>
+  </li>
+  <li class="checkbox checkbox-primary">
+    <a href="#" data-toggle="modal" data-target="#modal_imprimir"  class="btn btn-light cerrarPanel"><i class="fa fa-print"></i> Imprimir</a>
   </li>
 @endsection
  @section('contenido')
@@ -221,7 +224,7 @@ Productos <i class="fa fa-home"></i>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-default"  onclick="enviar();">Imprimir</button>
+                    <button type="submit" class="btn btn-default"   onclick="enviar();">Imprimir</button>
                   </div>
                 </form>
               </div>

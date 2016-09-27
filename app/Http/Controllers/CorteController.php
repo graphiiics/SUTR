@@ -19,13 +19,13 @@ class CorteController extends Controller
     public function index(){
         switch (Auth::user()->tipo) {
             case '1':
-               $cortes = Corte::orderBy('id', 'asc')->get();
+               $cortes = Corte::where('fecha','>=',date("Y-m-d", strtotime("-2 month")))->orderBy('id', 'asc')->get();
                 break;
             case '2':
-                $cortes = Corte::orderBy('id', 'asc')->get();
+                $cortes = Corte::where('fecha','>=',date("Y-m-d", strtotime("-2 month")))->orderBy('id', 'asc')->get();
                 break;
             case '3':
-               $cortes = Corte::where('user_id',Auth::user()->id)->orderBy('id', 'asc')->get();
+               $cortes = Corte::where('fecha','>=',date("Y-m-d", strtotime("-2 month")))->where('user_id',Auth::user()->id)->orderBy('id', 'asc')->get();
                 break;
         }
        	return view('cortes/index',compact('cortes'));
@@ -43,7 +43,7 @@ class CorteController extends Controller
 	    	$corte->fecha_corte=date('y-m-d H:i:s');
 	    	if($corte->save()){
 	    		foreach ($ventas as $venta) {
-	    			$venta->update(['corte'=>true,'fecha_corte'=>date('y-m-d H:i')]);
+	    			$venta->update(['corte'=>true,'fecha_corte'=>date('y-m-d')]);
 	    			$importe+=$venta->importe;
 	    			if(strtotime($fecha)>strtotime($venta->fecha)){
 	    				$fecha=$venta->fecha;

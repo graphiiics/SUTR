@@ -23,7 +23,7 @@ Registro <i class="fa fa-home"></i>
 @endsection
 @section('panelBotones')
   <li class="checkbox checkbox-primary">
-    <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light"><i class="fa fa-plus"></i> Crear Nuevo</a>
+    <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light cerrarPanel"><i class="fa fa-plus"></i> Crear Nuevo</a>
   </li>
 @endsection
 @section('contenido')

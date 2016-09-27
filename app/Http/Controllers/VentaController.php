@@ -24,7 +24,7 @@ class VentaController extends Controller
         $totalAdeudo=0;
         switch (Auth::user()->tipo) {
             case 1:
-                $ventas = Venta::orderBy('id', 'asc')->get();
+                $ventas = Venta::where('corte',0)->orderBy('id', 'asc')->get();
                 break;
             case 2:
                 $ventas = Venta::where('corte',0)->orderBy('id', 'asc')->get();
@@ -46,7 +46,7 @@ class VentaController extends Controller
                 
                 break;
             case 3:
-                $ventas = Venta::where('user_id',Auth::user()->id)->orderBy('id', 'asc')->get();
+                $ventas = Venta::where('user_id',Auth::user()->id)->where('corte',0)->orderBy('id', 'asc')->get();
                 foreach ($ventas as $venta) {
                    if(!$venta->corte && $venta->estatus==1){
                     $totalCorte+=$venta->importe;
@@ -98,8 +98,16 @@ class VentaController extends Controller
                     $cantidadSolicitada=$request->input('cantidad'.$i);
     			    if($cantidadActual>=$cantidadSolicitada){
                         $cantidadFinal=$cantidadActual-$cantidadSolicitada;
-                        $producto->unidades()->updateExistingPivot(Auth::user()->unidad_id,['cantidad' =>$cantidadFinal,'updated_at'=>date('Y-m-d H:i:s')]);
-                        $venta->productos()->attach($venta->id,['producto_id' =>$producto->id,'cantidad' =>$cantidadSolicitada,'precio'=>$request->input('precio'.$i),'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')]);
+                        if($producto->unidades()->updateExistingPivot(Auth::user()->unidad_id,['cantidad' =>$cantidadFinal,'updated_at'=>date('Y-m-d H:i:s')])){
+                            $venta->productos()->attach($venta->id,['producto_id' =>$producto->id,'cantidad' =>$cantidadSolicitada,'precio'=>$request->input('precio'.$i),'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')]);
+                            
+                            Session::flash('message','Venta realizada correctamente');
+                            Session::flash('class','success');
+                        }else{
+                            $venta->delete();
+                            Session::flash('message','Error al crear la venta');
+                             Session::flash('class','danger');
+                        }
                     }
                     else{
                         $venta->delete();
@@ -109,8 +117,7 @@ class VentaController extends Controller
                     }
                     $this->actualizarStock($producto->id);
 	    		}
-	    		Session::flash('message','Venta realizada correctamente');
-		        Session::flash('class','success');
+	    		
 	    	}else{
 	    		Session::flash('message','Error al crear la venta');
 		        Session::flash('class','danger');

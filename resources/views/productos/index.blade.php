@@ -43,8 +43,16 @@ Productos <i class="fa fa-home"></i>
 @section('panelBotones')
   <li class="checkbox checkbox-primary">
     @if(Auth::user()->tipo<=2)
-      <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light"><i class="fa fa-plus"></i> Crear Nuevo</a>
+    <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light"><i class="fa fa-plus"></i> Crear Nuevo</a>
     @endif
+  </li>
+  
+        <li class="checkbox checkbox-primary"> <a href="{{route('productosPdf','Suplemento')}}"  target="_blank"  class="btn btn-light cerrarPanel"><i class="fa fa-print"></i>  Suplementos</a></li>
+        <li class="checkbox checkbox-primary"> <a href="{{route('productosPdf','Medicamento')}}"  target="_blank"  class="btn btn-light cerrarPanel"><i class="fa fa-print"></i>  Medicamentos</a></li>
+        <li class="checkbox checkbox-primary"> <a href="{{route('productosPdf','Material')}}"  target="_blank"  class="btn btn-light cerrarPanel"><i class="fa fa-print"></i>  Materiales</a></li>
+        <li class="checkbox checkbox-primary"> <a href="{{route('productosPdf','Todos')}}"  target="_blank"  class="btn btn-light cerrarPanel"><i class="fa fa-print"></i>  Todos</a></li>
+  
+    
   </li>
 @endsection
  @section('contenido')

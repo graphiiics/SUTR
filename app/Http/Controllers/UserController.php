@@ -31,7 +31,7 @@ class UserController extends Controller
     	return view('usuarios/index',compact('usuarios','unidades'));
     }
     public function editarUsuario(User $usuario,Request $request){
-    	if($usuario->update(['telefono'=>$request->input('telefono'),'estatus'=>$request->input('estatus'),'unidad_id'=>$request->input('unidad_id')])){
+    	if($usuario->update($request->all())){
     		Session::flash('message','Datos actualizados correctamente');
             Session::flash('class','success');
        }else{

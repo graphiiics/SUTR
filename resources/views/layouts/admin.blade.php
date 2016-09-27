@@ -40,7 +40,7 @@
     <!-- Start Top Right -->
     <ul class="top-right">
       <li class="link">
-      <a href="{{route('notificaciones')}}" class="notifications">{{count(Auth::user()->notificaciones->where('estado',2))}}</a>
+      <a href="{{route('notificaciones')}}" class="notifications">{{count(Auth::user()->notificaciones)}}</a>
        </li>
     <li class="dropdown link">
       <a href="#" data-toggle="dropdown" class="dropdown-toggle profilebox"><img src="{{asset('img/perfil/'.Auth::user()->foto)}}" alt="img"><b>{{Auth::user()->name}}  (Administrador)</b><span class="caret"></span></a>
@@ -145,11 +145,10 @@
 
       <div class="gn-title">Opciones</div>
 
-      <ul class="list-w-title">
+      <ul >
         @yield('panelBotones')
-        <li>
-          <a href="#sidepanel" class="sidepanel-open-button"><i class="fa fa-close"></i></a>
-        </li>
+        
+
       </ul>
 
     </div>

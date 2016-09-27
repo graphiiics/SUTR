@@ -19,7 +19,7 @@
 Ventas <i class="fa fa-home"></i>
 @endsection
 @section ('botones')
-
+  
   <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light"><i class="fa fa-plus"></i>Nueva venta</a>
   @if(Auth::user()->tipo==3)
     <a href="#" data-toggle="modal" data-target="#modal"  class="btn btn-light"><i class="fa fa-money"></i>Corte de caja</a>
@@ -31,9 +31,26 @@ Ventas <i class="fa fa-home"></i>
  
 @endsection
 @section('panelBotones')
-  <li class="checkbox checkbox-primary">
-    <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light"><i class="fa fa-plus"></i>Nueva venta</a>
-  </li>
+    <li class="checkbox checkbox-primary">
+   <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light cerrarPanel"><i class="fa fa-plus"></i>Nueva venta</a>
+     </li>
+  @if(Auth::user()->tipo==3)
+     <li class="checkbox checkbox-primary">
+      <a href="#" data-toggle="modal" data-target="#modal"  class="btn btn-light cerrarPanel"><i class="fa fa-money"></i>Corte de caja</a>
+    </li>
+    <li class="checkbox checkbox-primary">
+      <a href="{{route('cortesGerente')}}"  class="btn btn-light"><i class="fa fa-archive cerrarPanel"></i>Mostrar cortes realizados</a>
+    </li>
+  @elseif(Auth::user()->tipo<3)
+   <li class="checkbox checkbox-primary">
+     <a href="{{route('cortes')}}"  class="btn btn-light"><i class="fa fa-archive cerrarPanel"></i>Mostrar cortes realizados</a>
+    </li>
+    <li class="checkbox checkbox-primary">
+     <a href="#" data-toggle="modal" data-target="#modalActual"  class="btn btn-light cerrarPanel"><i class="fa fa-money"></i>Ventas Actuales</a>
+    </li>
+  @endif
+
+  
 @endsection
  @section('contenido')
         <!-- Start Panel -->

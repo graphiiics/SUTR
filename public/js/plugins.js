@@ -24,6 +24,11 @@ $(document).ready(function(){
         $(".sidepanel").toggle(100);
     });
 });
+$(document).ready(function(){
+    $(".cerrarPanel").click(function(){
+        $(".sidepanel").toggle(100);
+    });
+});
 
 
 
