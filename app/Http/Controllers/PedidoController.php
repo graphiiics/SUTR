@@ -20,41 +20,105 @@ class PedidoController extends Controller
     }
 
     public function index(){
-        switch (Auth::user()->tipo) {
-            case 1:
-               $pedidos = Pedido::where('fecha','>=',date("Y-m-d", strtotime("-2 month")))->orderBy('id', 'desc')->get();
-                break;
-            case 2:
-               $pedidos = Pedido::where('fecha','>=',date("Y-m-d", strtotime("-2 month")))->orderBy('id', 'desc')->get();
-                break;
-            case 3:
-                $pedidos = Pedido::where('fecha','>=',date("Y-m-d", strtotime("-2 month")))->where('user_id',Auth::user()->id)->get();
-                break;
-        }
+       
     	$productos= Producto::orderBy('nombre', 'asc')->get();
         $unidades=Unidad::orderBy('id', 'asc')->get();
-    	return view('pedidos/index',compact('pedidos','productos','unidades'));
+    	return view('pedidos/index',compact('productos','unidades'));
+    }
+     public function obtenerPedidos()
+    {
+        switch (Auth::user()->tipo) {
+            case 1:
+               $pedidos = Pedido::where('fecha','>=',date("Y-m-d", strtotime("-2 month")))->orderBy('id', 'desc')->paginate(10);;
+                break;
+            case 2:
+               $pedidos = Pedido::where('fecha','>=',date("Y-m-d", strtotime("-2 month")))->orderBy('id', 'desc')->paginate(10);;
+                break;
+            case 3:
+                $pedidos = Pedido::where('fecha','>=',date("Y-m-d", strtotime("-2 month")))->where('user_id',Auth::user()->id)->paginate(10);;
+                break;
+        }
+        foreach ($pedidos as $pedido) {
+            
+            foreach ($pedido->productos as $key=>$producto) {
+               $producto->editando=false;
+               $producto->stock=$this->cantidadAlmacen($producto);
+            }
+            $pedido->user;
+            $pedido->unidad;
+            if($pedido->estatus==1)
+                $pedido->estatus='Pendiente';
+            elseif($pedido->estatus==2)
+                $pedido->estatus='Realizado';
+            elseif($pedido->estatus==3)
+                $pedido->estatus='Entregado';
+        }
+        $response = [
+            'pagination' => [
+                'total' => $pedidos->total(),
+                'per_page' => $pedidos->perPage(),
+                'current_page' => $pedidos->currentPage(),
+                'last_page' => $pedidos->lastPage(),
+                'from' => $pedidos->firstItem(),
+                'to' => $pedidos->lastItem()
+            ],
+            'data' => $pedidos
+        ];
+    
+        return $response;
     }
 
+    public function productosPedidos()
+    {
+        $productos= Producto::orderBy('nombre', 'asc')->get();
+        foreach ($productos as $key=>$producto) {
+            $cantidad=$this->cantidadAlmacen($producto);
+            if($cantidad<1){
+                unset($productos[$key]);
+            }else{
+                $producto->key=$key;
+                $producto->stock=$cantidad;
+            }
+        }
+        return $productos;
+    }
+    public function productosNoPedido(Pedido $pedido){
+        $productos= $this->productosPedidos();
+
+        foreach($pedido->productos as $producto) {
+            $pivot=$producto->pivot;
+            foreach ($productos as $key=> $prod) {
+                $prod->editando=false;
+                $prod->pivot=$pivot;
+                if($producto->id==$prod->id){
+                     unset($productos[$key]);
+                }
+            }
+        }
+        return $productos;
+    }
+    public function cantidadAlmacen(Producto $producto)
+    {
+        return $producto->unidades()->first()->pivot->cantidad;
+    }
     public function guardarPedido(Request $request){
     	
     	if($request->input('totalProductos')>0){
     		$pedido= new Pedido;
 	    	$pedido->user_id=Auth::user()->id;
-	    	$pedido->unidad_id=$request->input('unidad');
+	    	$pedido->unidad_id=Auth::user()->unidad_id;
 	    	$pedido->fecha=date('Y-m-d H:i:s');
 	    	$pedido->estatus=1;
+            $pedido->observaciones=$request->input('observaciones');
     		if($pedido->save()){
 	    		for ($i=1; $i <=intval($request->input('totalProductos')); $i++) { 
-
-                        $producto=Producto::find($request->input('producto'.$i));
-                        $cantidadActual=$producto->unidades()->find(1)->pivot->cantidad;
-                        $cantidadSolicitada=$request->input('cantidad'.$i);
-                        if($cantidadActual<$cantidadSolicitada){
-                            $cantidadSolicitada=$cantidadActual;
-                        }
-	    			   $pedido->productos()->attach($pedido->id,['producto_id' =>$producto->id,'cantidad' =>$cantidadSolicitada,'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')]);
-                        
+                    $producto=Producto::find($request->input('producto'.$i));
+                    $cantidadActual=$producto->unidades()->find(1)->pivot->cantidad;
+                    $cantidadSolicitada=$request->input('cantidad'.$i);
+                    if($cantidadActual<$cantidadSolicitada){
+                        $cantidadSolicitada=$cantidadActual;
+                    }
+    			   $pedido->productos()->attach($pedido->id,['producto_id' =>$producto->id,'cantidad' =>$cantidadSolicitada,'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')]);     
 	    		}
                 foreach (User::where('tipo',1)->orWhere('tipo',2)->get() as $user) {
                     $notificacion= new Notificacion;
@@ -66,7 +130,6 @@ class PedidoController extends Controller
                     $notificacion->estado=2;
                     $notificacion->save();
                 }
-                    
 	    		Session::flash('message','Pedido realizado correctamente');
 		        Session::flash('class','success');
 	    	}else{
@@ -77,7 +140,6 @@ class PedidoController extends Controller
     		session::flash('message','El pedido no contiene ningún producto');
 		    Session::flash('class','danger');
     	}
-    	
         switch (Auth::user()->tipo) {
         case 1:
                return redirect('superAdmin/pedidos');
@@ -90,13 +152,11 @@ class PedidoController extends Controller
             break;
        }
     }
-
     public function eliminarPedido( Pedido $pedido){
     	if(count($pedido->productos)>0){
     		if($pedido->productos()->detach()){
     			if($pedido->delete()){
-    				Session::flash('message','Pedido eliminado correctamente');
-	            	Session::flash('class','success');
+    				return "eliminada";
 	    		}else{
 	    			Session::flash('message','Error al eliminar el pedido');
 	            	Session::flash('class','danger');
@@ -109,26 +169,14 @@ class PedidoController extends Controller
     	}
     	else{
     		if($pedido->delete()){
-    			Session::flash('message','Pedido eliminado correctamente');
-            	Session::flash('class','success');
+    			return "eliminada";
     		}else{
     			Session::flash('message','Error al eliminar el pedido');
             	Session::flash('class','danger');
     		}
     	}
     	
-    	switch (Auth::user()->tipo) {
-        case 1:
-               return redirect('superAdmin/pedidos');
-            break;
-         case 2:
-               return redirect('admin/pedidos');
-            break;
-        case 3:
-                return redirect('gerente/pedidos');
-            break;
-           
-       }
+    	
     }
     public function recibirPedido( Pedido $pedido){
         $productos=$pedido->productos;
@@ -150,7 +198,7 @@ class PedidoController extends Controller
             $pedido->estatus=3;
             if($pedido->save()){
                
-                Session::flash('message','Pedido emitido correctamente');
+                Session::flash('message','Pedido recibido correctamente');
                 Session::flash('class','success');
             }
           
@@ -171,20 +219,48 @@ class PedidoController extends Controller
            
        }
     }
-    public function agregarComentario(Pedido $pedido,Request $request)
+    public function actualizarPedido(Pedido $pedido,Request $request)
     {
-       if($request->input('comentarios')!=null){
-                $pedido->comentarios=$pedido->comentarios."\n".Auth::user()->name.": ".$request->input('comentarios');
-                $pedido->save();
+       // return $request->all();
+       if($request->input('observaciones')!=null){
+            $pedido->observaciones=$pedido->comentarios."\n".Auth::user()->name.": ".$request->input('observaciones');   
+        }
+        $pedido->productos()->detach();
+        for($i=0;$i<intval($request->input('totalProductos'));$i++){ 
+            $producto=Producto::find($request->input('productoEditar'.$i));
+            $cantidadActual=$producto->unidades()->find(Auth::user()->unidad_id)->pivot->cantidad;
+            $cantidadSolicitada=$request->input('cantidadEditar'.$i);
+            $cantidadFinal=$cantidadActual-$cantidadSolicitada;
+            if($cantidadSolicitada>$cantidadActual){
+                $cantidadSolicitada=$cantidadActual;                       
             }
+            $pedido->productos()->attach($pedido->id,['producto_id'=>$request->input('productoEditar'.$i),'cantidad'=>$cantidadSolicitada,'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')]); 
+        }
+        if($pedido->save()){
+           
+            Session::flash('message','Pedido actulizado correctamente');
+            Session::flash('class','success');
+        }
+        else{
+            Session::flash('message','Error al emitir pedido');
+            Session::flash('class','danger');
+        }
+        switch (Auth::user()->tipo) {
+        case 1:
+               return redirect('superAdmin/pedidos');
+            break;
+         case 2:
+               return redirect('admin/pedidos');
+            break;
+        case 3:
+                return redirect('gerente/pedidos');
+            break;
+       }
     }
     public function emitirPedido( Pedido $pedido, Request $request){
-            $productos=$pedido->productos;
-            for ($i=0; $i <count($productos) ; $i++) { 
-                $pedido->productos()->updateExistingPivot($request->input('productoEditar'.$i),['cantidad'=>$request->input('cantidadEditar'.$i),'updated_at'=>date('Y-m-d H:i:s')]); 
-            }
-            if($request->input('comentarios')!=null){
-                $pedido->comentarios=$pedido->comentarios."\n".Auth::user()->name.": ".$request->input('comentarios');
+           
+            if($request->input('observaciones')!=null){
+                $pedido->observaciones=$pedido->comentarios."\n".Auth::user()->name.": ".$request->input('observaciones');
                 $pedido->save();
             }
             
@@ -195,18 +271,20 @@ class PedidoController extends Controller
             $registro->tipo=2;
             $registro->observaciones='Salida de pedido hacia la unidad '.$pedido->unidad->nombre;
             if($registro->save()){
-              for ($i=0; $i <count($productos) ; $i++) { 
+                $pedido->productos()->detach();
+                for($i=0;$i<intval($request->input('totalProductos'));$i++){ 
                     $producto=Producto::find($request->input('productoEditar'.$i));
                     $cantidadActual=$producto->unidades()->find(Auth::user()->unidad_id)->pivot->cantidad;
                     $cantidadSolicitada=$request->input('cantidadEditar'.$i);
                     $cantidadFinal=$cantidadActual-$cantidadSolicitada;
                     if($cantidadSolicitada>$cantidadActual){
-                        $cantidadFinal=$cantidadActual;
-                         $pedido->productos()->updateExistingPivot($request->input('productoEditar'.$i),['cantidad'=>$cantidadFinal,'updated_at'=>date('Y-m-d H:i:s')]); 
+                        $cantidadSolicitada=$cantidadActual;                       
                     }
-                    $registro->productos()->attach($registro->id,['producto_id' =>$request->input('productoEditar'.$i),'cantidad' =>$cantidadFinal,'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')]);
+                    $pedido->productos()->attach($pedido->id,['producto_id'=>$request->input('productoEditar'.$i),'cantidad'=>$cantidadSolicitada,'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')]);
+                    $registro->productos()->attach($registro->id,['producto_id' =>$request->input('productoEditar'.$i),'cantidad' =>$cantidadSolicitada,'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')]);
                     $producto->unidades()->updateExistingPivot(Auth::user()->unidad_id,['cantidad' =>$cantidadFinal,'updated_at'=>date('Y-m-d H:i:s')]);
                      $this->actualizarStock($producto->id);
+                        
                 }
                 $pedido->estatus=2;
                 if($pedido->save()){
@@ -227,6 +305,7 @@ class PedidoController extends Controller
                 Session::flash('message','Error al emitir pedido');
                 Session::flash('class','danger');
             }
+
         switch (Auth::user()->tipo) {
         case 1:
                return redirect('superAdmin/pedidos');

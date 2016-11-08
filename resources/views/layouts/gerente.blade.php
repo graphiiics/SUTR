@@ -165,6 +165,33 @@ Bootstrap Core JavaScript File
 Plugin.js - Some Specific JS codes for Plugin Settings
 ================================================ -->
 <script type="text/javascript" src="{{asset('js/plugins.js')}}"></script>
+
+<!-- ================================================
+Bootstrap Select
+================================================ -->
+<script type="text/javascript" src="{{asset('js/bootstrap-select/bootstrap-select.js')}}"></script>
+
+<!-- ================================================
+Bootstrap Toggle
+================================================ -->
+<script type="text/javascript" src="{{asset('js/bootstrap-toggle/bootstrap-toggle.min.js')}}"></script>
+
+<!-- ================================================
+Moment.js
+================================================ -->
+<script type="text/javascript" src="{{asset('js/moment/moment.min.js')}}"></script>
+
+<!-- ================================================
+Bootstrap Date Range Picker
+================================================ -->
+<script type="text/javascript" src="{{asset('js/date-range-picker/daterangepicker.js')}}"></script>
+
+
+<script src="{{asset('/js/vue.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script>
+<script src="{{asset('js/sweet-alert/sweet-alert.min.js')}}"></script>
 @yield('js')
+
+
 </body>
 </html>

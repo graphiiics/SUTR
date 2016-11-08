@@ -77,10 +77,6 @@ class ProductoController extends Controller
            
        }
     }
-    public function cantidadAlmacen(Producto $producto)
-    {
-        return $producto->unidades()->first()->pivot->cantidad;
-    }
     public function cantidadUnidad(Producto $producto)
     {
         return $producto->unidades()->find(Auth::user()->unidad_id)->pivot->cantidad;

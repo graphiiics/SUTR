@@ -67,5 +67,13 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Notificacion')->where('estado',2);
     }
+    public function ingresos()
+    {
+        return $this->belongsTo('App\Ingreso');
+    }
+    public function egresos()
+    {
+        return $this->belongsTo('App\Egreso');
+    }
 
 }

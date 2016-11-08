@@ -99,11 +99,15 @@ Route::group(['middleware' => 'admin','prefix'=>'admin'], function() {
    Route::get('eliminarPedido/{pedido}',['as'=>'eliminarPedido','uses'=>'PedidoController@eliminarPedido'])->where('pedido', '[0-9]+');
    Route::get('recibirPedido/{pedido}',['as'=>'recibirPedido','uses'=>'PedidoController@recibirPedido'])->where('pedido', '[0-9]+');
    Route::post('emitirPedido/{pedido}',['as'=>'emitirPedido','uses'=>'PedidoController@emitirPedido'])->where('pedido', '[0-9]+');
+   Route::get('obtenerPedidos',['as'=>'obtenerPedidos', 'uses'=>'PedidoController@obtenerPedidos']);
+   Route::get('productosPedidos',['as'=>'productosPedidos', 'uses'=>'PedidoController@productosPedidos']);
+   Route::get('productosNoPedido/{pedido}',['as'=>'productosNoPedido', 'uses'=>'PedidoController@productosNoPedido'])->where('pedido', '[0-9]+');
 
    //Rutas Ventas
    Route::get('ventas',['as'=>'ventas', 'uses'=>'VentaController@index']);
    Route::post('guardarVenta',['as'=>'guardarVenta','uses'=>'VentaController@guardarVenta']);
    Route::get('liquidarVenta/{venta}',['as'=>'liquidarVenta','uses'=>'VentaController@liquidarVenta'])->where('venta', '[0-9]+');
+    Route::get('eliminarVenta/{venta}',['as'=>'eliminarVenta','uses'=>'VentaController@eliminarVenta'])->where('venta', '[0-9]+');
    //Rutas Compras
    Route::get('compras',['as'=>'compras', 'uses'=>'CompraController@index']);
    Route::post('guardarCompra',['as'=>'guardarCompra','uses'=>'CompraController@guardarCompra']);
@@ -152,7 +156,11 @@ Route::group(['middleware' => 'gerente','prefix'=>'gerente'], function() {
    Route::post('guardarPedido',['as'=>'guardarPedidoGerente','uses'=>'PedidoController@guardarPedido']);
    Route::get('eliminarPedido/{pedido}',['as'=>'eliminarPedidoGerente','uses'=>'PedidoController@eliminarPedido'])->where('pedido', '[0-9]+');
    Route::get('recibirPedido/{pedido}',['as'=>'recibirPedidoGerente','uses'=>'PedidoController@recibirPedido'])->where('pedido', '[0-9]+');
-    Route::get('agregarComentarioPedido/{pedido}',['as'=>'agregarComentarioPedido','uses'=>'PedidoController@agregarComentario'])->where('pedido', '[0-9]+');
+    Route::get('actulizarPedido/{pedido}',['as'=>'actulizarPedido','uses'=>'PedidoController@actulizarPedido'])->where('pedido', '[0-9]+');
+    Route::get('obtenerPedidos',['as'=>'obtenerPedidosGerente', 'uses'=>'PedidoController@obtenerPedidos']);
+    Route::get('productosPedidos',['as'=>'productosPedidosGerente', 'uses'=>'PedidoController@productosPedidos']);
+    Route::get('productosNoPedido/{pedido}',['as'=>'productosNoPedidoGerente', 'uses'=>'PedidoController@productosNoPedido'])->where('pedido', '[0-9]+');
+    Route::post('emitirPedido/{pedido}',['as'=>'emitirPedido','uses'=>'PedidoController@actualizarPedido'])->where('pedido', '[0-9]+');
 
    //Rutas Ventas
    Route::get('ventas',['as'=>'ventasGerente', 'uses'=>'VentaController@index']);
@@ -170,6 +178,12 @@ Route::group(['middleware' => 'gerente','prefix'=>'gerente'], function() {
   //Rutas Cortes
     Route::get('cortes',['as'=>'cortesGerente','uses'=>'CorteController@index']);
     Route::get('realizarCorte',['as'=>'realizarCorteGerente','uses'=>'CorteController@realizarCorte']);
+    Route::get('obtenerIngresos',['as'=>'obtenerIngresos','uses'=>'CorteController@obtenerIngresos']);
+    Route::get('obtenerEgresos',['as'=>'obtenerEgresos','uses'=>'CorteController@obtenerEgresos']);
+    Route::get('guardarIngresos',['as'=>'guardarIngresos','uses'=>'CorteController@guardarIngresos']);
+    Route::get('guardarEgresos',['as'=>'guardarEgresos','uses'=>'CorteController@guardarEgresos']);
+    Route::get('eliminarIngreso/{ingreso}',['as'=>'eliminarIngreso','uses'=>'CorteController@eliminarIngreso'])->where('ingreso','[0-9]+');
+    Route::get('eliminarEgreso/{egreso}',['as'=>'eliminarEgreso','uses'=>'CorteController@eliminarEgreso'])->where('egreso','[0-9]+');
 
   //Rutas Recibos
     Route::get('recibos',['as'=>'recibosGerente','uses'=>'ReciboController@index']);
@@ -203,9 +217,12 @@ Route::group(['middleware' => 'gerente','prefix'=>'gerente'], function() {
     Route::get('reciboPdf/{recibo}',['as'=>'reciboPdf','uses'=>'PdfController@reciboPdf'])->where('recibo', '[0-9]+');
     Route::get('hojaControlPdf/{sesion}',['as'=>'hojaControlPdf','uses'=>'PdfController@hojaControlPdf'])->where('sesion', '[0-9]+');
     Route::get('ventasTotalesCortePdf',['as'=>'ventasTotalesCortePdf', 'uses'=>'PdfController@ventasTotalesCortePdf']);
-    Route::get('suplementosPdf',['as'=>'suplementosPdf', 'uses'=>'PdfController@suplementosPdf']);
+    Route::post('reporteVentasPdf',['as'=>'reporteVentasPdf', 'uses'=>'PdfController@reporteVentasPdf']);
     //Ruta Productos
     Route::get('productosUnidad',['as'=>'productosUnidad','uses'=>'ProductoController@productosUnidad']);
+    Route::get('productosVenta',['as'=>'productosVenta','uses'=>'VentaController@productosVenta']);
+    Route::get('obtenerVentas',['as'=>'obtenerVentas','uses'=>'VentaController@obtenerVentas']);
+    Route::get('obtenerVentasBusqueda',['as'=>'obtenerVentasBusqueda','uses'=>'VentaController@obtenerVentasBusqueda']);
 });
 
 

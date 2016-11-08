@@ -159,7 +159,7 @@ Registro <i class="fa fa-home"></i>
                   <div  class="form-group">
                     <label class="col-sm-2 control-label form-label">Tipo: </label>
                     <div class="col-sm-10">
-                      <select name="tipo"  id="tipo" onchange="cantidadUnidad();" class="selectpicker form-control form-control-radius">
+                      <select name="tipo"  id="tipo" onchange="cantidadUnidad();" class="selectpicker form-control form-control">
                           <option value="1">Entrada</option>
                           <option value="2">Salida</option>
                         </select>                  
@@ -168,14 +168,14 @@ Registro <i class="fa fa-home"></i>
                    <div class="form-group">
                       <label class="col-sm-2 control-label form-label">Observaciones: </label>
                       <div class="col-sm-10">
-                      <input type="text" name="observaciones" class="form-control form-control-radius">             
+                      <input type="text" name="observaciones" class="form-control form-control">             
                     </div>
                     </div>
                   <div>
                     <div class="form-group col-lg-8 md-8 sm-8">
                         <label " class="col-lg-4 control-label form-label">Producto:</label>
                         <div class="col-lg-8">
-                          <select id="nProducto" onchange="cantidadUnidad();" class="selectpicker form-control form-control-radius">
+                          <select id="nProducto" onchange="cantidadUnidad();" class="selectpicker form-control form-control">
                             @foreach($productos as $producto)
                             <option value="{{$producto->id}}-{{$producto->nombre}}" >{{$producto->nombre}}</option>
                             @endforeach
@@ -185,7 +185,7 @@ Registro <i class="fa fa-home"></i>
                    
                     <div class="form-group col-lg-4 md-4 sm-4">
                         <div class="col-lg-12">
-                          <input type="number"   id="cProducto"  value="0"  min="0"  max="100" class="form-control form-control-radius" >
+                          <input type="number"   id="cProducto"  value="0"  min="0"  max="100" class="form-control form-control" >
                         </div>
                     </div>
                      <a  href="#" id="agregar" onclick="AgregarCampos();" type="button" class="btn btn-rounded btn-success   btn-icon"><i class="fa fa-plus"></i></a>
