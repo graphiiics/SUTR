@@ -35,7 +35,7 @@ class PedidoController extends Controller
                $pedidos = Pedido::where('fecha','>=',date("Y-m-d", strtotime("-2 month")))->orderBy('id', 'desc')->paginate(10);;
                 break;
             case 3:
-                $pedidos = Pedido::where('fecha','>=',date("Y-m-d", strtotime("-2 month")))->where('user_id',Auth::user()->id)->paginate(10);;
+                $pedidos = Pedido::where('fecha','>=',date("Y-m-d", strtotime("-2 month")))->where('user_id',Auth::user()->id)->orderBy('id', 'desc')->paginate(10);;
                 break;
         }
         foreach ($pedidos as $pedido) {

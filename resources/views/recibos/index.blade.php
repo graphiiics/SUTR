@@ -206,7 +206,7 @@ Recibos <i class="fa fa-home"></i>
                      <div  class="form-group">
                       <label class="col-sm-2 control-label form-label">Tipo de pago:</label>
                       <div class="col-sm-10">
-                        <select name="tipo_pago" id="tipoPago" onclick="pago();" class="selectpicker form-control form-control-radius" required>
+                        <select name="tipo_pago" id="tipoPago" onclick="pago();" class=" form-control form-control" required>
                           </select>                  
                       </div>
                     </div>

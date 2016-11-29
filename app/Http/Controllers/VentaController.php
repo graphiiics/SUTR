@@ -31,6 +31,7 @@ class VentaController extends Controller
             case 2:
                 $ventas = Venta::where('corte',0)->orderBy('id', 'asc')->get();
                 $usuarios=User::where('tipo',3)->get();
+                
                     foreach ($usuarios as $usuario) {
                         $usuario->totalVentas=$this->calcularEfectivo($usuario->id);
                         $usuario->totalPendientes=$this->calcularCredito($usuario->id);

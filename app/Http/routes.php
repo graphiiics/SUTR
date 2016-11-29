@@ -26,6 +26,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('hojaConsulta','consultaController@index');
+Route::get('imprimirHoja','consultaController@imprimirHoja');
 
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
@@ -93,6 +95,11 @@ Route::group(['middleware' => 'admin','prefix'=>'admin'], function() {
    Route::get('registros',['as'=>'registros','uses'=>'RegistroController@index']);
    Route::post('guardarRegistro',['as'=>'guardarRegistro','uses'=>'RegistroController@guardarRegistro']);
    Route::get('eliminarRegistro/{registro}',['as'=>'eliminarRegistro','uses'=>'RegistroController@eliminarRegistro'])->where('registro', '[0-9]+');
+   Route::get('obtenerRegistros',['as'=>'obtenerRegistros','uses'=>'RegistroController@obtenerRegistros']);
+   Route::get('obtenerRegistroBusqueda',['as'=>'obtenerRegistroBusqueda','uses'=>'RegistroController@obtenerRegistroBusqueda']);
+
+   Route::get('productosSalida',['as'=>'productosSalida','uses'=>'RegistroController@productosSalida']);
+   Route::get('productosEntrada',['as'=>'productosEntrada','uses'=>'RegistroController@productosEntrada']);
    //Rutas Pedidos
    Route::get('pedidos',['as'=>'pedidos', 'uses'=>'PedidoController@index']);
    Route::post('guardarPedido',['as'=>'guardarPedido','uses'=>'PedidoController@guardarPedido']);
@@ -150,6 +157,11 @@ Route::group(['middleware' => 'gerente','prefix'=>'gerente'], function() {
    //Rutas Registros
    Route::get('registros',['as'=>'registrosGerente','uses'=>'RegistroController@index']);
    Route::post('guardarRegistro',['as'=>'guardarRegistroGerente','uses'=>'RegistroController@guardarRegistro']);
+   Route::get('obtenerRegistros',['as'=>'obtenerRegistrosGerente','uses'=>'RegistroController@obtenerRegistros']);
+   Route::get('obtenerRegistroBusqueda',['as'=>'obtenerRegistroBusquedaGerente','uses'=>'RegistroController@obtenerRegistroBusqueda']);
+   Route::get('productosSalida',['as'=>'productosSalidaGerente','uses'=>'RegistroController@productosSalida']);
+   Route::get('productosEntrada',['as'=>'productosEntradaGerente','uses'=>'RegistroController@productosEntrada']);
+   
    
    //Rutas Pedidos
    Route::get('pedidos',['as'=>'pedidosGerente', 'uses'=>'PedidoController@index']);

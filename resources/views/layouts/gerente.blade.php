@@ -32,6 +32,10 @@
     <a href="#" class="sidebar-open-button-mobile"><i class="fa fa-bars"></i></a>
     <!-- End Sidebar Show Hide Button -->
    
+    <!-- Start Sidepanel Show-Hide Button -->
+    <a href="#sidepanel" class="sidepanel-open-button"><i class="fa fa-outdent"></i></a>
+    <!-- End Sidepanel Show-Hide Button -->
+    
     <!-- Start Top Right -->
     <ul class="top-right">
       <li class="link">
@@ -93,12 +97,12 @@
 
 
     <!-- Start Page Header Right Div -->
-    <div class="right">
-    @yield('botones')
+    <div class="right col-lg-12 col-md-6">
+      @yield('botones')
     </div>
     <!-- End Page Header Right Div -->
 
-  </div>
+  </div> 
   <!-- End Page Header -->
 
  <!-- //////////////////////////////////////////////////////////////////////////// --> 

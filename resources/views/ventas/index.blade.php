@@ -31,6 +31,7 @@ Ventas <i class="fa fa-home"></i>
      <a href="{{route('cortes')}}"  class="btn btn-light"><i class="fa fa-archive"></i>Mostrar cortes realizados</a>
      <a href="#" data-toggle="modal" data-target="#modalActual"  class="btn btn-light"><i class="fa fa-money"></i>Ventas Actuales</a>
      <a href="#" data-toggle="modal" data-target="#modelFechas"  class="btn btn-light"><i class="fa fa-file-pdf-o"></i>Reporte de Ventas</a>
+     <a href="#" data-toggle="modal" data-target="#modalEnvios"  class="btn btn-light"><i class="fa fa-file-text"></i>Registro de Suplementos</a>
   @endif
  <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light"><i class="fa fa-plus"></i>Nueva venta</a>
 @endsection
@@ -51,6 +52,9 @@ Ventas <i class="fa fa-home"></i>
   @elseif(Auth::user()->tipo<3)
    <li class="checkbox checkbox-primary">
      <a href="{{route('cortes')}}"  class="btn btn-light"><i class="fa fa-archive cerrarPanel"></i>Mostrar cortes realizados</a>
+    </li>
+    <li class="checkbox checkbox-primary">
+      <a href="#" data-toggle="modal" data-target="#modalEnvios"  class="btn btn-light cerrarPanel"><i class="fa fa-file-text "></i>Registro de Suplementos</a>
     </li>
     <li class="checkbox checkbox-primary">
      <a href="#" data-toggle="modal" data-target="#modalActual"  class="btn btn-light cerrarPanel"><i class="fa fa-money"></i>Ventas Actuales</a>
@@ -252,7 +256,7 @@ Ventas <i class="fa fa-home"></i>
                     <input type="number"  class="form-control" name="Importe" min="0" step=".1" v-model="importe">
                   </div>
                    <div class="col-sm-4">
-                   <a  href="#" class="btn btn-rounded btn-success btn-icon" @click="enviarDatos()"><i class="fa fa-plus"></i></a>
+                   <a  href="#" class="btn btn-rounded btn-success btn-icon pull-right" @click="enviarDatos()"><i class="fa fa-plus"></i></a>
                   </div>
                 </div>
                 <div class="form-group" >
@@ -326,49 +330,73 @@ Ventas <i class="fa fa-home"></i>
 
       <!-- End Modal Code -->
     <!-- Modal -->
-             <div class="modal fade" id="modelFechas" tabindex="-1" role="dialog" aria-hidden="true">
-              <div class="modal-dialog modal-md">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Reporte de Ventas Totales </h4>
-                  </div>
-                   <form class="form-horizontal" role="form" method="POST" action="{{ route('reporteVentasPdf') }}">
-                  {!! csrf_field() !!}  
-                  <div  class="modal-body">   
-                    <div class="form-group">
-                      <h5>Rango de fechas del reporte</h5>
-                        <div class="control-group">
-                          <div class="controls">
-                           <div class="input-prepend input-group">
-                             <span class="add-on input-group-addon"><i class="fa fa-calendar"></i></span>
-                             <input type="text" id="date-range-picker" name="fechas" class="form-control" value="" /> 
-                           </div>
-                          </div>
-                        </div>
-                    </div>
-                   <div  class="form-group">
-                      <label class="col-sm-2 control-label form-label">Unidad: </label>
-                      <div class="col-sm-10">
-
-                        <select name="unidad" v-model="pago" class="selectpicker form-control form-control-radius" >
-                              <option value="0">Todas</option>
-                            @foreach($usuarios as $usuario)
-                              <option value="{{$usuario->id}}">{{$usuario->unidad->nombre}}</option>
-                            @endforeach
-                        </select>                  
+         <div class="modal fade" id="modelFechas" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-md">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Reporte de Ventas Totales </h4>
+              </div>
+               <form class="form-horizontal" role="form" method="POST" action="{{ route('reporteVentasPdf') }}">
+              {!! csrf_field() !!}  
+              <div  class="modal-body">   
+                <div class="form-group">
+                  <h5>Rango de fechas del reporte</h5>
+                    <div class="control-group">
+                      <div class="controls">
+                       <div class="input-prepend input-group">
+                         <span class="add-on input-group-addon"><i class="fa fa-calendar"></i></span>
+                         <input type="text" id="date-range-picker" name="fechas" class="form-control" value="" /> 
+                       </div>
                       </div>
                     </div>
-                  </div>      
-                
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
-                       <button type="submit" class="btn btn-default" >Imprimir</button>
-                    </div>
                 </div>
-                </form>
-              </div>
+               <div  class="form-group">
+                  <label class="col-sm-2 control-label form-label">Unidad: </label>
+                  <div class="col-sm-10">
+
+                    <select name="unidad" v-model="pago" class="selectpicker form-control form-control-radius" >
+                          <option value="0">Todas</option>
+                        @foreach($usuarios as $usuario)
+                          <option value="{{$usuario->id}}">{{$usuario->unidad->nombre}}</option>
+                        @endforeach
+                    </select>                  
+                  </div>
+                </div>
+              </div>      
+            
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
+                   <button type="submit" class="btn btn-default" >Imprimir</button>
+                </div>
             </div>
+            </form>
+          </div>
+        </div>
+
+      <!-- End Modal Code -->
+      <!-- Modal -->
+         <div class="modal fade" id="modalEnvios" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-md">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Reporte de Ventas Totales </h4>
+              </div>
+               <form class="form-horizontal" role="form" method="POST" action="{{ route('reporteVentasPdf') }}">
+              {!! csrf_field() !!}  
+              <div  class="modal-body">   
+                
+              </div>      
+            
+                <div class="modal-footer">
+                  
+                   <a  class="btn btn-default" >Imprimir</a>
+                </div>
+            </div>
+            </form>
+          </div>
+        </div>
 
       <!-- End Modal Code -->
        <!-- Modal -->
@@ -504,25 +532,25 @@ Ventas <i class="fa fa-home"></i>
                                 </option>
                               </select>     
                             </div>
-                            <div class="col-lg-2 md-2">
+                            <div class="col-lg-2 pull-right">
                               <a  href="#" id="agregar" v-on:click="agregarProducto(producto)"  v-on:keyup.enter="agregarProducto(producto)"  class="btn btn-rounded btn-success btn-icon"><i class="fa fa-plus"></i></a>
                             </div>
                           </div>
-                        
-                          <div class="form-group  ">
-                            <div class="col-lg-6 md-6">
-                              <div class="input-group">
-                                <div class="input-group-addon">Cantidad</div>
-                                  <input type="number" v-model="cantidad"  value="1" min="1" :max="cantidadMaxima" class="form-control form-control" >
+                          <div class="form-group">
+                              <div class="col-lg-6 md-6 sm-6">
+                                <div class="input-group">
+                                  <div class="input-group-addon">Cantidad</div>
+                                    <input type="number" v-model="cantidad"  value="1" min="1" :max="cantidadMaxima" class="form-control form-control" >
+                                </div>
                               </div>
-                            </div>
-                            <div class="col-lg-6 md-6">
-                              <div class="input-group">
-                                <div class="input-group-addon">$</div>
-                                  <input type="number"  v-model="precio" min="0" value="0" step=".01" class="form-control form-control" >
+                              <div class="col-lg-6 md-6 sm-6">
+                                <div class="input-group">
+                                  <div class="input-group-addon">$</div>
+                                    <input type="number"  v-model="precio" min="0" value="0" step=".01" class="form-control form-control" >
+                                </div>
                               </div>
-                            </div>
                           </div>
+                          
                           <div class="form-group" >
                             <table class="table-striped" width="100%">
                               <thead>
@@ -597,7 +625,14 @@ Ventas <i class="fa fa-home"></i>
       console.log(start.toISOString(), end.toISOString(), label);
     });
   });
-
+  var suplementos = new Vue({
+    
+    el: '#header',
+    data: { 
+     busqueda:""
+    },
+   
+  })
 var app = new Vue({
   
   el: '#modal_nuevo',
@@ -732,7 +767,9 @@ var tabla = new Vue({
                 }
 
                 return pagesArray;
-            }
+            },
+
+
         },
         methods: {
             fetchItems: function (page) {
@@ -750,7 +787,7 @@ var tabla = new Vue({
                  this.$http.get('../obtenerVentasBusqueda' ).then(function (response) {
                     //look into the routes file and format your response
                     this.$set('ventas', response.body);
-                    console.log(this.ventas);
+                    //console.log(this.ventas);
                   }, function (error) {
                       // handle error
                   });

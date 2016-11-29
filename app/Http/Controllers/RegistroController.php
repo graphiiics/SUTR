@@ -21,21 +21,97 @@ class RegistroController extends Controller
     }
 
     public function index(){
-        switch (Auth::user()->tipo) {
-            case '1':
-               $registros = Registro::where('fecha','>=',date("Y-m-d", strtotime("-2 month")))->orderBy('id', 'asc')->get();
+        
+    	return view('registros/index');
+    }
+    public function obtenerRegistros(){
+         switch (Auth::user()->tipo) {
+            case 1:
+                $registros = Registro::where('fecha','>=',date("Y-m-d", strtotime("-2 month")))->orderBy('id', 'des')->paginate(10);
                 break;
-            case '2':
-                $registros = Registro::where('fecha','>=',date("Y-m-d", strtotime("-2 month")))->orderBy('id', 'asc')->get();
+            case 2:
+               $registros = Registro::where('fecha','>=',date("Y-m-d", strtotime("-2 month")))->orderBy('id', 'des')->paginate(10);
                 break;
-            case '3':
-               $registros = Registro::where('fecha','>=',date("Y-m-d", strtotime("-2 month")))->where('user_id',Auth::user()->id)->orderBy('id', 'asc')->get();
+            case 3:
+               $registros = Registro::where('fecha','>=',date("Y-m-d", strtotime("-2 month")))->where('user_id',Auth::user()->id)->orderBy('id', 'des')->paginate(10);;
                 break;
         }
-    	
-    	$productos = Producto::orderBy('nombre', 'asc')->get();
-        $unidades= Unidad::orderBy('id', 'asc')->get();
-    	return view('registros/index',compact('registros','productos','unidades'));
+        foreach ($registros as $registro) {
+
+            $registro->user;
+            $registro->unidad;
+            $registro->productos;
+            if($registro->tipo==1)
+                $registro->tipo="Entrada";
+            elseif($registro->tipo==2)
+                $registro->tipo="Salida";
+            
+        }
+        $response = [
+            'pagination' => [
+                'total' => $registros->total(),
+                'per_page' => $registros->perPage(),
+                'current_page' => $registros->currentPage(),
+                'last_page' => $registros->lastPage(),
+                'from' => $registros->firstItem(),
+                'to' => $registros->lastItem()
+            ],
+            'data' => $registros
+        ];
+    
+        return $response;
+    }
+    public function productosSalida()
+    {
+        $productos= Producto::orderBy('nombre', 'asc')->get();
+        foreach ($productos as $key=>$producto) {
+            $cantidad=$producto->unidades()->find(Auth::user()->unidad_id)->pivot->cantidad;
+            if($cantidad<1){
+                unset($productos[$key]);
+            }else{
+                $producto->key=$key;
+                $producto->stock=$cantidad;
+            }
+        }
+        return $productos;
+    }
+    public function productosEntrada(Producto $producto)
+    {
+        $productos= Producto::orderBy('nombre', 'asc')->get();
+        foreach ($productos as $key=>$producto) {
+            
+                $producto->key=$key;
+                $producto->stock=100;
+            
+        }
+        return $productos;
+    }
+    public function obtenerRegistroBusqueda()
+    {
+         switch (Auth::user()->tipo) {
+            case 1:
+                $registros = Registro::where('fecha','>=',date("Y-m-d", strtotime("-2 month")))->orderBy('id', 'des')->get();
+                break;
+            case 2:
+               $registros = Registro::where('fecha','>=',date("Y-m-d", strtotime("-2 month")))->orderBy('id', 'des')->get();
+                break;
+            case 3:
+               $registros = Registro::where('fecha','>=',date("Y-m-d", strtotime("-2 month")))->where('user_id',Auth::user()->id)->orderBy('id', 'des')->get();;
+                break;
+        }
+        foreach ($registros as $registro) {
+
+            $registro->user;
+            $registro->unidad;
+            $registro->productos;
+            if($registro->tipo==1)
+                $registro->tipo="Entrada";
+            elseif($registro->tipo==2)
+                $registro->tipo="Salida";
+            
+        }
+   
+    return $registros;
     }
 
     public function guardarRegistro(Request $request){
