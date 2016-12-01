@@ -106,7 +106,9 @@ Cortes <i class="fa fa-home"></i>
                             </table>                  
                           </div>
                           <div class="modal-footer">
+
                             <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
+                            <a type="button" target="_blank" href="{{route('ventasTotalesCortePdfReimpresion','id='.$corte->user_id.'&corte='.$corte->id)}}" class="btn btn-rounded btn-icon btn-success"><i title="Imprimir Corte" class="fa fa-print"></i> Imprimir</a>
                           </div>
                         </div>
                       </div>

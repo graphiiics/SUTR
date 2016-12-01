@@ -9,6 +9,7 @@ use App\Corte;
 use App\Venta;
 use App\Egreso;
 use App\ingreso;
+use App\Producto;
 use Auth;
 use Session;
 class CorteController extends Controller
@@ -63,10 +64,20 @@ class CorteController extends Controller
             foreach ($ingresos as $ingreso) {
                 $ingreso->update(['corte'=>true,'fecha_corte'=>date('y-m-d')]);
             }
+            foreach (Producto::where('categoria','Suplemento')->get() as $producto) {
+                
+                 $producto->unidades()->updateExistingPivot(Auth::user()->unidad_id,['stock_corte'=>$producto->unidades()->find(Auth::user()->unidad_id)->pivot->cantidad,'updated_at'=>date('Y-m-d H:i:s')]);
+
+            }
 	    	Session::flash('message','Corte realidado correctamente del día '.$fecha);
 		    Session::flash('class','success');
     	}
     	else{
+            foreach (Producto::where('categoria','Suplemento')->get() as $producto) {
+                
+                 $producto->unidades()->updateExistingPivot(Auth::user()->unidad_id,['stock_corte'=>$producto->unidades()->find(Auth::user()->unidad_id)->pivot->cantidad,'updated_at'=>date('Y-m-d H:i:s')]);
+
+            }
     		Session::flash('message','No hay ventas disponibles para realizar el corte de caja');
 		    Session::flash('class','danger');
     	}

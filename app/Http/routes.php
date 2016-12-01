@@ -229,12 +229,18 @@ Route::group(['middleware' => 'gerente','prefix'=>'gerente'], function() {
     Route::get('reciboPdf/{recibo}',['as'=>'reciboPdf','uses'=>'PdfController@reciboPdf'])->where('recibo', '[0-9]+');
     Route::get('hojaControlPdf/{sesion}',['as'=>'hojaControlPdf','uses'=>'PdfController@hojaControlPdf'])->where('sesion', '[0-9]+');
     Route::get('ventasTotalesCortePdf',['as'=>'ventasTotalesCortePdf', 'uses'=>'PdfController@ventasTotalesCortePdf']);
-    Route::post('reporteVentasPdf',['as'=>'reporteVentasPdf', 'uses'=>'PdfController@reporteVentasPdf']);
+    Route::get('ventasTotalesCortePdfReimpresion',['as'=>'ventasTotalesCortePdfReimpresion', 'uses'=>'PdfController@ventasTotalesCortePdfReimpresion']);
+    Route::get('ventasTotalesCortePdfReimpresion',['as'=>'ventasTotalesCortePdfReimpresion', 'uses'=>'PdfController@ventasTotalesCortePdfReimpresion']);
+    Route::get('reporteVentasPdf',['as'=>'reporteVentasPdf', 'uses'=>'PdfController@reporteVentasPdf']);
+    Route::get('entradaSalidaSuplementosPdf',['as'=>'entradaSalidaSuplementosPdf', 'uses'=>'PdfController@entradaSalidaSuplementosPdf']);
+
+
     //Ruta Productos
     Route::get('productosUnidad',['as'=>'productosUnidad','uses'=>'ProductoController@productosUnidad']);
     Route::get('productosVenta',['as'=>'productosVenta','uses'=>'VentaController@productosVenta']);
     Route::get('obtenerVentas',['as'=>'obtenerVentas','uses'=>'VentaController@obtenerVentas']);
     Route::get('obtenerVentasBusqueda',['as'=>'obtenerVentasBusqueda','uses'=>'VentaController@obtenerVentasBusqueda']);
+    
 });
 
 

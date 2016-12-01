@@ -352,25 +352,34 @@ Ventas <i class="fa fa-home"></i>
                     </div>
                 </div>
                <div  class="form-group">
-                  <label class="col-sm-2 control-label form-label">Unidad: </label>
-                  <div class="col-sm-10">
 
-                    <select name="unidad" v-model="pago" class="selectpicker form-control form-control-radius" >
-                          <option value="0">Todas</option>
-                        @foreach($usuarios as $usuario)
-                          <option value="{{$usuario->id}}">{{$usuario->unidad->nombre}}</option>
-                        @endforeach
-                    </select>                  
+                  <div class="row">
+                  <div class="col-sm-8"> 
+                    <select name="usuario" id="usuarioFechas" class="selectpicker form-control form-control" >
+                    <option value="0">Todas</option>
+                      @foreach($usuarios as $usuario)
+                        
+                        <option value="{{$usuario->id}}">{{$usuario->name}}</option>
+                      @endforeach 
+                    </select>  
+                    
                   </div>
+                  <div class="col-sm-4 ">
+                    <button  class="btn btn-default pull-right" onclick="FechasSuplementos();" >Obtener PDF</button>
+                  </div>
+                  <br><br><br> 
+                  <div class="col-sm-12"  id="pdfFechas">   
+                    
+                  </div> 
+                </div>
                 </div>
               </div>      
             
                 <div class="modal-footer">
                   <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
-                   <button type="submit" class="btn btn-default" >Imprimir</button>
+                   
                 </div>
             </div>
-            </form>
           </div>
         </div>
 
@@ -381,20 +390,32 @@ Ventas <i class="fa fa-home"></i>
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Reporte de Ventas Totales </h4>
+                <h4 class="modal-title">Control de entrada y salida de medicamentos </h4>
               </div>
-               <form class="form-horizontal" role="form" method="POST" action="{{ route('reporteVentasPdf') }}">
-              {!! csrf_field() !!}  
-              <div  class="modal-body">   
-                
-              </div>      
-            
-                <div class="modal-footer">
-                  
-                   <a  class="btn btn-default" >Imprimir</a>
+               
+              <div  class="modal-body">
+                <div class="row">
+                  <div class="col-sm-8"> 
+                    <select name="usuario" id="usuarioSuplentos" class="selectpicker form-control form-control-radius" >
+                      @foreach($usuarios as $usuario)
+                        <option value="{{$usuario->id}}">{{$usuario->name}}</option>
+                      @endforeach 
+                    </select>  
+                    
+                  </div>
+                  <div class="col-sm-4 ">
+                    <button  class="btn btn-default pull-right" onclick="ObtenerSuplementos();" >Obtener PDF</button>
+                  </div>
+                  <br><br><br> 
+                  <div class="col-sm-12"  id="pdf">   
+                    
+                  </div> 
                 </div>
+              </div>      
+              <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
+              </div>
             </div>
-            </form>
           </div>
         </div>
 
@@ -461,7 +482,8 @@ Ventas <i class="fa fa-home"></i>
                                
                                 <th>Nombre</th>
                                 <th>Monto en Efectivo</th>  
-                                <th>Monto Pendiente</th>                     
+                                <th>Monto Pendiente</th>      
+                                <th>Acciones</th>               
                               </tr>
                             </thead>
                             <tbody>
@@ -471,6 +493,10 @@ Ventas <i class="fa fa-home"></i>
                                       <td>{{$usuario->name}}</td>
                                       <td>${{$usuario->totalVentas}}</td>
                                       <td>${{$usuario->totalPendientes}}</td>
+                                      
+                                      <td>
+                                      <a type="button" target="_blank" href="{{route('ventasTotalesCortePdf','id='.$usuario->id)}}" class="btn btn-rounded btn-icon btn-success"><i title="Imprimir Corte" class="fa fa-print"></i></a>
+                                     </td>
                                    </tr>
                                 @endforeach
                                 <tr>
@@ -483,7 +509,7 @@ Ventas <i class="fa fa-home"></i>
                       </div>      
                         <div class="modal-footer">
                           <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
-                           <a href="{{route('ventasTotalesCortePdf')}}" class="btn btn-default" target="_blank" ">Imprimir</a>
+                           
                         </div>
                     </div>
                   </div>
@@ -625,14 +651,16 @@ Ventas <i class="fa fa-home"></i>
       console.log(start.toISOString(), end.toISOString(), label);
     });
   });
-  var suplementos = new Vue({
+  function ObtenerSuplementos(){
     
-    el: '#header',
-    data: { 
-     busqueda:""
-    },
-   
-  })
+  
+  $('#pdf').html('<embed   src="../entradaSalidaSuplementosPdf?usuario='+$('#usuarioSuplentos').val()+'" width="95%" height="500px">')
+  }
+  function FechasSuplementos(){
+    
+  
+  $('#pdfFechas').html('<embed   src="../reporteVentasPdf?usuario='+$('#usuarioFechas').val()+'&fechas='+$('#date-range-picker').val()+'" width="95%" height="500px">')
+  }
 var app = new Vue({
   
   el: '#modal_nuevo',
