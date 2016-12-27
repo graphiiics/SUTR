@@ -27,7 +27,7 @@ class ProductoController extends Controller
        if($producto->update(['nombre'=>$request->input('nombre'),'precio_venta'=>$request->input('precio_venta'),'categoria'=>$request->input('categoria'),'presentacion'=>$request->input('presentacion')])){
            
             foreach (Unidad::all() as $key=>$unidad) {
-               $producto->unidades()->updateExistingPivot($unidad->id,['cantidad' =>$request->input('cantidadUnidad'.($key+1)),'stock_minimo' =>$request->input('productoMinimoUnidad'.($key+1)),'updated_at'=>date('Y-m-d H:i:s')]);//checar funcion
+               $producto->unidades()->updateExistingPivot($unidad->id,['cantidad' =>$request->input('cantidadUnidad'.$unidad->id),'stock_minimo' =>$request->input('productoMinimoUnidad'.$unidad->id),'updated_at'=>date('Y-m-d H:i:s')]);//checar funcion
                 
             }
             Session::flash('message','Datos actualizados correctamente');

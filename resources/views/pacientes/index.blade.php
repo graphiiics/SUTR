@@ -20,16 +20,16 @@ Pacientes <i class="fa fa-home"></i>
 @endsection
 
 @section ('botones')
-@if(Auth::user()->tipo==3)
+
   <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light"><i class="fa fa-plus"></i> Crear Nuevo</a>  
-@endif
+
 @endsection
 @section('panelBotones')
 
   <li class="checkbox checkbox-primary">
-  @if(Auth::user()->tipo<=2)
+  
     <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light"><i class="fa fa-plus"></i> Crear Nuevo</a>
-  @endif
+  
   </li>
 @endsection
  @section('contenido')
@@ -62,7 +62,12 @@ Pacientes <i class="fa fa-home"></i>
              
                 <tbody>
                     @foreach ($pacientes as $paciente)
-                      <tr>
+                      @if($paciente->estatus==1)
+                       <tr>
+                      @elseif($paciente->estatus==2)
+                         <tr class="warning" >
+                      @endif
+                     
                         <td>{{$paciente->id}}</td>
                         @if(Auth::user()->tipo<=2)
                           <td>{{$paciente->unidad->nombre}}</td>
@@ -77,7 +82,8 @@ Pacientes <i class="fa fa-home"></i>
                         @else
                           <td>No tiene sesiones</td>
                         @endif
-                         <td><a  href="#" data-toggle="modal" data-target="#modal{{$paciente->id}}" class="btn btn-rounded btn-light">Editar</a>
+                         <td>
+                         <a  href="#" data-toggle="modal" data-target="#modal{{$paciente->id}}" class="btn btn-rounded btn-light">Editar</a>
                             <!-- Modal -->
                                 <div class="modal fade" id="modal{{$paciente->id}}" tabindex="-1" role="dialog" aria-hidden="true">
                                   <div class="modal-dialog modal-md">
@@ -104,7 +110,7 @@ Pacientes <i class="fa fa-home"></i>
                                                       <option value="{{$unidad->id}}">{{$unidad->nombre}}</option>
                                                     @endforeach
                                                   @else
-                                                   {{--  <option value="{{Auth::user()->unidad->id}}">{{Auth::user()->unidad->nombre}}</option> --}}
+                                                    <option value="{{Auth::user()->unidad->id}}">{{Auth::user()->unidad->nombre}}</option>
                                                   @endif
                                               
                                                   </select>                  
@@ -144,7 +150,14 @@ Pacientes <i class="fa fa-home"></i>
                                 </div>
 
                               <!-- End Modal Code -->
-
+                              @if($paciente->estatus==1 && Auth::user()->tipo==3)
+                                <a  href="{{route('suspenderPacienteGerente',$paciente->id)}}" class="btn btn-rounded btn-icon btn-warning" title="Suspender paciente"><i class="fa fa-close"></i></a>
+                              
+                              @elseif($paciente->estatus==2 && Auth::user()->tipo==3)
+                                 <a  href="{{route('activarPacienteGerente',$paciente->id)}}" class="btn btn-rounded btn-icon btn-success" title="Activar paciente"><i class="fa fa-check-square-o"></i></a>
+                              @elseif($paciente->estatus==2 && Auth::user()->tipo<3)
+                                 <a  href="{{route('eliminarPaciente',$paciente->id)}}" class="btn btn-rounded  btn-icon btn-danger" title="Eliminar paciente"><i class="fa fa-trash"></i></a>
+                              @endif
                         </td>
                        
                         </tr>
@@ -181,9 +194,13 @@ Pacientes <i class="fa fa-home"></i>
                                               <label class="col-sm-2 control-label form-label">Unidad: </label>
                                               <div class="col-sm-10">
                                                 <select name="unidad_id" class="selectpicker form-control form-control-radius">
-                                                     
+                                                    @if(Auth::user()->tipo==3)
                                                     <option value="{{Auth::user()->unidad->id}}">{{Auth::user()->unidad->nombre}}</option>
-                                              
+                                                    @else
+                                                      @foreach($unidades as $unidad)
+                                                        <option value="{{$unidad->id}}">{{$unidad->nombre}}</option>
+                                                      @endforeach 
+                                                    @endif
                                                   </select>                  
                                               </div>
                                             </div>

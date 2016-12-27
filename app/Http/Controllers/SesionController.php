@@ -22,15 +22,16 @@ class SesionController extends Controller
     }
 
     public function index(){
+        $d=strtotime("-6 Months");
         switch (Auth::user()->tipo) {
             case 1:
-                $sesiones = Sesion::orderBy('fecha', 'asc')->get();
+                $sesiones = Sesion::where('fecha','>',date("Y-m-d", $d))->orderBy('fecha', 'asc')->get();
                 break;
             case 2:
-                $sesiones = Sesion::orderBy('fecha', 'asc')->get();
+                $sesiones = Sesion::where('fecha','>',date("Y-m-d", $d))->orderBy('fecha', 'asc')->get();
                 break;
             case 3:
-                $sesiones = Sesion::orderBy('fecha', 'asc')->get();
+                $sesiones = Sesion::where('updated_at','>',date('Y-m-d'))->where('user_id',Auth::user()->id)->orderBy('fecha', 'asc')->get();
                 
                 break;
         }

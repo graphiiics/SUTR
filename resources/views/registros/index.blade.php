@@ -166,7 +166,7 @@ Registro <i class="fa fa-home"></i>
            <div  class="form-group">
             <label class="col-sm-2 control-label form-label">Unidad: </label>
             <div class="col-sm-10">
-              <select name="unidad" class="selectpicker form-control form-control-radius">
+              <select name="unidad" class="form-control ">
                   <option value="{{Auth::user()->unidad->id}}">{{Auth::user()->unidad->nombre}}</option>
                 </select>                  
             </div>
@@ -174,7 +174,7 @@ Registro <i class="fa fa-home"></i>
           <div class="form-group">
             <label class="col-sm-2 control-label form-label">Tipo: </label>
             <div class="col-sm-10">
-              <select name="tipo"  id="tipo" @change="limpiarProductos()" class="form-control form-control">
+              <select name="tipo" v-model="tipo" id="tipo" @change="limpiarProductos()" class="form-control form-control">
                   <option value="1">Entrada</option>
                   <option value="2">Salida</option>
                 </select>                  
@@ -191,13 +191,13 @@ Registro <i class="fa fa-home"></i>
               <div class="col-lg-6 md-6">
                 <select  v-model="producto"  id="producto" class="form-control form-control"  @change="datosProducto(producto)">
                   <option value="" >Selecciona un producto</option>
-                  <option v-for="articulo in articulos" value="@{{articulo.key}}">
+                  <option v-for="articulo in articulos" :value="$index">
                     @{{articulo.nombre}} (@{{articulo.presentacion}})
                   </option>
                 </select>     
               </div>
               <div class="col-lg-4 md-4">
-                <div class=" pull-right">
+                <div class="pull-right">
                   <a  href="#" id="agregar" v-on:click="agregarProducto(producto)"  v-on:keyup.space="agregarProducto(producto)"  class="btn btn-rounded btn-success btn-icon"><i class="fa fa-plus"></i></a>
                 </div>
                 <div class="col-lg-8 md-8 input-group">
@@ -220,21 +220,21 @@ Registro <i class="fa fa-home"></i>
                 <tbody id="bodyModal">
                   <tr v-for="producto in productos">
                     <td>@{{$index+1}}</td>
-                    <td>@{{producto.nombre}}<input type="hidden" :name="'producto'+($index+1)" :value="producto.id_producto"></td>
+                    <td>@{{producto.nombre}}<input type="hidden" :name="'producto'+($index+1)" :value="producto.id"></td>
                     <td>@{{producto.categoria}}</td>
                     <template v-if="!producto.editando">
-                      <template v-if="producto.cantidad==1">
-                        <td><input type="hidden" :name="'cantidad'+($index+1)"  class="form-control" :value="producto.cantidad">@{{producto.cantidad}} @{{producto.presentacion}} <input type="hidden" name=""></td>
+                      <template v-if="producto.cantidad_paquete==1">
+                        <td><input type="hidden" :name="'cantidad'+($index+1)"  class="form-control" :value="producto.cantidad_paquete">@{{producto.cantidad_paquete}} @{{producto.presentacion}} <input type="hidden" name=""></td>
                       </template>
                       <template v-else>
-                        <td><input type="hidden" :name="'cantidad'+($index+1)"  class="form-control" :value="producto.cantidad">@{{producto.cantidad}} @{{producto.presentacion}}s</td>
+                        <td><input type="hidden" :name="'cantidad'+($index+1)"  class="form-control" :value="producto.cantidad_paquete">@{{producto.cantidad_paquete}} @{{producto.presentacion}}s</td>
                       </template>
                       <td><a  @click="editarProducto(producto)" class="btn btn-default btn-rounded btn-icon"><i class="fa fa-pencil"></i></a>
                       <a  @click="eliminarProducto(producto)" class="btn btn-danger btn-rounded btn-icon"><i class="fa fa-close"></i></a></td>
                     </template>
                     <template v-else>
                       <td>
-                        <input v-model="producto.cantidad" type="number" min="1"  class="form-control">
+                        <input v-model="producto.cantidad_paquete" type="number" min="1"  class="form-control">
                       </td>
                       <td>
                         <a  @click="actualizarProducto(producto)" class="btn btn-success btn-rounded btn-icon"><i class="fa fa-check"></i></a>
@@ -344,8 +344,8 @@ var nuevo = new Vue({
     nombre:"",
     cantidad: 0,
     id_producto:0,
-    productos:[],
-    articulos:[],
+    productosS:[],
+    productosE:[],
     productosSalida:[],
     productosEntrada:[],
     unidad:'',
@@ -354,40 +354,69 @@ var nuevo = new Vue({
     cantidadMaxima:0,
     editando:false,
     totalProductos:0,
+    tipo:"1",
 
-  },
+  },computed: {
+          articulos: function () {
+            
+           
+            if(this.tipo=="1"){
+              
+              return this.productosEntrada;            
+            }
+            else if(this.tipo=="2"){
+              
+              return this.productosSalida;  
+            }
+          
+        },
+        productos: function () {
+            
+           
+            if(this.tipo=="1"){
+              
+              return this.productosE;            
+            }
+            else if(this.tipo=="2"){
+              
+              return this.productosS;  
+            }
+          
+        },
+        
+    },
   methods: {
     agregarProducto: function (producto) {
       if(this.nombre!=""){
-        if(this.cantidadMaxima<this.cantidad){
+        if(parseInt(this.cantidadMaxima)<parseInt(this.cantidad)){
           this.cantidad=this.cantidadMaxima;
         }
-        this.productos.push({id:this.id,id_producto:this.id_producto,nombre:this.nombre,precio:this.precio,cantidad:this.cantidad,editando:false,categoria:this.categoria,presentacion:this.presentacion});
-        $("#producto option[value='"+producto+"']").remove();
+        this.productos.push(this.articulos[this.id]);
+        this.productos[this.productos.length-1].cantidad_paquete=this.cantidad;
+        this.articulos.$remove(this.articulos[this.id])
         this.totalProductos=this.productos.length;
         this.nombre="";
         this.cantidad=1;   
+        this.producto="";
       }      
     },
     obtenerProductos: function(){
         this.$http.get('productosEntrada').then((response) => {
         this.$set('productosEntrada',response.body)
-        this.$set('articulos',response.body)
+     
        });
          this.$http.get('productosSalida').then((response) => {
         this.$set('productosSalida',response.body)
+        // this.$set('articulos',response.body)
+        
        });
     },
-    limpiarProductos: function(){
-      this.producto=0;
-      this.articulos=[];
-      this.totalProductos=this.productos.length;
-      this.nombre="";
-      this.cantidad=1;    
-      this.articulos=this.produc
+    limpiarProductos: function(){ 
+
+     
     },
     datosProducto: function(index) {
-      this.nombre= this.articulos[index].nombre+' ('+this.articulos[index].presentacion+')';
+      this.nombre=this.articulos[index].nombre;
       this.cantidad=1;
       this.id=index;
       this.id_producto=this.articulos[index].id;
@@ -396,10 +425,7 @@ var nuevo = new Vue({
       this.presentacion=this.articulos[index].presentacion;
     },
     eliminarProducto:function(producto){
-      $('#producto').append($('<option>', {
-      value: producto.id,
-      text: producto.nombre
-      }));
+      this.articulos.push(producto);
       this.productos.$remove(producto)
       this.totalProductos=this.productos.length;
     },
@@ -421,7 +447,6 @@ var nuevo = new Vue({
   }
 });
 
-</script>
 </script>
 
 

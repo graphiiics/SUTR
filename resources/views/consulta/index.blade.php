@@ -154,6 +154,17 @@
                 </div>
               </div>
               <div class="form-group">
+                <div class="col-md-12" >
+                  <label for="hemoglobina" class="col-sm-2 control-label form-label">Hemoglobina</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="hemoglobina" id="hemoglobina">
+                  </div>
+                </div>
+                
+                
+              </div>
+
+              <div class="form-group">
                 
                 
                 <div class="col-md-12" >

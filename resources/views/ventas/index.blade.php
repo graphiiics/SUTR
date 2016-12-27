@@ -337,8 +337,7 @@ Ventas <i class="fa fa-home"></i>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Reporte de Ventas Totales </h4>
               </div>
-               <form class="form-horizontal" role="form" method="POST" action="{{ route('reporteVentasPdf') }}">
-              {!! csrf_field() !!}  
+                
               <div  class="modal-body">   
                 <div class="form-group">
                   <h5>Rango de fechas del reporte</h5>
@@ -685,7 +684,7 @@ var app = new Vue({
     agregarProducto: function (producto) {
       if(this.nombre!=""){
           if(this.precio>0){
-            if(this.cantidadMaxima<this.cantidad){
+            if(parseInt(this.cantidadMaxima)<parseInt(this.cantidad)){
               this.cantidad=this.cantidadMaxima;
             }
             if(this.nombre.includes('Cat'))
@@ -950,7 +949,7 @@ var io = new Vue({
             totalImporte: function(data){
               total=0
               for(var i=0;i<data.length;i++){
-                  total+=data[i].importe
+                  total+=parseInt(data[i].importe)
               }
               console.log(total);   
               return total;

@@ -18,6 +18,7 @@ use App\Proveedor;
 use App\Ingreso;
 use App\Egreso;
 use App\Corte;
+use App\Recibo;
 use Auth;
 class PdfController extends Controller
 {
@@ -25,6 +26,72 @@ class PdfController extends Controller
     {
         $this->middleware('auth');
     }
+    public function registroPdf(Registro $registro)
+	{
+		$contadorPaginas=1;
+		$header = ['#', 'Nombre','Categoria','Cantidad'];
+			Fpdf::AddPage();
+
+		//////////////////times  14 normal inicio
+			//Tipo de documento
+			Fpdf::ln(-20);
+			Fpdf::SetFont('times','I',16);
+			if($registro->tipo==1){
+				Fpdf::Cell(180,20,'Registro (Entrada)',0	,0,'C'); 
+			}else{
+				Fpdf::Cell(180,20,'Registro (Salida)',0	,0,'C'); 
+			}
+			Fpdf::Cell(180,20,'Registro',0	,0,'C'); 
+			Fpdf::ln(15);
+			//Emisor	
+			Fpdf::SetFontSize(10);
+			Fpdf::Cell(60,10,'Realizado por: '.utf8_decode($registro->user->name),0	,0,'C');
+			//Unidad
+			Fpdf::Cell(60,10,'Fecha : '.$registro->fecha,0,0,'C');
+			Fpdf::Cell(60,10,'Unidad: '.utf8_decode($registro->unidad->nombre),0	,0,'C');
+
+		//////////////////times  14 normal fin		
+
+		////////////////// tabla inicio
+			//// Tabla Cabecera Inicio
+			Fpdf::Ln();
+			Fpdf::SetFont('times','B',12);
+			Fpdf::SetFillColor(200,220,255);
+			
+				Fpdf::Cell(30,6,$header[0],1,0,'C',true);
+				Fpdf::Cell(90,6,$header[1],1,0,'C',true);
+				Fpdf::Cell(30,6,$header[2],1,0,'C',true);
+				Fpdf::Cell(30,6,$header[3],1,0,'C',true);
+			
+			Fpdf::Ln();
+			//// Tabla Cabecera Fin
+			//// Tabla Cuerpo Inicio
+			
+			//// Tabla Cuerpo Fin
+			Fpdf::SetFont('arial','I',10);
+			foreach ($registro->productos as $key => $producto) {
+				
+				Fpdf::Cell(30,6,$key+1,1,0,'C');
+				Fpdf::Cell(90,6,utf8_decode($producto->nombre),1,0,'L');
+				Fpdf::Cell(30,6,$producto->categoria,1,0,'L');
+				if($producto->pivot->cantidad==1)
+					Fpdf::Cell(30,6,$producto->pivot->cantidad.' '.$producto->presentacion,1,0,'L');
+				else
+					Fpdf::Cell(30,6,$producto->pivot->cantidad.' '.$producto->presentacion.'s',1,0,'L');
+				Fpdf::Ln();
+
+			}
+			Fpdf::Ln();			
+		////////////////// tabla fin
+
+		///////////Comentario Inicio
+			Fpdf::Cell(180,20,'Comentarios: '.utf8_decode($registro->observaciones),0,0,'L');
+		///////////Comentario Fin
+			Fpdf::SetTitle('Registro'.$registro->id.'_'.$registro->fecha);
+		$headers=['Content-Type'=>'application/pdf'];
+		return Response::make(Fpdf::Output('I','Registro'.$registro->id.'_'.$registro->fecha.'.pdf'), 200,$headers); 
+		
+	}
 		public function pedidoPdf(Pedido $pedido)
 	{
 		$contadorPaginas=1;
@@ -669,68 +736,78 @@ public function ventasTotalesCortePdf(Request $request)
 					
 			Fpdf::SetFont('arial','I',8);
 			foreach ($productos as $producto){
-				Fpdf::Cell(40,5,$producto->nombre,1,0,'C');
-				Fpdf::Cell(30,5,'$'.$producto->precio_venta,1,0,'C');
-				if($producto->TotalProducto==1)
-					Fpdf::Cell(30,5,$producto->TotalProducto.' '.$producto->presentacion,1,0,'C');
-				else{
-					if($producto->TotalProducto==0)
-						$producto->TotalProducto=0;
-					Fpdf::Cell(30,5,$producto->TotalProducto.' '.$producto->presentacion.'s',1,0,'C');
+				if($producto->TotalProducto>0){
+
+
+
+					Fpdf::Cell(40,5,$producto->nombre,1,0,'C');
+					Fpdf::Cell(30,5,'$'.$producto->precio_venta,1,0,'C');
+					if($producto->TotalProducto==1)
+						Fpdf::Cell(30,5,$producto->TotalProducto.' '.$producto->presentacion,1,0,'C');
+					else{
+						if($producto->TotalProducto==0)
+							$producto->TotalProducto=0;
+						Fpdf::Cell(30,5,$producto->TotalProducto.' '.$producto->presentacion.'s',1,0,'C');
+					}
+					if($producto->TotalProductoCredito==1)
+						Fpdf::Cell(30,5,$producto->TotalProductoCredito.' '.$producto->presentacion,1,0,'C');
+					else{
+						if($producto->TotalProductoCredito==0)
+							$producto->TotalProductoCredito=0;
+						Fpdf::Cell(30,5,$producto->TotalProductoCredito.' '.$producto->presentacion.'s',1,0,'C');
+					}
+					Fpdf::Cell(30,5,'$'.($producto->precio_venta*$producto->TotalProducto),1,0,'C');
+					Fpdf::Cell(30,5,'$'.($producto->precio_venta*$producto->TotalProductoCredito),1,0,'C');
+					Fpdf::Ln();
+					$ventasEfectivo+=($producto->precio_venta*$producto->TotalProducto);
+					$ventasCredito+=($producto->precio_venta*$producto->TotalProductoCredito);
 				}
-				if($producto->TotalProductoCredito==1)
-					Fpdf::Cell(30,5,$producto->TotalProductoCredito.' '.$producto->presentacion,1,0,'C');
-				else{
-					if($producto->TotalProductoCredito==0)
-						$producto->TotalProductoCredito=0;
-					Fpdf::Cell(30,5,$producto->TotalProductoCredito.' '.$producto->presentacion.'s',1,0,'C');
-				}
-				Fpdf::Cell(30,5,'$'.($producto->precio_venta*$producto->TotalProducto),1,0,'C');
-				Fpdf::Cell(30,5,'$'.($producto->precio_venta*$producto->TotalProductoCredito),1,0,'C');
-				Fpdf::Ln();
-				$ventasEfectivo+=($producto->precio_venta*$producto->TotalProducto);
-				$ventasCredito+=($producto->precio_venta*$producto->TotalProductoCredito);
-				
 			}
-			Fpdf::Cell(40,5,'Eritropoyetina 4000 (6 Piezas)',1,0,'C');
-			Fpdf::Cell(30,5,'$1000',1,0,'C');
-			if($eritro1000==1)
-				Fpdf::Cell(30,5,$eritro1000.' Caja',1,0,'C');
-			else
-				Fpdf::Cell(30,5,$eritro1000.' Cajas',1,0,'C');
-			if($eritro1000Credito==1)
-				Fpdf::Cell(30,5,$eritro1000Credito.' Caja',1,0,'C');
-			else
-				Fpdf::Cell(30,5,$eritro1000Credito.' Cajas',1,0,'C');
-			Fpdf::Cell(30,5,'$'.($eritro1000*1000),1,0,'C');
-			Fpdf::Cell(30,5,'$'.($eritro1000Credito*1000),1,0,'C');
-			Fpdf::Ln();
-			Fpdf::Cell(40,5,'Eritropoyetina 4000 (1 Piezas)',1,0,'C');
-			Fpdf::Cell(30,5,'$120',1,0,'C');
-			if($eritro120==1)
-				Fpdf::Cell(30,5,$eritro120.' Pieza',1,0,'C');
-			else
-				Fpdf::Cell(30,5,$eritro120.' Piezas',1,0,'C');
-			if($eritro120Credito==1)
-				Fpdf::Cell(30,5,$eritro120Credito.' Pieza',1,0,'C');
-			else
-				Fpdf::Cell(30,5,$eritro120Credito.' Piezas',1,0,'C');
-			Fpdf::Cell(30,5,'$'.($eritro120*120),1,0,'C');
-			Fpdf::Cell(30,5,'$'.($eritro120Credito*120),1,0,'C');
-			Fpdf::Ln();
-			Fpdf::Cell(40,5,'Ventro paciente',1,0,'C');
-			Fpdf::Cell(30,5,'$55',1,0,'C');
-			if($ventro55==1)
-				Fpdf::Cell(30,5,$ventro55.' Caja',1,0,'C');
-			else
-				Fpdf::Cell(30,5,$ventro55.' Cajas',1,0,'C');
-			if($ventro55Credito==1)
-				Fpdf::Cell(30,5,$ventro55Credito.' Caja',1,0,'C');
-			else
-				Fpdf::Cell(30,5,$ventro55Credito.' Cajas',1,0,'C');
-			Fpdf::Cell(30,5,'$'.($ventro55*55),1,0,'C');
-			Fpdf::Cell(30,5,'$'.($ventro55Credito*55),1,0,'C');
-			Fpdf::Ln();
+			if($eritro1000>0){
+				Fpdf::Cell(40,5,'Eritropoyetina 4000 (6 Piezas)',1,0,'C');
+				Fpdf::Cell(30,5,'$1000',1,0,'C');
+				if($eritro1000==1)
+					Fpdf::Cell(30,5,$eritro1000.' Caja',1,0,'C');
+				else
+					Fpdf::Cell(30,5,$eritro1000.' Cajas',1,0,'C');
+				if($eritro1000Credito==1)
+					Fpdf::Cell(30,5,$eritro1000Credito.' Caja',1,0,'C');
+				else
+					Fpdf::Cell(30,5,$eritro1000Credito.' Cajas',1,0,'C');
+				Fpdf::Cell(30,5,'$'.($eritro1000*1000),1,0,'C');
+				Fpdf::Cell(30,5,'$'.($eritro1000Credito*1000),1,0,'C');
+				Fpdf::Ln();
+			}
+			if($eritro120>0){
+				Fpdf::Cell(40,5,'Eritropoyetina 4000 (1 Piezas)',1,0,'C');
+				Fpdf::Cell(30,5,'$120',1,0,'C');
+				if($eritro120==1)
+					Fpdf::Cell(30,5,$eritro120.' Pieza',1,0,'C');
+				else
+					Fpdf::Cell(30,5,$eritro120.' Piezas',1,0,'C');
+				if($eritro120Credito==1)
+					Fpdf::Cell(30,5,$eritro120Credito.' Pieza',1,0,'C');
+				else
+					Fpdf::Cell(30,5,$eritro120Credito.' Piezas',1,0,'C');
+				Fpdf::Cell(30,5,'$'.($eritro120*120),1,0,'C');
+				Fpdf::Cell(30,5,'$'.($eritro120Credito*120),1,0,'C');
+				Fpdf::Ln();
+			}
+			if($ventro55>0){
+				Fpdf::Cell(40,5,'Ventro paciente',1,0,'C');
+				Fpdf::Cell(30,5,'$55',1,0,'C');
+				if($ventro55==1)
+					Fpdf::Cell(30,5,$ventro55.' Caja',1,0,'C');
+				else
+					Fpdf::Cell(30,5,$ventro55.' Cajas',1,0,'C');
+				if($ventro55Credito==1)
+					Fpdf::Cell(30,5,$ventro55Credito.' Caja',1,0,'C');
+				else
+					Fpdf::Cell(30,5,$ventro55Credito.' Cajas',1,0,'C');
+				Fpdf::Cell(30,5,'$'.($ventro55*55),1,0,'C');
+				Fpdf::Cell(30,5,'$'.($ventro55Credito*55),1,0,'C');
+				Fpdf::Ln();
+			}
 			Fpdf::Cell(100);
 			$ventasEfectivo+=($eritro1000*1000)+($eritro120*120)+($ventro55*55);
 			$ventasCredito+=($eritro1000Credito*1000)+($eritro120Credito*120)+($ventro55Credito*55);
@@ -842,7 +919,7 @@ public function ventasTotalesCortePdf(Request $request)
 
 			Fpdf::SetFont('times','B',12);
 			Fpdf::SetFillColor(250,220,255);
-			Fpdf::Cell(190,6,utf8_decode($usuario->name).$fechaInicioCorte.$fechaFinCorte,1,0,'C',true);
+			Fpdf::Cell(190,6,utf8_decode($usuario->name).' Del ' .$fechaInicioCorte.' Al '.$fechaFinCorte,1,0,'C',true);
 			Fpdf::Ln();
 			Fpdf::Cell(190,6,'Suplementos',1,0,'C');
 			$ventasEfectivo=0;
@@ -1030,7 +1107,7 @@ public function ventasTotalesCortePdf(Request $request)
 			Fpdf::Cell(130,5,'Concepto',1,0,'C',true);
 			Fpdf::Cell(30,5,'Importe',1,0,'C',true);
 			Fpdf::SetFont('arial','I',8);
-			foreach (Ingreso::where('created_at','<=',$fechaInicioCorte)->where('created_at','>=',$fechaFinCorte)->where('user_id',$usuario->id)->get() as $ingreso){
+			foreach (Ingreso::where('created_at','>=',$fechaInicioCorte)->where('created_at','<=',$fechaFinCorte)->where('user_id',$usuario->id)->get() as $ingreso){
 				Fpdf::Ln();
 				Fpdf::Cell(30,5,$ingreso->fecha,1,0,'C');
 				Fpdf::Cell(130,5,$ingreso->concepto,1,0,'C');
@@ -1050,7 +1127,7 @@ public function ventasTotalesCortePdf(Request $request)
 			Fpdf::Cell(130,5,'Concepto',1,0,'C',true);
 			Fpdf::Cell(30,5,'Importe',1,0,'C',true);
 			Fpdf::SetFont('arial','I',8);
-			foreach (Egreso::where('created_at','<=',$fechaInicioCorte)->where('created_at','>=',$fechaFinCorte)->where('user_id',$usuario->id)->get() as $egreso){
+			foreach (Egreso::where('created_at','>=',$fechaInicioCorte)->where('created_at','<=',$fechaFinCorte)->where('user_id',$usuario->id)->get() as $egreso){
 				Fpdf::Ln();
 				Fpdf::Cell(30,5,$egreso->fecha,1,0,'C');
 				Fpdf::Cell(130,5,$egreso->concepto,1,0,'C');
@@ -1262,6 +1339,365 @@ public function ventasTotalesCortePdf(Request $request)
         
 		
 }
+
+public function reciboPdf($id){
+			Fpdf::AddPage();
+			$recibo=Recibo::find($id);
+			$altura=Fpdf::GetPageHeight();
+
+		//////////////////times  14 normal inicio
+			//Tipo de documento
+			Fpdf::ln(-25);
+			// Fpdf::SetFillColor(100,100,100);
+			// Fpdf::line(0,$altura/3,220,$altura/3);
+			// Fpdf::line(0,($altura/3)*2,220,($altura/3)*2);
+			Fpdf::SetFillColor(255,255,255);
+			Fpdf::Rect(10,10,190,20,'F');
+			Fpdf::SetFont('times','B',16);
+			Fpdf::Cell(60);
+			
+			Fpdf::Image('../public/img/logo_2.png',20,11,20,0,'PNG');
+			////////////////////////////////
+			Fpdf::Ln();
+			Fpdf::Cell(65);
+
+			Fpdf::Cell(60,10,utf8_decode('Recibo Original'),1,0,'C');
+			Fpdf::Ln();
+			Fpdf::Cell(65);
+			Fpdf::SetFont('Helvetica','B',14);
+			Fpdf::Cell(60,10,utf8_decode($recibo->unidad->nombre),0,0,'C');
+			Fpdf::Ln();
+			Fpdf::Cell(5);
+			/////Fecha
+			Fpdf::SetFont('times','B',14);
+			Fpdf::Cell(60,10,'Fecha:______________',0,0,'L');
+			Fpdf::Cell(-40);
+			Fpdf::SetFont('Courier','I',12);
+			Fpdf::Cell(40,10,$recibo->fecha,0,0,'L');
+			///// Temmina Fecha
+			if($recibo->folio>0){
+				Fpdf::SetFont('times','B',14);
+				Fpdf::Cell(60,10,'Folio Anterior:________',0,0,'C');
+				Fpdf::Cell(-23);
+				Fpdf::SetFont('Courier','I',12);
+				Fpdf::Cell(23,10,$recibo->folio,0,0,'L');
+			}else{
+				Fpdf::Cell(60);
+			}
+			/////Folio
+			Fpdf::SetFont('times','B',14);
+			Fpdf::Cell(60,10,'Folio:_________',0,0,'R');
+			Fpdf::Cell(-23);
+			Fpdf::SetFont('Courier','I',12);
+			Fpdf::Cell(23,10,$recibo->id,0,0,'L');
+
+			/////Termina Folio
+			/////Nombre
+			Fpdf::Ln();
+			Fpdf::Cell(5);
+			Fpdf::SetFont('times','B',14);
+			Fpdf::Cell(180,10,'Nombre del paciente:____________________________________',0,0,'L');
+			Fpdf::Cell(-130);
+			Fpdf::SetFont('Courier','I',12);
+			Fpdf::Cell(60,10,$recibo->paciente->nombre,0,0,'L');
+			// ////Termina Nombre
+			// //// Pago
+			Fpdf::Ln();
+			Fpdf::Cell(5);
+			Fpdf::SetFont('times','B',14);
+			Fpdf::Cell(90,10,'Metodo de pago: ',0,0,'L');
+			Fpdf::SetFont('Courier','I',12);	
+			Fpdf::Cell(-50);
+			Fpdf::Cell(50,10,$recibo->tipo_pago,0,0,'L');
+			if($recibo->tipo_pago=='Efectivo' || $recibo->tipo_pago=='Credito' || $recibo->tipo_pago=='Hospital'){
+				Fpdf::SetFont('times','B',14);
+				Fpdf::Cell(90,10,'Cantidad:__________ ',0,0,'R');
+				Fpdf::SetFont('Courier','I',12);	
+				Fpdf::Cell(-27);
+				Fpdf::Cell(27,10,'$'.number_format($recibo->cantidad,2),0,0,'L');
+			}
+			Fpdf::Ln(5);
+			// ////Termina Pago
+			Fpdf::Ln(20);
+			Fpdf::Cell(90,10,'____________________________ ',0,0,'C');
+			Fpdf::Ln();
+			Fpdf::Cell(90,10,'Nombre y Firma ',0,0,'C');
+			Fpdf::Ln(-25);
+			Fpdf::Cell(90);
+			Fpdf::SetFont('Courier','B',14);
+			Fpdf::Cell(90,30,'Sello del Hospital ',1,0,'C');
+			
+			Fpdf::Ln(-50);
+			Fpdf::Cell(190,85,'',1,0,'C');
+			///////////////////////////////// Termina Recibo Original
+			Fpdf::Ln(5);
+			/////////////////////////////////////////Copia Recibo
+
+			Fpdf::Image('../public/img/logo_2.png',20,101,20,0,'PNG');
+			Fpdf::SetFont('times','B',16);
+			Fpdf::Ln();
+			Fpdf::Cell(65);
+
+			Fpdf::Cell(60,10,utf8_decode('Recibo Copia'),1,0,'C');
+			Fpdf::Ln();
+			Fpdf::Cell(65);
+			Fpdf::SetFont('Helvetica','B',14);
+			Fpdf::Cell(60,10,utf8_decode($recibo->unidad->nombre),0,0,'C');
+			Fpdf::Ln();
+			Fpdf::Cell(5);
+			/////Fecha
+			Fpdf::SetFont('times','B',14);
+			Fpdf::Cell(60,10,'Fecha:______________',0,0,'L');
+			Fpdf::Cell(-40);
+			Fpdf::SetFont('Courier','I',12);
+			Fpdf::Cell(40,10,$recibo->fecha,0,0,'L');
+			///// Temmina Fecha
+			if($recibo->folio>0){
+				Fpdf::SetFont('times','B',14);
+				Fpdf::Cell(60,10,'Folio Anterior:________',0,0,'C');
+				Fpdf::Cell(-23);
+				Fpdf::SetFont('Courier','I',12);
+				Fpdf::Cell(23,10,$recibo->folio,0,0,'L');
+			}else{
+				Fpdf::Cell(60);
+			}
+			/////Folio
+			Fpdf::SetFont('times','B',14);
+			Fpdf::Cell(60,10,'Folio:_________',0,0,'R');
+			Fpdf::Cell(-23);
+			Fpdf::SetFont('Courier','I',12);
+			Fpdf::Cell(23,10,$recibo->id,0,0,'L');
+
+			/////Termina Folio
+			/////Nombre
+			Fpdf::Ln();
+			Fpdf::Cell(5);
+			Fpdf::SetFont('times','B',14);
+			Fpdf::Cell(180,10,'Nombre del paciente:____________________________________',0,0,'L');
+			Fpdf::Cell(-130);
+			Fpdf::SetFont('Courier','I',12);
+			Fpdf::Cell(60,10,$recibo->paciente->nombre,0,0,'L');
+			
+			// ////Termina Nombre
+			// //// Pago
+			Fpdf::Ln();
+			Fpdf::Cell(5);
+			Fpdf::SetFont('times','B',14);
+			Fpdf::Cell(90,10,'Metodo de pago: ',0,0,'L');
+			Fpdf::SetFont('Courier','I',12);	
+			Fpdf::Cell(-50);
+			Fpdf::Cell(50,10,$recibo->tipo_pago,0,0,'L');
+			if($recibo->tipo_pago=='Efectivo' || $recibo->tipo_pago=='Credito' || $recibo->tipo_pago=='Hospital'){
+				Fpdf::SetFont('times','B',14);
+				Fpdf::Cell(90,10,'Cantidad:__________ ',0,0,'R');
+				Fpdf::SetFont('Courier','I',12);	
+				Fpdf::Cell(-27);
+				Fpdf::Cell(27,10,'$'.number_format($recibo->cantidad,2),0,0,'L');
+			}
+
+			Fpdf::Ln(5);
+			// ////Termina Pago
+			Fpdf::Ln(20);
+			Fpdf::Cell(90,10,'____________________________ ',0,0,'C');
+			Fpdf::Ln();
+			Fpdf::Cell(90,10,'Nombre y Firma ',0,0,'C');
+			Fpdf::Ln(-25);
+			Fpdf::Cell(90);
+			Fpdf::SetFont('Courier','B',14);
+			Fpdf::Cell(90,30,'Sello del Hospital ',1,0,'C');
+			
+			Fpdf::Ln(-50);
+			Fpdf::Cell(190,85,'',1,0,'C');
+			//////////////////////////////// Termina Copia Recibo
+			
+			if($recibo->tipo_pago=="Hospital"){
+			Fpdf::Ln(5);
+			///////////////////////////////////////// Copia Hospital
+
+			Fpdf::Image('../public/img/logo_2.png',20,191,20,0,'PNG');
+			Fpdf::SetFont('times','B',16);
+			Fpdf::Ln();
+			Fpdf::Cell(65);
+
+			Fpdf::Cell(60,10,utf8_decode('Recibo Hospital'),1,0,'C');
+			Fpdf::Ln();
+			Fpdf::Cell(65);
+			Fpdf::SetFont('Helvetica','B',14);
+			Fpdf::Cell(60,10,utf8_decode($recibo->unidad->nombre),0,0,'C');
+			Fpdf::Ln();
+			Fpdf::Cell(5);
+			/////Fecha
+			Fpdf::SetFont('times','B',14);
+			Fpdf::Cell(60,10,'Fecha:______________',0,0,'L');
+			Fpdf::Cell(-40);
+			Fpdf::SetFont('Courier','I',12);
+			Fpdf::Cell(40,10,$recibo->fecha,0,0,'L');
+			///// Temmina Fecha
+			if($recibo->folio>0){
+				Fpdf::SetFont('times','B',14);
+				Fpdf::Cell(60,10,'Folio Anterior:________',0,0,'C');
+				Fpdf::Cell(-23);
+				Fpdf::SetFont('Courier','I',12);
+				Fpdf::Cell(23,10,$recibo->folio,0,0,'L');
+			}else{
+				Fpdf::Cell(60);
+			}
+			/////Folio
+			Fpdf::SetFont('times','B',14);
+			Fpdf::Cell(60,10,'Folio:_________',0,0,'R');
+			Fpdf::Cell(-23);
+			Fpdf::SetFont('Courier','I',12);
+			Fpdf::Cell(23,10,$recibo->id,0,0,'L');
+
+			/////Termina Folio
+			/////Nombre
+			Fpdf::Ln();
+			Fpdf::Cell(5);
+			Fpdf::SetFont('times','B',14);
+			Fpdf::Cell(180,10,'Nombre del paciente:____________________________________',0,0,'L');
+			Fpdf::Cell(-130);
+			Fpdf::SetFont('Courier','I',12);
+			Fpdf::Cell(60,10,$recibo->paciente->nombre,0,0,'L');
+			// ////Termina Nombre
+			// //// Pago
+			Fpdf::Ln();
+			Fpdf::Cell(5);
+			Fpdf::SetFont('times','B',14);
+			Fpdf::Cell(90,10,'Metodo de pago: ',0,0,'L');
+			Fpdf::SetFont('Courier','I',12);	
+			Fpdf::Cell(-50);
+			Fpdf::Cell(50,10,$recibo->tipo_pago,0,0,'L');
+			Fpdf::SetFont('times','B',14);
+			Fpdf::Cell(90,10,'Cantidad:__________ ',0,0,'R');
+			Fpdf::SetFont('Courier','I',12);	
+			Fpdf::Cell(-27);
+			Fpdf::Cell(27,10,'$'.number_format($recibo->cantidad,2),0,0,'L');
+			Fpdf::Ln(5);
+			// ////Termina Pago
+			Fpdf::Ln(20);
+			Fpdf::Cell(90,10,'____________________________ ',0,0,'C');
+			Fpdf::Ln();
+			Fpdf::Cell(90,10,'Nombre y Firma ',0,0,'C');
+			Fpdf::Ln(-25);
+			Fpdf::Cell(90);
+			Fpdf::SetFont('Courier','B',14);
+			Fpdf::Cell(90,30,'Sello del Hospital ',1,0,'C');
+			
+			Fpdf::Ln(-50);
+			Fpdf::Cell(190,85,'',1,0,'C');
+			//////////////////////////////// Termina Copia recibo
+		}
+			//// Tabla Cabecera Fin
+			//// Tabla Cuerpo Inicio
+			
+			//// Tabla Cuerpo Fin
+			
+		
+
+		
+			Fpdf::SetTitle('Recibo'.'_'.$recibo->nombre.' _'.date('Y-m-d'));
+		$headers=['Content-Type'=>'application/pdf'];
+		return Response::make(Fpdf::Output('I','Recibo'.'_'.$recibo->nombre.' _'.date('Y-m-d').'.pdf'), 200,$headers);
+	}
+	public function reporteRecibosPdf(Request $request){
+
+		//return $request->all();
+		Fpdf::AddPage();
+		$fechas=$request->input('fechas');
+		$fechaInicio=substr($fechas,6,4).'/'.substr($fechas,0,5);
+		$fechaFin=substr($fechas,-4,4).'/'.substr($fechas,-10,5);
+		$unidad=$request->input('unidad');
+		$paciente=$request->input('paciente');
+		$metodo=$request->input('metodoPago');
+
+		
+		if($unidad==0){
+			if($paciente==0){
+				$recibos=Recibo::where('estatus',2)->where('fecha','>=',$fechaInicio)->where('fecha','<=',$fechaFin)->where('tipo_pago',$metodo)->get();
+			}else{
+				$recibos=Recibo::where('estatus',2)->where('fecha','>=',$fechaInicio)->where('fecha','<=',$fechaFin)->where('paciente_id',$paciente)->where('tipo_pago','like',$metodo.'%')->get();
+			}
+		}else{
+			if($paciente==0){
+				$recibos=Recibo::where('estatus',2)->where('fecha','>=',$fechaInicio)->where('fecha','<=',$fechaFin)->where('unidad_id',$unidad)->where('tipo_pago','like',$metodo.'%')->get();
+			}else{
+				$recibos=Recibo::where('estatus',2)->where('fecha','>=',$fechaInicio)->where('fecha','<=',$fechaFin)->where('unidad_id',$unidad)->where('paciente_id',$paciente)->where('tipo_pago','like',$metodo.'%')->get();
+			}
+		}
+		
+
+		Fpdf::ln(-20);
+		Fpdf::SetFont('times','I',14);
+		Fpdf::Cell(40);
+		Fpdf::Cell(80,20,'Reporte recibos de '.$fechas,0	,0,'C'); 
+		Fpdf::SetFont('times','B',14);
+		if($unidad==0){
+
+			Fpdf::Cell(60,20,'Todas las unidades',0	,0,'C'); 
+		}else{
+			Fpdf::Cell(60,20,utf8_decode(Unidad::find($unidad)->nombre),0	,0,'C'); 
+		}
+		Fpdf::ln();
+		Fpdf::SetFont('times','B',12);
+
+		Fpdf::SetFillColor(200,220,255);
+		Fpdf::Cell(10,10,' # ',1	,0,'C',true);
+		Fpdf::Cell(55,10,'Nombre',1	,0,'C',true);
+		Fpdf::Cell(25,10,'Fecha',1	,0,'C',true);
+		Fpdf::Cell(20,10,'Folio N.',1	,0,'C',true);
+		Fpdf::Cell(20,10,'Folio A.',1	,0,'C',true);
+		Fpdf::Cell(20,10,'Pago',1	,0,'C',true); 
+		Fpdf::Cell(20,10,'Estado',1	,0,'C',true); 
+		Fpdf::Cell(20,10,'Cantidad',1,0,'C',true); 
+		Fpdf::Ln();
+		Fpdf::SetFont('times','I',10);
+		$totalReporte=0;
+		Fpdf::SetFillColor(250,250,250);
+		foreach ($recibos as $key => $recibo) {
+			$totalReporte+=$recibo->cantidad;
+			if($key%2==0){
+				Fpdf::Cell(10,8,$key+1,1,0,'C');
+				Fpdf::Cell(55,8,$recibo->paciente->nombre,1	,0,'L');
+				Fpdf::Cell(25,8,$recibo->fecha,1,0,'C');
+				Fpdf::Cell(20,8,$recibo->id,1,0,'C');
+				Fpdf::Cell(20,8,$recibo->folio,1,0,'C');
+				Fpdf::Cell(20,8,utf8_decode($recibo->tipo_pago),1,0,'L'); 
+				if($recibo->estatus==1)
+					Fpdf::Cell(20,8,'Emitido',1	,0,'C'); 
+				elseif($recibo->estatus==2)
+					Fpdf::Cell(20,8,'Pagado',1	,0,'C'); 
+				elseif($recibo->estatus==3)
+					Fpdf::Cell(20,8,'Credito',1,0,'C');
+				elseif($recibo->estatus==6)
+					Fpdf::Cell(20,8,'Cancelado',1,0,'C');
+				Fpdf::Cell(20,8,'$'.number_format($recibo->cantidad,2),1,1,'L');
+			}else
+			{
+				Fpdf::Cell(10,8,$key+1,1,0,'C',true);
+				Fpdf::Cell(55,8,$recibo->paciente->nombre,1	,0,'L',true);
+				Fpdf::Cell(25,8,$recibo->fecha,1,0,'C',true);
+				Fpdf::Cell(20,8,$recibo->id,1,0,'C',true);
+				Fpdf::Cell(20,8,$recibo->folio,1,0,'C',true);
+				Fpdf::Cell(20,8,utf8_decode($recibo->tipo_pago),1,0,'L',true); 
+				if($recibo->estatus==1)
+					Fpdf::Cell(20,8,'Emitido',1	,0,'C',true); 
+				elseif($recibo->estatus==2)
+					Fpdf::Cell(20,8,'Pagado',1	,0,'C',true); 
+				elseif($recibo->estatus==3)
+					Fpdf::Cell(20,8,'Credito',1,0,'C',true);
+				elseif($recibo->estatus==6)
+					Fpdf::Cell(20,8,'Cancelado',1,0,'C');
+				Fpdf::Cell(20,8,'$'.number_format($recibo->cantidad,2),1,1,'L',true);
+			}
+		}
+		Fpdf::SetFillColor(200,220,255);
+		Fpdf::Cell(140);
+		Fpdf::Cell(20,8,'Total: ',1,0,'L',true); 
+		Fpdf::Cell(30,8,'$'.number_format($totalReporte,2),1,0,'L'); 
+		Fpdf::SetTitle('Reporte_recibos'.' _'.date('Y-m-d'));
+		$headers=['Content-Type'=>'application/pdf'];
+		return Response::make(Fpdf::Output('I','Recibo _'.date('Y-m-d').'.pdf'), 200,$headers);
+	}
 
 ///////////////////////////////////////////////////////////////////////
 	// public function ventasTotalesCortePdf() Funcion Alternativa

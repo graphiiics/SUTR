@@ -69,18 +69,19 @@ class RegistroController extends Controller
             if($cantidad<1){
                 unset($productos[$key]);
             }else{
-                $producto->key=$key;
+                 $producto->key=$key;
+                $producto->editando=false;
                 $producto->stock=$cantidad;
             }
         }
-        return $productos;
+        return $productos->unique();
     }
     public function productosEntrada(Producto $producto)
     {
         $productos= Producto::orderBy('nombre', 'asc')->get();
         foreach ($productos as $key=>$producto) {
-            
                 $producto->key=$key;
+                $producto->editando=false;
                 $producto->stock=100;
             
         }
@@ -115,7 +116,7 @@ class RegistroController extends Controller
     }
 
     public function guardarRegistro(Request $request){
-    	 
+    	//return $request->all();
     	if($request->input('totalProductos')>0){
     		$registro= new Registro;
 	    	$registro->user_id=Auth::user()->id;

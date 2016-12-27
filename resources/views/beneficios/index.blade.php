@@ -66,11 +66,9 @@ Beneficios <i class="fa fa-home"></i>
                         <td>{{$beneficio->empresa->razon_social}}</td>
                         <td>{{$beneficio->concepto->nombre}}</td>
                          <td>{{$beneficio->paciente->nombre}}</td>
-                        @if(is_int($beneficio->cantidad))
-                          <td>${{$beneficio->cantidad}}</td>
-                        @else
-                           <td>${{$beneficio->cantidad}}.00</td>
-                        @endif
+                        
+                           <td>${{number_format($beneficio->cantidad,2)}}</td>
+                        
                         <td>{{$beneficio->sesiones}}</td>
                         <td>{{$beneficio->sesiones_realizadas}}</td>
                         @if($beneficio->estatus==1)
@@ -122,12 +120,13 @@ Beneficios <i class="fa fa-home"></i>
                     <label class="col-sm-2 control-label form-label">Unidad: </label>
                     <div class="col-sm-10">
                       <select name="unidad_id" class="selectpicker form-control form-control-radius">
-                         @if(!Auth::user()->tipo==3)
-                          @foreach($unidades as $unidad) 
+                         @if(Auth::user()->tipo==3)
+                         
+                           <option value="{{Auth::user()->unidad->id}}">{{Auth::user()->unidad->nombre}}</option>
+                        @else
+                           @foreach($unidades as $unidad) 
                             <option value="{{$unidad->id}}">{{$unidad->nombre}}</option>
                           @endforeach
-                        @else
-                           <option value="{{Auth::user()->unidad->id}}">{{Auth::user()->unidad->nombre}}</option>
                         @endif
 
                         </select>                  

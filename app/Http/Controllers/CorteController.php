@@ -85,11 +85,11 @@ class CorteController extends Controller
     }
     public function obtenerIngresos()
     {
-        return Ingreso::where('corte',0)->get();
+        return Ingreso::where('corte',0)->where('user_id',Auth::user()->id)->get();
     }
     public function obtenerEgresos()
     {
-        return Egreso::where('corte',0)->get();
+        return Egreso::where('corte',0)->where('user_id',Auth::user()->id)->get();
     }
 
     public function guardarIngresos(Request $request){

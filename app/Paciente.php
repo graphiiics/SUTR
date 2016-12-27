@@ -9,7 +9,7 @@ class Paciente extends Model
      protected $table = 'pacientes';
      protected $primaryKey = 'id';
     protected $fillable = [
-        'unidad_id','nombre', 'direccion','celular','telefono'
+        'unidad_id','nombre', 'direccion','celular','telefono','estatus'
     ];
   
 

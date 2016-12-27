@@ -70,14 +70,9 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">Detalles del pedido </h4>
                       </div>
-                          <template v-if="tipo_usuario==2 && pedido.estatus=='Pendiente'" >
-                          <form class="form-horizontal" v-if="" role="form" method="POST" action="emitirPedido/@{{pedido.id}}">
-                           </form>
-                        </template>
-                         <template v-if="pedido.user_id==usuario && pedido.estatus=='Pendiente' ">
-                         <form class="form-horizontal" v-if="" role="form" method="POST" action="emitirPedido/@{{pedido.id}}">
-                           </form>
-                         </template>
+                          
+                      <form class="form-horizontal"  role="form" method="POST" action="emitirPedido/@{{pedido.id}}">
+                         
                           
                       <div class="modal-body">
                         
@@ -179,18 +174,19 @@
                         <template v-if="tipo_usuario==2 && pedido.estatus=='Pendiente'" >
                          
                            <button   type="submit" class="btn btn-warning">Emitir Pedido</button>
-                           </form>
+                          
                         </template>
                         <template v-if="pedido.user_id==usuario && pedido.estatus=='Pendiente' ">
                         
                            <button   type="submit" class="btn btn-warning">Actulizar Pedido</button>
-                          </form>
+                          
                           <a   @click="eliminarPedido(pedido.id)"  class="btn btn-danger" ">Eliminar Pedido</a>
                         </template>
                          
                         <a  href="../pedidoPdf/@{{pedido.id}}" target="_blank" class="btn btn-default">Imprimir</a>
                       </div>
                     </div>
+                  </form>
                   </div>
                 </div>
                     <!-- End Modal Code -->
@@ -234,13 +230,15 @@
         </div>
         @if(Auth::user()->tipo==1)
             <form class="form-horizontal" role="form" method="POST" action="{{ route('guardarPedido') }}">
+            {!! csrf_field() !!} 
           @elseif(Auth::user()->tipo==2)
             <form  class="form-horizontal" role="form" method="POST" action="{{ route('guardarPedido') }}">
+            {!! csrf_field() !!} 
           @elseif(Auth::user()->tipo==3)
             <form  class="form-horizontal" role="form" method="POST" action="{{ route('guardarPedidoGerente') }}">
              {!! csrf_field() !!}   
           @endif
-        <form  class="form-horizontal" role="form" method="POST" action="{{ route('guardarPedidoGerente') }}">
+       
         <div  class="modal-body"> 
           <div  class="form-group">
             <label class="col-lg-2 sm-2  control-label form-label">Unidad: </label>
@@ -433,8 +431,8 @@ var tabla = new Vue({
             },
              agregarProducto: function (producto) {
               if(this.nombre!=""){
-                if(this.cantidadMaxima<this.cantidad){
-                  this.cantidad=this.cantidadMaxima;
+                if(parseInt(this.cantidadMaxima)<parseInt(this.cantidad)){
+                  this.cantidad=parseInt(this.cantidadMaxima);
                 }
                 this.productos.push(this.articulos[producto]);
                 this.productos[this.productos.length-1].pivot.cantidad=this.cantidad;
@@ -509,7 +507,7 @@ var nuevo = new Vue({
   methods: {
     agregarProducto: function (producto) {
       if(this.nombre!=""){
-        if(this.cantidadMaxima<this.cantidad){
+        if(parseInt(this.cantidadMaxima)<parseInt(this.cantidad)){
           this.cantidad=this.cantidadMaxima;
         }
         this.productos.push({id:this.id,id_producto:this.id_producto,nombre:this.nombre,precio:this.precio,cantidad:this.cantidad,editando:false,categoria:this.categoria,presentacion:this.presentacion});

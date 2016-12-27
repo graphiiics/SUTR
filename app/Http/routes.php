@@ -26,8 +26,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('hojaConsulta','consultaController@index');
-Route::get('imprimirHoja','consultaController@imprimirHoja');
+Route::get('hojaConsulta','ConsultaController@index');
+Route::get('imprimirHoja','ConsultaController@imprimirHoja');
 
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
@@ -131,6 +131,10 @@ Route::group(['middleware' => 'admin','prefix'=>'admin'], function() {
     Route::get('pacientes',['as'=>'pacientes','uses'=>'PacienteController@index']);
     Route::post('editarPaciente/{paciente}',['as'=>'editarPaciente','uses'=>'PacienteController@editarPaciente'])->where('paciente', '[0-9]+');
     Route::post('guardarPaciente',['as'=>'guardarPaciente','uses'=>'PacienteController@guardarPaciente']);
+    Route::get('pacientesUnidad',['as'=>'pacientesUnidad','uses'=>'PacienteController@pacientesUnidad']);
+    Route::get('activarPaciente/{paciente}',['as'=>'activarPaciente','uses'=>'PacienteController@activarPaciente'])->where('paciente','[0-9]+');
+    Route::get('suspenderPaciente/{paciente}',['as'=>'suspenderPaciente','uses'=>'PacienteController@suspenderPaciente'])->where('paciente','[0-9]+');
+    Route::get('eliminarPaciente/{paciente}',['as'=>'eliminarPaciente','uses'=>'PacienteController@eliminarPaciente'])->where('paciente','[0-9]+');
 
     //Rutas Cortes
     Route::get('cortes',['as'=>'cortes','uses'=>'CorteController@index']);
@@ -143,7 +147,12 @@ Route::group(['middleware' => 'admin','prefix'=>'admin'], function() {
      //Rutas Beneficios
     Route::get('beneficios',['as'=>'beneficios','uses'=>'BeneficioController@index']);
     Route::post('editarBeneficio/{beneficio}',['as'=>'editarBeneficio','uses'=>'BeneficioController@editarBeneficio'])->where('beneficio', '[0-9]+');
-    Route::post('guardarBeneficio',['as'=>'guardarBeneficio','uses'=>'BeneficioController@guardarBeneficio']);
+    Route::post('guardarBeneficio',['as'=>'guardarBeneficio','uses'=>'BeneficioController@guardarBeneficio']); 
+    // Rutas Recibos
+    Route::get('recibos',['as'=>'recibos','uses'=>'ReciboController@index']);
+
+    //Rutas Conceptos
+    Route::get('obtenerConceptos',['as'=>'obtenerConceptos','uses'=>'ConceptoController@obtenerConceptos']);
  });
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -186,6 +195,8 @@ Route::group(['middleware' => 'gerente','prefix'=>'gerente'], function() {
     Route::get('pacientes',['as'=>'pacientesGerente','uses'=>'PacienteController@index']);
     Route::post('editarPaciente/{paciente}',['as'=>'editarPacienteGerente','uses'=>'PacienteController@editarPaciente'])->where('paciente', '[0-9]+');
     Route::post('guardarPaciente',['as'=>'guardarPacienteGerente','uses'=>'PacienteController@guardarPaciente']);
+    Route::get('activarPaciente/{paciente}',['as'=>'activarPacienteGerente','uses'=>'PacienteController@activarPaciente'])->where('paciente','[0-9]+');
+    Route::get('suspenderPaciente/{paciente}',['as'=>'suspenderPacienteGerente','uses'=>'PacienteController@suspenderPaciente'])->where('paciente','[0-9]+');
 
   //Rutas Cortes
     Route::get('cortes',['as'=>'cortesGerente','uses'=>'CorteController@index']);
@@ -203,6 +214,7 @@ Route::group(['middleware' => 'gerente','prefix'=>'gerente'], function() {
     Route::get('liquidarRecibo/{recibo}',['as'=>'liquidarReciboGerente','uses'=>'ReciboController@liquidarRecibo'])->where('recibo', '[0-9]+');
     Route::post('guardarRecibo',['as'=>'guardarReciboGerente','uses'=>'ReciboController@guardarRecibo']);
     Route::get('datosPaciente/{paciente}',['as'=>'datosPaciente','uses'=>'ReciboController@datosPaciente'])->where('paciente','[0-9]+');
+    Route::get('cancelarRecibo/{recibo}',['as'=>'cancelarReciboGerente','uses'=>'ReciboController@cancelarRecibo'])->where('recibo', '[0-9]+');
 
 
     //Rutas Beneficios
@@ -233,6 +245,8 @@ Route::group(['middleware' => 'gerente','prefix'=>'gerente'], function() {
     Route::get('ventasTotalesCortePdfReimpresion',['as'=>'ventasTotalesCortePdfReimpresion', 'uses'=>'PdfController@ventasTotalesCortePdfReimpresion']);
     Route::get('reporteVentasPdf',['as'=>'reporteVentasPdf', 'uses'=>'PdfController@reporteVentasPdf']);
     Route::get('entradaSalidaSuplementosPdf',['as'=>'entradaSalidaSuplementosPdf', 'uses'=>'PdfController@entradaSalidaSuplementosPdf']);
+    Route::get('reporteRecibosPdf',['as'=>'reporteRecibosPdf', 'uses'=>'PdfController@reporteRecibosPdf']);
+    
 
 
     //Ruta Productos

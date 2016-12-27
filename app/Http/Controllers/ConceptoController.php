@@ -63,4 +63,8 @@ class ConceptoController extends Controller
         
         return redirect('consultar_conceptos');
     }
+
+    public function obtenerConceptos(){
+        return Concepto::all();
+    } 
 }

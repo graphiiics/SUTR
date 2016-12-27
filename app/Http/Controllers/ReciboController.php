@@ -12,6 +12,7 @@ use App\Beneficio;
 use Auth;
 use Session;
 use App\Sesion;
+use App\User;
 
 class ReciboController extends Controller
 {
@@ -23,19 +24,20 @@ class ReciboController extends Controller
     public function index(){
         switch (Auth::user()->tipo) {
             case 1:
-                $recibos = Recibo::orderBy('fecha', 'asc')->get();
+                $recibos = Recibo::where('estatus','!=',6)->orderBy('fecha', 'asc')->get();
                 break;
             case 2:
-                $recibos = Recibo::orderBy('fecha', 'asc')->get();
+                $recibos = Recibo::where('estatus','!=',6)->orderBy('fecha', 'asc')->get();
+
                 break;
             case 3:
-                $recibos = Recibo::where('user_id',Auth::user()->id)->orderBy('fecha', 'asc')->get();
+                $recibos = Recibo::where('estatus','!=',6)->where('user_id',Auth::user()->id)->where('updated_at','>',date('Y-m-d'))->orWhere('estatus',1)->orWhere('estatus',3)->orderBy('fecha', 'asc')->get();
                 
                 break;
         }
-    	
-        $pacientes=Paciente::where('unidad_id',Auth::user()->unidad_id)->orderBy('nombre', 'asc')->get();
-    	return view('recibos/index',compact('recibos','pacientes'));
+    	$usuarios=User::where('tipo',3)->get();
+        $pacientes=Paciente::where('unidad_id',Auth::user()->unidad_id)->where('estatus',1)->orderBy('nombre', 'asc')->get();
+    	return view('recibos/index',compact('recibos','pacientes','usuarios'));
     }
 
     public function terminarRecibo(Recibo $recibo)
@@ -107,18 +109,51 @@ class ReciboController extends Controller
             
     	switch (Auth::user()->tipo) {
 	    	case 1:
-	    		return redirect('superAdmin/sesiones'); //Cambiar a Sesiones
+	    		return redirect('superAdmin/recibos'); //Cambiar a Sesiones
 	    		break;
 	    	case 2:
-	    		return redirect('admin/sesiones');
+	    		return redirect('admin/recibos');
 	    		break;
 	    	case 3:
-	    		return redirect('gerente/sesiones');
+	    		return redirect('gerente/recibos');
 	    		break;
     	
    		}
    	}
+     public function cancelarRecibo(Recibo $recibo)
+    {
+        
+             // 1:Emitido //2:Pagado 3:Credito 4:Conciliando 5:Finalizado 6:cancelado
+        if($recibo->update(['estatus'=>6]))
+        {
+            if($recibo->beneficio && $recibo->tipo_pago.contains($recibo->beneficio->concepto->nombre)){
+                $beneficio=Beneficio::find($recibo->beneficio_id);
+                $beneficio->sesiones_realizadas--;
+                $beneficio->save();
 
+            }
+                Session::flash('message','Recibo Cancelado correctamente');
+                Session::flash('class','success');
+
+        }
+        else{
+            Session::flash('message','Error al cancelar recibo, vuelve a intentarlo');
+            Session::flash('class','danger');
+        }
+            
+        switch (Auth::user()->tipo) {
+            case 1:
+                return redirect('superAdmin/recibos'); //Cambiar a Sesiones
+                break;
+            case 2:
+                return redirect('admin/recibos');
+                break;
+            case 3:
+                return redirect('gerente/recibos');
+                break;
+        
+        }
+    }
     public function datosPaciente(Paciente $paciente)
     {  
         $algo=array(); //array vacio

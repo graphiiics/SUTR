@@ -228,7 +228,7 @@ class PedidoController extends Controller
         $pedido->productos()->detach();
         for($i=0;$i<intval($request->input('totalProductos'));$i++){ 
             $producto=Producto::find($request->input('productoEditar'.$i));
-            $cantidadActual=$producto->unidades()->find(Auth::user()->unidad_id)->pivot->cantidad;
+            $cantidadActual=$producto->unidades()->find(1)->pivot->cantidad;
             $cantidadSolicitada=$request->input('cantidadEditar'.$i);
             $cantidadFinal=$cantidadActual-$cantidadSolicitada;
             if($cantidadSolicitada>$cantidadActual){
@@ -274,7 +274,7 @@ class PedidoController extends Controller
                 $pedido->productos()->detach();
                 for($i=0;$i<intval($request->input('totalProductos'));$i++){ 
                     $producto=Producto::find($request->input('productoEditar'.$i));
-                    $cantidadActual=$producto->unidades()->find(Auth::user()->unidad_id)->pivot->cantidad;
+                    $cantidadActual=$producto->unidades()->find(1)->pivot->cantidad;
                     $cantidadSolicitada=$request->input('cantidadEditar'.$i);
                     $cantidadFinal=$cantidadActual-$cantidadSolicitada;
                     if($cantidadSolicitada>$cantidadActual){
