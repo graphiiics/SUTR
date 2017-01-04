@@ -26,7 +26,7 @@ class ConsultaController extends Controller
 			Fpdf::SetFont('times','I',16);
 			Fpdf::Cell(60);
 			Fpdf::Cell(60,20,'Hoja de '.utf8_decode('Análisis Clinicos'),0	,0,'C'); 
-			Fpdf::Image('../public/img/laboratorioUTR.png',30,55,150,0,'PNG');
+			Fpdf::Image('img/laboratorioUTR.png',30,55,150,0,'PNG');
 		
 		//////////////////times  14 normal fin
 			Fpdf::SetFont('times','',14);	

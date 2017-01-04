@@ -22,20 +22,23 @@ class SesionController extends Controller
     }
 
     public function index(){
-        $d=strtotime("-6 Months");
+        $d=strtotime("-3 Months");
         switch (Auth::user()->tipo) {
             case 1:
-                $sesiones = Sesion::where('fecha','>',date("Y-m-d", $d))->orderBy('fecha', 'asc')->get();
+                $recibos = Reciborecibos::where('fecha','>',date("Y-m-d", $d))->orderBy('fecha', 'asc')->get();
                 break;
             case 2:
-                $sesiones = Sesion::where('fecha','>',date("Y-m-d", $d))->orderBy('fecha', 'asc')->get();
+                $recibos = Recibo::where('fecha','>',date("Y-m-d", $d))->orderBy('fecha', 'asc')->get();
                 break;
             case 3:
-                $sesiones = Sesion::where('updated_at','>',date('Y-m-d'))->where('user_id',Auth::user()->id)->orderBy('fecha', 'asc')->get();
-                
+                $recibos = Recibo::where('fecha','>',date("Y-m-d", $d))->orderBy('fecha', 'asc')->get();
+               
                 break;
         }
-    	
-    	return view('sesiones/index',compact('sesiones'));
+    	foreach ($recibos as $recibo) {
+            $recibo->sesion;
+        }
+       // return $recibos;
+    	return view('sesiones/index',compact('recibos'));
     }
 }

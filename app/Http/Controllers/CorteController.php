@@ -8,7 +8,7 @@ use App\Http\Requests;
 use App\Corte;
 use App\Venta;
 use App\Egreso;
-use App\ingreso;
+use App\Ingreso;
 use App\Producto;
 use Auth;
 use Session;

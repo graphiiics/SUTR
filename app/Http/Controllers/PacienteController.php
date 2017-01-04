@@ -149,7 +149,7 @@ class PacienteController extends Controller
     }
     public function pacientesUnidad(Request $request){
         if($request->input('id')==0){
-            return Paciente::where('estatus',1)->get()->orderBy('nombre','asc');
+            return Paciente::where('estatus',1)->orderBy('nombre','asc')->get();
         }else{
             return Unidad::find($request->input('id'))->pacientes;
         }

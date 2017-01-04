@@ -59,20 +59,20 @@ Sesiones <i class="fa fa-home"></i>
                 </thead>
              
                 <tbody>
-                    @foreach ($sesiones as $sesion)
+                    @foreach ($recibos as $recibo)
                       <tr>
-                        <td>{{$sesion->id}}</td>
+                        <td>{{$recibo->sesion->id}}</td>
                         @if(Auth::user()->tipo<=2)
-                          <td>{{Auth::user()->unidad->nombre}}</td>
+                          <td>{{$recibo->unidad->nombre}}</td>
                         @endif
-                        <td>{{$sesion->recibo->paciente->nombre}}</td>
+                        <td>{{$recibo->paciente->nombre}}</td>
                        
-                        <td>{{$sesion->fecha}}</td>
+                        <td>{{$recibo->sesion->fecha}}</td>
                         
-                        <td>{{$sesion->conecto}}</td>
-                        <td>{{$sesion->desconecto}}</td>
+                        <td>{{$recibo->sesion->conecto}}</td>
+                        <td>{{$recibo->sesion->desconecto}}</td>
                          
-                        <td><a  href="{{route('hojaControlPdf',$sesion->id)}}"  class="btn btn-rounded btn-icon btn-info"><i title="Imprimir hoja de control" class="fa fa-print"></i></a>
+                        <td><a  href="{{route('hojaControlPdf',$recibo->sesion->id)}}"  class="btn btn-rounded btn-icon btn-info"><i title="Imprimir hoja de control" class="fa fa-print"></i></a>
                           
                         </td>
                        

@@ -22,19 +22,24 @@ class ReciboController extends Controller
     }
 
     public function index(){
+         $d=strtotime("-3 Months");
         switch (Auth::user()->tipo) {
             case 1:
-                $recibos = Recibo::where('estatus','!=',6)->orderBy('fecha', 'asc')->get();
+                $recibos = Recibo::where('fecha','>',date("Y-m-d", $d))->where('estatus','!=',6)->orderBy('fecha', 'asc')->get();
                 break;
             case 2:
-                $recibos = Recibo::where('estatus','!=',6)->orderBy('fecha', 'asc')->get();
+                $recibos = Recibo::where('fecha','>',date("Y-m-d", $d))->where('estatus','!=',6)->orderBy('fecha', 'asc')->get();
 
                 break;
             case 3:
-                $recibos = Recibo::where('estatus','!=',6)->where('user_id',Auth::user()->id)->where('updated_at','>',date('Y-m-d'))->orWhere('estatus',1)->orWhere('estatus',3)->orderBy('fecha', 'asc')->get();
+                $recibos = Recibo::where('fecha','>',date("Y-m-d", $d))->where('estatus','!=',6)->where('user_id',Auth::user()->id)->where('updated_at','>',date('Y-m-d'))->orWhere('estatus',1)->orWhere('estatus',3)->orderBy('fecha', 'asc')->get();
                 
                 break;
         }
+        foreach ($recibos as $recibo) {
+           $recibo->folios;
+        }
+        return $recibos;
     	$usuarios=User::where('tipo',3)->get();
         $pacientes=Paciente::where('unidad_id',Auth::user()->unidad_id)->where('estatus',1)->orderBy('nombre', 'asc')->get();
     	return view('recibos/index',compact('recibos','pacientes','usuarios'));
@@ -67,7 +72,7 @@ class ReciboController extends Controller
     {
        
         
-            if($recibo->update(['estatus'=>2])){
+            if($recibo->update(['estatus'=>2,'tipo_pago'=>'Hospital'])){
                 Session::flash('message','Pago liquidado, ahora puedes imprimir tu recibo!');
                 Session::flash('class','success');
             }else{

@@ -158,7 +158,7 @@ Compras <i class="fa fa-home"></i>
                           <div  class="form-group">
                             <label class="col-sm-2 control-label form-label">Proveedor: </label>
                             <div class="col-sm-10">
-                              <select name="proveedor" id="proveedor" onchange="actualizarProductos();" class="selectpicker form-control form-control-radius">
+                              <select name="proveedor" id="proveedor" onchange="actualizarProductos();" class="form-control form-control-radius">
                                 <option>Selecciona un proveedor</option>
                                  @foreach($proveedores  as $proveedor)
                                  <option value="{{$proveedor->id}}" >{{$proveedor->nombre}}</option>
@@ -170,7 +170,7 @@ Compras <i class="fa fa-home"></i>
                           <div class="form-group  ">
                               <label  class="col-lg-2 md-2 control-label form-label">Producto:</label>
                               <div class="col-lg-8 md-8">
-                                <select id="nProducto" onchange="actualizarPrecio();" class="selectpicker form-control form-control-radius" disabled>
+                                <select id="nProducto" onchange="actualizarPrecio();" class=" form-control form-control-radius" disabled>
                                 </select>     
                               </div>
                               <div class="col-lg-2 md-2">

@@ -23,7 +23,7 @@ Recibos <i class="fa fa-home"></i>
 @if(Auth::user()->tipo==3)
   <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light"><i class="fa fa-plus"></i> Crear Nuevo</a>  
 @else
-   <a href="#" data-toggle="modal" data-target="#modalFechas"  class="btn btn-light"><i class="fa fa-file-pdf-o"></i>Reporte de Ventas</a>
+   <a href="#" data-toggle="modal" data-target="#modalFechas"  class="btn btn-light"><i class="fa fa-file-pdf-o"></i>Reporte recibos</a>
 @endif
 @endsection
 @section('panelBotones')
@@ -32,7 +32,7 @@ Recibos <i class="fa fa-home"></i>
   @if(Auth::user()->tipo==3)
     <a href="#" data-toggle="modal" data-target="#modal_nuevo"  class="btn btn-light cerrarPanel"><i class="fa fa-plus"></i> Crear Nuevo</a>
   @else
-    <a href="#" data-toggle="modal" data-target="#modalFechas"  class="btn btn-light cerrarPanel"><i class="fa fa-plus"></i>Reporte de Ventas</a>
+    <a href="#" data-toggle="modal" data-target="#modalFechas"  class="btn btn-light cerrarPanel"><i class="fa fa-plus"></i>Reporte recibos</a>
   @endif
   </li>
 @endsection
@@ -211,7 +211,7 @@ Recibos <i class="fa fa-home"></i>
                   <div class="col-sm-3"> 
                   <label>Unidad</label> 
                     <select name="usuario" id="usuarioFechas" onchange="pacientesUnidad();" class="selectpicker form-control form-control" >
-                    <option value="0">Todas</option>
+                    <option value="0" selected >Todas</option>
                       @foreach($usuarios as $usuario)
                         
                         <option value="{{$usuario->unidad_id}}">{{$usuario->unidad->nombre}}</option>
@@ -223,7 +223,7 @@ Recibos <i class="fa fa-home"></i>
                     <label>Paciente</label> 
                     <select name="paciente" id="usuarioPacientes" class=" form-control form-control" >
                     
-                    <option value="0">Todas</option>
+                    <option value="0" selected>Todos</option>
                       
                     </select>  
                     
@@ -231,10 +231,12 @@ Recibos <i class="fa fa-home"></i>
                   <div class="col-sm-3">
                     <label>Tipo de pago</label> 
                     <select name="metodoPago" id="metodoPago" class=" form-control form-control" >
+                    <option value="0" selected>Todos</option>  
                     <option>Efectivo</option>
                     <option>Credito</option>
                     <option>Hospital</option>
                     <option>Cortecía</option>
+                    <option>Cargo a habitación</option>
                       
                     </select>  
                     
@@ -337,6 +339,7 @@ $(document).ready(function() {
     $('#example0').DataTable();
     var cantidad=0;
     conceptos();
+    pacientesUnidad();
 } );
 $(document).ready(function() {
     $('#date-range-picker').daterangepicker(null, function(start, end, label) {
@@ -356,7 +359,7 @@ function FechasRecibos(){
   }
 function pago() {
   
-  if($('#tipoPago').val()=="Efectivo" || $('#tipoPago').val()=="Credito" || $('#tipoPago').val()=="Hospital"){
+  if($('#tipoPago').val()=="Efectivo" || $('#tipoPago').val()=="Credito" || $('#tipoPago').val()=="Hospital" ||  $('#tipoPago').val()=="Cargo a habitación"){
         $('#cantidad').val(1020).attr('readonly',false);
     }
   else{
@@ -440,6 +443,10 @@ function datosPaciente(){
             text: 'Hospital',
              }));
         $('#tipoPago').append($('<option>', {
+            value: 'Cargo a habitación',
+            text: 'Cargo a habitación',
+             }));
+        $('#tipoPago').append($('<option>', {
             value: 'Cortecía',
             text: 'Cortecía',
              }));
@@ -464,6 +471,10 @@ function datosPaciente(){
         $('#tipoPago').append($('<option>', {
             value: 'Hospital',
             text: 'Hospital',
+             }));
+         $('#tipoPago').append($('<option>', {
+            value: 'Cargo a habitación',
+            text: 'Cargo a habitación',
              }));
         $('#tipoPago').append($('<option>', {
             value: 'Cortecía',

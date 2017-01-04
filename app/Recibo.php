@@ -42,6 +42,13 @@ class Recibo extends Model
     {
         return $this->belongsTo('App\Unidad');
     }
-
-
+    public function sesion()
+    {
+        return $this->hasOne('App\Sesion');
+    }
+    public function folios()
+    {
+        return $this->hasOne('App\Folio_recibos');
+    }
+    
 }
