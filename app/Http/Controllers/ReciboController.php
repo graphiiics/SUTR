@@ -22,7 +22,7 @@ class ReciboController extends Controller
     }
 
     public function index(){
-         $d=strtotime("-3 Months");
+         $d=strtotime("-1 Months");
         switch (Auth::user()->tipo) {
             case 1:
                 $recibos = Recibo::where('fecha','>',date("Y-m-d", $d))->where('estatus','!=',6)->orderBy('fecha', 'asc')->get();
@@ -32,19 +32,35 @@ class ReciboController extends Controller
 
                 break;
             case 3:
-                $recibos = Recibo::where('fecha','>',date("Y-m-d", $d))->where('estatus','!=',6)->where('user_id',Auth::user()->id)->where('updated_at','>',date('Y-m-d'))->orWhere('estatus',1)->orWhere('estatus',3)->orderBy('fecha', 'asc')->get();
+                $recibos = Recibo::where('fecha','>',date("Y-m-d", $d))->where('estatus','!=',6)->where('user_id',Auth::user()->id)->where('unidad_id',Auth::user()->unidad_id)->where('updated_at','>',date('Y-m-d'))->orWhere('estatus',1)->orWhere('estatus',3)->orderBy('fecha', 'asc')->get();
                 
                 break;
         }
         foreach ($recibos as $recibo) {
            $recibo->folios;
         }
-        return $recibos;
+        //return $recibos;
     	$usuarios=User::where('tipo',3)->get();
         $pacientes=Paciente::where('unidad_id',Auth::user()->unidad_id)->where('estatus',1)->orderBy('nombre', 'asc')->get();
-    	return view('recibos/index',compact('recibos','pacientes','usuarios'));
+         $ultimoFolio=$this->ultimoFolioUnidad();
+    	 return view('recibos/index',compact('recibos','pacientes','usuarios','ultimoFolio'));
+      
+            //    foreach (Recibo::where('unidad_id',7)->get() as $key => $value) {
+            //     $value->update(['folio'=>$value->id]);
+            // }
+        
+        
+        // return 'listo';
     }
+    public function ultimoFolioUnidad()
+    {
 
+        $recibo= Recibo::where('unidad_id',Auth::user()->unidad_id)->get();
+        if($recibo->count()>0)
+            return $recibo->last()->folio+1;
+        else
+            return 1;
+    }
     public function terminarRecibo(Recibo $recibo)
     {
         if($recibo->tipo_pago=="Credito"){
@@ -89,14 +105,20 @@ class ReciboController extends Controller
     	$recibo->estatus=1; // 1:Emitido //2:Pagado 3:Credito 4:Conciliando 5:Finalizado
         $recibo->user_id=Auth::user()->id;
         $recibo->fecha=date('Y-m-d');
+        
+        
         if($request->input('beneficio_id')>0){
             $beneficio=Beneficio::find($request->input('beneficio_id'));
-            $beneficio->sesiones_realizadas++;
-            if($beneficio->sesiones_realizadas>=$beneficio->sesiones){
-                $beneficio->estatus=2;
+            $tipoPago=strrpos($recibo->tipo_pago,$beneficio->concepto->nombre);
+            if($tipoPago!==false){
+               
+                $beneficio->sesiones_realizadas++;
+                if($beneficio->sesiones_realizadas>=$beneficio->sesiones){
+                    $beneficio->estatus=2;
+                }
+                $beneficio->save();
             }
-            $beneficio->save();
-        }
+         }   
     	if($recibo->save()){
             $sesion = new Sesion;
             $sesion->recibo_id=$recibo->id;

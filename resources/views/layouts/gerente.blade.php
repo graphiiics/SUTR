@@ -45,7 +45,7 @@
       <a href="#" data-toggle="dropdown" class="dropdown-toggle profilebox"><img src="{{asset('img/perfil/'.Auth::user()->foto)}}" alt="img"><b>{{Auth::user()->name}} (Gerente)</b><span class="caret"></span></a>
         <ul class="dropdown-menu dropdown-menu-list dropdown-menu-right">
          
-          <li><a href="href="{{url('/logout')}}"><i class="fa falist fa-power-off"></i> Cerrar Sesión</a></li>
+          <li><a href="{{url('/logout')}}"><i class="fa falist fa-power-off"></i> Cerrar Sesión</a></li>
         </ul>
     </li>
 

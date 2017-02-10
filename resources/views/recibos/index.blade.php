@@ -52,7 +52,7 @@ Recibos <i class="fa fa-home"></i>
             <table id="example0" class="table display">
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>Folio</th>
                         @if(Auth::user()->tipo<=2)
                           <th>Unidad</th>
                         @endif
@@ -76,7 +76,7 @@ Recibos <i class="fa fa-home"></i>
                         @elseif($recibo->estatus==4)
                         <tr class="warning">
                       @endif
-                        <td>{{$recibo->id}}</td>
+                        <td>{{$recibo->folio}}</td>
                         @if(Auth::user()->tipo<=2)
                           <td>{{$recibo->unidad->nombre}}</td>
                         @endif
@@ -242,6 +242,7 @@ Recibos <i class="fa fa-home"></i>
                     
                   </div>
                   <div class="col-sm-3">
+                    <a  class="btn btn-default pull-right" style="margin-top: 8%" onclick="ReciboExcel();" >Obtener Excel</a>
                     <button  class="btn btn-default pull-right" style="margin-top: 8%" onclick="FechasRecibos();" >Obtener PDF</button>
                   </div>
                   <br><br><br> 
@@ -313,7 +314,7 @@ Recibos <i class="fa fa-home"></i>
                      <div class="form-group">
                       <label " class="col-sm-2 control-label form-label">Folio: </label>
                       <div class="col-sm-10">
-                        <input type="number"   name="folio"  placeholder="Folio de recibos anteriores" min="0" class="form-control form-control">
+                        <input type="number"   name="folio"  placeholder="Folio de recibos anteriores" min="0" class="form-control form-control" readonly="" value="{{$ultimoFolio}}">
                       </div>
                   </div>
                     <input type="hidden" id="beneficio" value="0" name="beneficio_id">
@@ -356,6 +357,12 @@ function FechasRecibos(){
     
   
   $('#pdfFechas').html('<br><embed   src="../reporteRecibosPdf?unidad='+$('#usuarioFechas').val()+'&paciente='+$('#usuarioPacientes').val()+'&metodoPago='+$('#metodoPago').val()+'&fechas='+$('#date-range-picker').val()+'" width="100%" height="500px">')
+  }
+
+function ReciboExcel(){
+    
+  
+ window.location.href ='reporteRecibosExcel?unidad='+$('#usuarioFechas').val()+'&paciente='+$('#usuarioPacientes').val()+'&metodoPago='+$('#metodoPago').val()+'&fechas='+$('#date-range-picker').val();
   }
 function pago() {
   

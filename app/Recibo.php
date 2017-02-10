@@ -46,9 +46,9 @@ class Recibo extends Model
     {
         return $this->hasOne('App\Sesion');
     }
-    public function folios()
-    {
-        return $this->hasOne('App\Folio_recibos');
-    }
+    // public function folios()
+    // {
+    //     return $this->hasOne('App\Folio_recibos');
+    // }
     
 }

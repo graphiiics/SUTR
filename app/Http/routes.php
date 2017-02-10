@@ -155,6 +155,8 @@ Route::group(['middleware' => 'admin','prefix'=>'admin'], function() {
     Route::get('obtenerConceptos',['as'=>'obtenerConceptos','uses'=>'ConceptoController@obtenerConceptos']);
     //Rutas Sesiones
     Route::get('sesiones',['as'=>'sesiones','uses'=>'SesionController@index']);
+    //Rutas Excel
+     Route::get('reporteRecibosExcel',['as'=>'reporteRecibosExcel', 'uses'=>'ExcelController@reporteRecibosExcel']);
  });
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

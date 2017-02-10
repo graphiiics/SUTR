@@ -1378,21 +1378,21 @@ public function reciboPdf($id){
 			Fpdf::SetFont('Courier','I',12);
 			Fpdf::Cell(40,10,$recibo->fecha,0,0,'L');
 			///// Temmina Fecha
-			if($recibo->folio>0){
-				Fpdf::SetFont('times','B',14);
-				Fpdf::Cell(60,10,'Folio Anterior:________',0,0,'C');
-				Fpdf::Cell(-23);
-				Fpdf::SetFont('Courier','I',12);
-				Fpdf::Cell(23,10,$recibo->folio,0,0,'L');
-			}else{
+			// if($recibo->folio>0){
+			// 	Fpdf::SetFont('times','B',14);
+			// 	Fpdf::Cell(60,10,'Folio Anterior:________',0,0,'C');
+			// 	Fpdf::Cell(-23);
+			// 	Fpdf::SetFont('Courier','I',12);
+			// 	Fpdf::Cell(23,10,$recibo->folio,0,0,'L');
+			// }else{
 				Fpdf::Cell(60);
-			}
+			// }
 			/////Folio
 			Fpdf::SetFont('times','B',14);
 			Fpdf::Cell(60,10,'Folio:_________',0,0,'R');
 			Fpdf::Cell(-23);
 			Fpdf::SetFont('Courier','I',12);
-			Fpdf::Cell(23,10,$recibo->id,0,0,'L');
+			Fpdf::Cell(23,10,$recibo->folio,0,0,'L');
 
 			/////Termina Folio
 			/////Nombre
@@ -1456,21 +1456,21 @@ public function reciboPdf($id){
 			Fpdf::SetFont('Courier','I',12);
 			Fpdf::Cell(40,10,$recibo->fecha,0,0,'L');
 			///// Temmina Fecha
-			if($recibo->folio>0){
-				Fpdf::SetFont('times','B',14);
-				Fpdf::Cell(60,10,'Folio Anterior:________',0,0,'C');
-				Fpdf::Cell(-23);
-				Fpdf::SetFont('Courier','I',12);
-				Fpdf::Cell(23,10,$recibo->folio,0,0,'L');
-			}else{
+			// if($recibo->folio>0){
+			// 	Fpdf::SetFont('times','B',14);
+			// 	Fpdf::Cell(60,10,'Folio Anterior:________',0,0,'C');
+			// 	Fpdf::Cell(-23);
+			// 	Fpdf::SetFont('Courier','I',12);
+			// 	Fpdf::Cell(23,10,$recibo->folio,0,0,'L');
+			// }else{
 				Fpdf::Cell(60);
-			}
+			// }
 			/////Folio
 			Fpdf::SetFont('times','B',14);
 			Fpdf::Cell(60,10,'Folio:_________',0,0,'R');
 			Fpdf::Cell(-23);
 			Fpdf::SetFont('Courier','I',12);
-			Fpdf::Cell(23,10,$recibo->id,0,0,'L');
+			Fpdf::Cell(23,10,$recibo->folio,0,0,'L');
 
 			/////Termina Folio
 			/////Nombre
@@ -1538,21 +1538,21 @@ public function reciboPdf($id){
 			Fpdf::SetFont('Courier','I',12);
 			Fpdf::Cell(40,10,$recibo->fecha,0,0,'L');
 			///// Temmina Fecha
-			if($recibo->folio>0){
-				Fpdf::SetFont('times','B',14);
-				Fpdf::Cell(60,10,'Folio Anterior:________',0,0,'C');
-				Fpdf::Cell(-23);
-				Fpdf::SetFont('Courier','I',12);
-				Fpdf::Cell(23,10,$recibo->folio,0,0,'L');
-			}else{
+			// if($recibo->folio>0){
+			// 	Fpdf::SetFont('times','B',14);
+			// 	Fpdf::Cell(60,10,'Folio Anterior:________',0,0,'C');
+			// 	Fpdf::Cell(-23);
+			// 	Fpdf::SetFont('Courier','I',12);
+			// 	Fpdf::Cell(23,10,$recibo->folio,0,0,'L');
+			// }else{
 				Fpdf::Cell(60);
-			}
+			// }
 			/////Folio
 			Fpdf::SetFont('times','B',14);
 			Fpdf::Cell(60,10,'Folio:_________',0,0,'R');
 			Fpdf::Cell(-23);
 			Fpdf::SetFont('Courier','I',12);
-			Fpdf::Cell(23,10,$recibo->id,0,0,'L');
+			Fpdf::Cell(23,10,$recibo->folio,0,0,'L');
 
 			/////Termina Folio
 			/////Nombre
@@ -1671,8 +1671,8 @@ public function reciboPdf($id){
 		Fpdf::Cell(10,10,' # ',1	,0,'C',true);
 		Fpdf::Cell(50,10,'Nombre',1	,0,'C',true);
 		Fpdf::Cell(20,10,'Fecha',1	,0,'C',true);
-		Fpdf::Cell(20,10,'Folio N.',1	,0,'C',true);
-		Fpdf::Cell(20,10,'Folio A.',1	,0,'C',true);
+		Fpdf::Cell(20,10,'Unidad',1	,0,'C',true);
+		Fpdf::Cell(20,10,'Folio ',1	,0,'C',true);
 		Fpdf::Cell(30,10,'Pago',1	,0,'C',true); 
 		Fpdf::Cell(20,10,'Estado',1	,0,'C',true); 
 		Fpdf::Cell(20,10,'Cantidad',1,0,'C',true); 
@@ -1686,7 +1686,7 @@ public function reciboPdf($id){
 				Fpdf::Cell(10,8,$key+1,1,0,'C');
 				Fpdf::Cell(50,8,$recibo->paciente->nombre,1	,0,'L');
 				Fpdf::Cell(20,8,$recibo->fecha,1,0,'C');
-				Fpdf::Cell(20,8,$recibo->id,1,0,'C');
+				Fpdf::Cell(20,8,utf8_decode($recibo->unidad->nombre),1,0,'C');
 				Fpdf::Cell(20,8,$recibo->folio,1,0,'C');
 				Fpdf::Cell(30,8,utf8_decode($recibo->tipo_pago),1,0,'L'); 
 				if($recibo->estatus==1)
@@ -1703,7 +1703,7 @@ public function reciboPdf($id){
 				Fpdf::Cell(10,8,$key+1,1,0,'C',true);
 				Fpdf::Cell(50,8,$recibo->paciente->nombre,1	,0,'L',true);
 				Fpdf::Cell(20,8,$recibo->fecha,1,0,'C',true);
-				Fpdf::Cell(20,8,$recibo->id,1,0,'C',true);
+				Fpdf::Cell(20,8,utf8_decode($recibo->unidad->nombre),1,0,'C',true);
 				Fpdf::Cell(20,8,$recibo->folio,1,0,'C',true);
 				Fpdf::Cell(30,8,utf8_decode($recibo->tipo_pago),1,0,'L',true); 
 				if($recibo->estatus==1)

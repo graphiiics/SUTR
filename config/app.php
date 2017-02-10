@@ -147,7 +147,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
+        
         /*
          * Application Service Providers...
          */
@@ -156,7 +156,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Codedge\Fpdf\FpdfServiceProvider::class,
-
+        Maatwebsite\Excel\ExcelServiceProvider::class,
     ],
 
     /*
@@ -203,6 +203,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
         'Fpdf'      => Codedge\Fpdf\Facades\Fpdf::class,
+        'Excel'     => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 
