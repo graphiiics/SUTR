@@ -60,22 +60,17 @@ class ExcelController extends Controller
 		}
 		
 		foreach ($recibos as $recibo) {
-			$recibo->Folio=$recibo->folio;
-			$recibo->Paciente=$recibo->paciente->nombre;
-			$recibo->Unidad=$recibo->unidad->nombre;
-			$recibo->Fecha=$recibo->fecha;
-			$recibo->Concepto=$recibo->tipo_pago;
-			$recibo->Cantidad=$recibo->cantidad;
+			$recibo->unidad;
+			$recibo->paciente;
 		}
 		
 		 Excel::create('Reporte_'.$fechas.'_'.$unidad, function($excel) use($recibos){
 
             $excel->sheet('Recibos', function($sheet) use($recibos) {
-                $sheet->fromArray($recibos);
-                $sheet->mergeCells('A1:L1');
+                $sheet->loadView('reportes/reporteRecibosExcel')->with('recibos',$recibos);
  
             });
-        })->export('xls');
-
+        })->download('xls');
+		
     }
 }

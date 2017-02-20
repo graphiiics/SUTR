@@ -57,7 +57,7 @@ class ProductoController extends Controller
         $producto= new Producto($request->all());
         if($producto->save()){   
             foreach (Unidad::all() as $key=>$unidad) {
-               $producto->unidades()->attach($unidad->id,['cantidad' =>$request->input('cantidadUnidad'.($key+1)),'stock_minimo' =>$request->input('productoMinimoUnidad'.($key+1)),'producto_id'=>$producto->id,'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')]);
+               $producto->unidades()->attach($unidad->id,['cantidad' =>$request->input('cantidadUnidad'.($unidad->id)),'stock_minimo' =>$request->input('productoMinimoUnidad'.($unidad->id)),'producto_id'=>$producto->id,'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')]);
             
             }         
             Session::flash('message','Producto creado correctamente');
