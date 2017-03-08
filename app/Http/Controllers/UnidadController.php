@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Unidad;
 use Auth;
+use Session;
+use App\Producto;
 
 class UnidadController extends Controller
 {
@@ -23,10 +25,35 @@ class UnidadController extends Controller
 
     public function editarUnidad(Unidad $unidad,Request $request)
     {
-    	if($paciente->update(['nombre'=>$request->input('nombre'),'direccion'=>$request->input('direccion')])){
-
+    	if($unidad->update(['nombre'=>$request->input('nombre'),'direccion'=>$request->input('direccion')])){
+            Session::flash('message','Datos actualizados correctamente');
+            Session::flash('class','success');
     	}else{
-
+            Session::flash('message','Error al actualizar los datos');
+            Session::flash('class','Danger');
+    	}
+    	switch (Auth::user()->tipo) {
+	    	case 1:
+	    		return redirect('superAdmin/unidades');
+	    		break;
+	    	case 2:
+	    		return redirect('admin/unidades');
+	    		break;    	
+   		}
+    }
+    public function guardarUnidad(Request $request)
+    {
+    	$unidad= new Unidad($request->all());
+    	$unidad->estatus=1;
+    	if($unidad->save()){
+            foreach (Producto::all() as $producto){
+             $producto->unidades()->attach($unidad->id,['cantidad' => 0,'stock_minimo' =>0,'producto_id'=>$producto->id,'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')]);
+            }
+            Session::flash('message','Unidad Creada Exitosamente');
+            Session::flash('class','success');
+    	}else{
+            Session::flash('message','Error ');
+            Session::flash('class','success');
     	}
     	switch (Auth::user()->tipo) {
 	    	case 1:
@@ -35,32 +62,43 @@ class UnidadController extends Controller
 	    	case 2:
 	    		return redirect('admin/unidades');
 	    		break;
-	    	case 3:
-	    		return redirect('gerente/unidades');
-	    		break;
-    	
+	    	
    		}
     }
-    public function guardarUnidad(Request $request)
+    public function eliminarUnidad(Unidad $unidad)
     {
-    	$paciente= new Paciente($request->all());
-    	$paciente->estatus=1;
-    	if($paciente->save()){
-
-    	}else{
-
-    	}
-    	switch (Auth::user()->tipo) {
-	    	case 1:
-	    		return redirect('superAdmin/pacientes');
-	    		break;
-	    	case 2:
-	    		return redirect('admin/pacientes');
-	    		break;
-	    	case 3:
-	    		return redirect('gerente/pacientes');
-	    		break;
-    	
-   		}
+        if(count($unidad->productos)>0){
+            if($unidad->productos()->detach()){
+                if($unidad->delete()){
+                    Session::flash('message','Unidad eliminada Exitosamente');
+                    Session::flash('class','success');
+                }else{
+                    Session::flash('message','Error al eliminar la unidad');
+                    Session::flash('class','danger');
+                }
+            }
+            else{
+                Session::flash('message','Error al eliminar los productos de la unidad');
+                Session::flash('class','danger');
+            }
+        }
+        else{
+            if($unidad->delete()){
+                Session::flash('message','Unidad eliminada Exitosamente');
+                Session::flash('class','success');
+            }else{
+                Session::flash('message','Error al eliminar la unidad');
+                Session::flash('class','danger');
+            }
+        }
+        switch (Auth::user()->tipo) {
+            case 1:
+                return redirect('superAdmin/unidades');
+                break;
+            case 2:
+                return redirect('admin/unidades');
+                break;
+            
+        }
     }
 }

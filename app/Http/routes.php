@@ -157,6 +157,12 @@ Route::group(['middleware' => 'admin','prefix'=>'admin'], function() {
     Route::get('sesiones',['as'=>'sesiones','uses'=>'SesionController@index']);
     //Rutas Excel
      Route::get('reporteRecibosExcel',['as'=>'reporteRecibosExcel', 'uses'=>'ExcelController@reporteRecibosExcel']);
+
+     //Rutas Unidad
+    Route::get('unidades',['as'=>'unidades','uses'=>'UnidadController@index']);
+    Route::post('editarUnidad/{unidad}',['as'=>'editarUnidad','uses'=>'UnidadController@editarUnidad'])->where('unidad', '[0-9]+');
+    Route::post('guardarUnidad',['as'=>'guardarUnidad','uses'=>'UnidadController@guardarUnidad']);
+   // Route::get('eliminarUnidad/{unidad}',['as'=>'eliminarUnidad','uses'=>'UnidadController@eliminarUnidad'])->where('unidad', '[0-9]+');
  });
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

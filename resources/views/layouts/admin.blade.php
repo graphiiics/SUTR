@@ -67,7 +67,7 @@
   
   <li><a href="{{route('recibos')}}"><span class="icon color12"><i class="fa fa-tags"></i></span>Recibos</a>
   <li><a href="{{route('beneficios')}}"><span class="icon color12"><i class="fa fa-suitcase"></i></span>Beneficios</a>
-  <li><a href="#"><span class="icon color12"><i class="fa fa-university"></i></span>Unidades</a>
+  <li><a href="{{route('unidades')}}"><span class="icon color12"><i class="fa fa-university"></i></span>Unidades</a>
   <li><a href="{{route('pacientes')}}" ><span class="icon color12"><i class="fa fa-users"></i></span>Pacientes</a>
   <li><a href="{{route('sesiones')}}"><span class="icon color12"><i class="fa fa-stethoscope"></i></span>Sesiones</a>
   <li><a href="{{route('pedidos')}}"><span class="icon color12"><i class="fa fa-pencil-square-o"></i></span>Pedidos</a>

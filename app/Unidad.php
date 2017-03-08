@@ -6,8 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Unidad extends Model
 {
-     protected $table = 'unidads';
-     protected $primaryKey = 'id';
+    protected $table = 'unidads';
+    protected $primaryKey = 'id';
+    protected $fillable = [
+        'nombre', 'direccion',
+    ];
 
     public function recibos()
     {
