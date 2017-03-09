@@ -7,37 +7,38 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Concepto;
 use Session;
+use Auth;
 
 class ConceptoController extends Controller
 {
     //
-    public function consultar_conceptos(){
+    public function index(){
 
-        $conceptos = Concepto::All();
-        return view('super_views.consultar_conceptos',compact('conceptos'));
+        $conceptos = Concepto::orderBy('id', 'asc')->get();
+        return view('conceptos/index',compact('conceptos'));
     }
+    
 
-    public function crear_concepto()
+    public function guardarConcepto(Request $request)
     {
-        return view('super_views.crear_concepto');
-    }
-
-    public function guardar_concepto(Request $request)
-    {
-        $concepto = new Concepto;
-        $concepto->nombre = $request->input('nombre');
-        $concepto->estatus = 1;
-
-        
+       $concepto= new Concepto($request->all());
+        $concepto->estatus=1;
         if($concepto->save()){
-            Session::flash('message','Guardado Correctamente');
+            
+            Session::flash('message','Unidad Creada Exitosamente');
             Session::flash('class','success');
         }else{
-            Session::flash('message','Ha ocurrido un error');
-            Session::flash('class','danger');
+            Session::flash('message','Error ');
+            Session::flash('class','success');
         }
-            
-       return redirect('consultar_conceptos');
+        switch (Auth::user()->tipo) {
+            case 1:
+                return redirect('superAdmin/conceptos');
+                break;
+            case 2:
+                return redirect('admin/conceptos');
+                break;
+        }
     }
 
     public function editar_concepto($id)

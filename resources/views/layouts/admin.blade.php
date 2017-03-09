@@ -73,7 +73,7 @@
   <li><a href="{{route('pedidos')}}"><span class="icon color12"><i class="fa fa-pencil-square-o"></i></span>Pedidos</a>
   <li><a href="{{route('registros')}}"><span class="icon color12"><i class="fa fa-bar-chart"></i></span>Registros</a>
   <li><a href="{{route('ventas')}}""><span class="icon color12"><i class="fa fa-dollar"></i></span>Ventas</a>
-  <li><a href="#"><span class="icon color12"><i class="fa fa-cube"></i></span>Conceptos</a>
+  <li><a href="{{route('conceptos')}}"><span class="icon color12"><i class="fa fa-cube"></i></span>Conceptos</a>
   <li><a href="{{route('empresas')}}"><span class="icon color12"><i class="fa fa-building"></i></span>Empresas</a>
   <li><a href="{{route('compras')}}"><span class="icon color12"><i class="fa fa-money"></i></span>Compras</a>
   <li><a href="{{route('proveedores')}}"><span class="icon color12"><i class="fa fa-truck"></i></span>Proveedores</a>

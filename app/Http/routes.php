@@ -163,6 +163,12 @@ Route::group(['middleware' => 'admin','prefix'=>'admin'], function() {
     Route::post('editarUnidad/{unidad}',['as'=>'editarUnidad','uses'=>'UnidadController@editarUnidad'])->where('unidad', '[0-9]+');
     Route::post('guardarUnidad',['as'=>'guardarUnidad','uses'=>'UnidadController@guardarUnidad']);
    // Route::get('eliminarUnidad/{unidad}',['as'=>'eliminarUnidad','uses'=>'UnidadController@eliminarUnidad'])->where('unidad', '[0-9]+');
+
+    //Rutas Concepto
+    Route::get('conceptos',['as'=>'conceptos','uses'=>'ConceptoController@index']);
+    Route::post('editarConcepto/{unidad}',['as'=>'editarConcepto','uses'=>'ConceptoController@editarConcepto'])->where('unidad', '[0-9]+');
+    Route::post('guardarConcepto',['as'=>'guardarConcepto','uses'=>'ConceptoController@guardarConcepto']);
+   // Route::get('eliminarUnidad/{unidad}',['as'=>'eliminarUnidad','uses'=>'UnidadController@eliminarUnidad'])->where('unidad', '[0-9]+');
  });
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
