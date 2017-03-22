@@ -31,7 +31,7 @@ class SesionController extends Controller
                 $recibos = Recibo::where('fecha','>',date("Y-m-d", $d))->orderBy('fecha', 'asc')->get();
                 break;
             case 3:
-                $recibos = Recibo::where('fecha','>',date("Y-m-d", $d)->where('user_id',Auth::user()->id)->orderBy('fecha', 'asc')->get();
+                $recibos = Recibo::where('fecha','>',date("Y-m-d", $d))->where('user_id',Auth::user()->id)->orderBy('fecha', 'asc')->get();
                
                 break;
         }
