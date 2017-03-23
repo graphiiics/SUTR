@@ -32,7 +32,15 @@ class ReciboController extends Controller
 
                 break;
             case 3:
-                $recibos = Recibo::where('fecha','>',date("Y-m-d", $d))->where('estatus','!=',6)->where('user_id',Auth::user()->id)->where('unidad_id',Auth::user()->unidad_id)->where('updated_at','>',date('Y-m-d'))->orWhere('estatus',1)->orWhere('estatus',3)->orderBy('fecha', 'asc')->get();
+                $recibos = Recibo::where('fecha','>',date("Y-m-d", $d))->where('estatus','!=',6)->where('user_id',Auth::user()->id)->where('unidad_id',Auth::user()->unidad_id)->where('updated_at','>',date('Y-m-d'))->orWhere(function ($query) {
+                        $query->where('user_id',Auth::user()->id)
+                            ->where('unidad_id',Auth::user()->unidad_id)
+                            ->where('estatus',1);
+                        })->orWhere(function ($query) {
+                        $query->where('user_id',Auth::user()->id)
+                            ->where('unidad_id',Auth::user()->unidad_id)
+                            ->where('estatus',3);
+                        })->orderBy('fecha', 'asc')->get();
                 
                 break;
         }

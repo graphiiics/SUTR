@@ -55,7 +55,7 @@ Unidades <i class="fa fa-home"></i>
                         <td>{{$unidad->nombre}}</td>
                         <td>{{$unidad->direccion}}</td>
                         <td>{{count($unidad->pacientes)}}</td>
-                        <td><a  href="#" data-toggle="modal" data-target="#modal{{$unidad->id}}" class="btn btn-rounded btn-light">Editar usuario</a>
+                        <td><a  href="#" data-toggle="modal" data-target="#modal{{$unidad->id}}" class="btn btn-rounded btn-light">Editar Unidad</a>
                              <!-- Modal -->
                                 <div class="modal fade" id="modal{{$unidad->id}}" tabindex="-1" role="dialog" aria-hidden="true">
                                   <div class="modal-dialog modal-md">
