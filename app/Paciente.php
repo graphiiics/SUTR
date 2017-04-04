@@ -23,6 +23,11 @@ class Paciente extends Model
         return $this->hasMany('App\Beneficio');
     }
 
+    public function hojaNutrcion()
+    {
+        return $this->hasMany('App\NutricionData');
+    }
+
     public function unidad()
     {
         return $this->belongsTo('App\Unidad');
