@@ -28,6 +28,9 @@ class Administrador
                 case '3':
                     return redirect('gerente');
                     break;
+                 case '4':
+                    return redirect('nutriologo');
+                    break;
                 
                 default:
                    return  redirect('logout');

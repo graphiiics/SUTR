@@ -49,7 +49,10 @@ Route::group(['middleware' => 'web'], function () {
                         case '3':
                             return redirect('gerente');
                             break;
-                        
+                        # nutrilogo
+                        case '4':
+                            return redirect('nutriologo');
+                            break;
                         default:
                            return redirect('login');
                             break;

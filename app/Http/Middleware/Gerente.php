@@ -28,7 +28,9 @@ class Gerente
                 #Gerente
                 case '3':
                     break;
-                
+                case '4':
+                    return redirect('nutriologo');
+                    break;
                 default:
                    return  redirect('logout');
                     break;

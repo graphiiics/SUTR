@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Auth;
-class SuperAdministrador
+class Nutrilogo
 {
     /**
      * Handle an incoming request.
@@ -19,6 +19,7 @@ class SuperAdministrador
             switch (Auth::user()->tipo) {
                 #SuperAdministrador
                 case '1':
+                    return redirect('superAdmin');
                     break;
                 #Administrador
                 case '2':
@@ -29,8 +30,8 @@ class SuperAdministrador
                     return redirect('gerente');
                     break;
                 case '4':
-                    return redirect('nutriologo');
                     break;
+                
                 default:
                    return  redirect('logout');
                     break;

@@ -11,6 +11,10 @@
   {
     $variable = "layouts.gerente";
   }
+  elseif(Auth::user()->tipo==4)
+  {
+    $variable = "layouts.nutriologo";
+  }
 ?>
 @extends("$variable")
 @section('titulo') Pacientes 
@@ -157,6 +161,8 @@ Pacientes <i class="fa fa-home"></i>
                                  <a  href="{{route('activarPacienteGerente',$paciente->id)}}" class="btn btn-rounded btn-icon btn-success" title="Activar paciente"><i class="fa fa-check-square-o"></i></a>
                               @elseif($paciente->estatus==2 && Auth::user()->tipo<3)
                                  <a  href="{{route('eliminarPaciente',$paciente->id)}}" class="btn btn-rounded  btn-icon btn-danger" title="Eliminar paciente"><i class="fa fa-trash"></i></a>
+                              @elseif($paciente->estatus==1 && Auth::user()->tipo==4)
+                                 <a  href="{{route('eliminarPaciente',$paciente->id)}}" class="btn btn-rounded  btn-icon btn-danger" title="Hoja de nutrición"><i class="fa fa-apple"></i></a>
                               @endif
                         </td>
                        

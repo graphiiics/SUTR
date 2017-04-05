@@ -11,6 +11,10 @@
   {
     $variable = "layouts.gerente";
   }
+   elseif(Auth::user()->tipo==4)
+  {
+    $variable = "layouts.nutriologo";
+  }
 ?>
 @extends("$variable")
 @section('titulo') Binvenido a SUTR  
