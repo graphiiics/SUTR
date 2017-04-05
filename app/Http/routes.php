@@ -247,6 +247,15 @@ Route::group(['middleware' => 'gerente','prefix'=>'gerente'], function() {
    
  });
 
+Route::group(['middleware' => 'nutriologo','prefix'=>'nutriologo'], function() {
+   Route::get('/',['as'=>'inicioNutriologo','uses'=>'HomeController@index']);
+
+   // Rutas para reporte de nutrición
+   Route::get('reporte-nutricion',['as'=>'reporteNutrcion','uses'=>"NutricionDataController@index"]);
+
+
+ });
+
   ///////////////////////////////////////////////////////
 
   //Rutas PDF

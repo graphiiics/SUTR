@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Auth;
-class Nutrilogo
+class Nutriologo
 {
     /**
      * Handle an incoming request.

@@ -14,9 +14,10 @@ class CreateNutricionDatasTable extends Migration
     {
         Schema::create('nutricion_datas', function (Blueprint $table) {
             $table->increments('id');
-            $tabla->integer('user_id')->unsigned();
+            $tabla->integer('paciente_id')->unsigned();
             $tabla->float('grasa')->unsigned();
             $tabla->float('mm')->unsigned();
+            $tabla->float('agua')->unsigned();
             $tabla->float('gv')->unsigned();
             $tabla->float('peso_seco')->unsigned();
             $tabla->float('glucosa')->unsigned();

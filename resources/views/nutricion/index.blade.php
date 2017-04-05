@@ -52,7 +52,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($reportes as $reporte)
+                   {{--  @foreach ($reportes as $reporte)
                       <tr>
                         <td>{{$hoja->id}}</td>
                         <td>{{$hoja->paciente->nombre}}</td>
@@ -60,7 +60,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                         <td>{{$hoja->fecha}}</td>
                         <td>Algo lleva aqui!</td>
                     </tr>
-                  @endforeach
+                  @endforeach --}}
                 </tbody>
             </table>
 
@@ -72,7 +72,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
     <!-- End Panel -->
       <!-- Modal -->
                 <div class="modal fade" id="modal_nuevo" tabindex="-1" role="dialog" aria-hidden="true">
-                  <div class="modal-dialog modal-md">
+                  <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -80,14 +80,271 @@ Hoja nutricional  <i class="fa fa-home"></i>
                       </div>
                       <form class="form-horizontal" role="form" method="POST" enctype="multipart/form-data" action="{{ route('guardarConcepto') }}">
                         {!! csrf_field() !!}  
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label " class="col-sm-2 control-label form-label">Nombre: </label>
-                                <div class="col-sm-10">
-                                  <input type="text" name="nombre"  class="form-control form-control-radius" placeholder="Nombre del concepto" required>
-                                </div>
+                        <div class="modal-body row">
+                            <div class="col-lg-12 ">
+                               <h4 class="center-block">ANTROPOMETRÍA</h4>
                             </div>
-                             
+                            <div class="col-lg-4">
+                              <div class="form-group ">
+                                <label " class="col-sm-2 control-label form-label">Grasa: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="nombre" step=".01" class="form-control form-control" placeholder="" required>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-4">
+                              <div class="form-group ">
+                                <label " class="col-sm-2 control-label form-label">MM: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="nombre" step=".01" class="form-control form-control" placeholder="" required>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-4">
+                              <div class="form-group ">
+                                <label " class="col-sm-2 control-label form-label">Agua: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="nombre" step=".01" class="form-control form-control" placeholder="" required>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-4">
+                              <div class="form-group ">
+                                <label " class="col-sm-2 control-label form-label">GV: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="nombre" step=".01" class="form-control form-control" placeholder="" required>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-4">
+                              <div class="form-group ">
+                                <label " class="col-sm-2 control-label form-label">Peso seco: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="nombre" step=".01" class="form-control form-control" placeholder="" required>
+                                </div>
+                              </div>
+                            </div>
+
+
+                            <div class="col-lg-12 center-block">
+                               <h4>ANTROPOMETRÍA</h4>
+                            </div>
+                            <div class="col-lg-12 center-block">
+                               <h5>QUÍMICA SANGUINEA</h5>
+                            </div>
+                            <div class="col-lg-6">
+                              <div class="form-group ">
+                                <label " class="col-sm-2 control-label form-label">Glucosa: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="nombre" step=".01" class="form-control form-control" placeholder="" required>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-6">
+                              <div class="form-group ">
+                                <label " class="col-sm-2 control-label form-label">Urea: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="nombre" step=".01" class="form-control form-control" placeholder="" required>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-6">
+                              <div class="form-group ">
+                                <label " class="col-sm-2 control-label form-label">Creatitina: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="nombre" step=".01" class="form-control form-control" placeholder="" required>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-6">
+                              <div class="form-group ">
+                                <label " class="col-sm-2 control-label form-label">Ácido úrico: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="nombre" step=".01" class="form-control form-control" placeholder="" required>
+                                </div>
+                              </div>
+                            </div>
+                             <div class="col-lg-12">
+                              <div class="form-group ">
+                                <label " class="col-sm-2 control-label form-label">BUN: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="nombre" step=".01" class="form-control form-control" placeholder="" required>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-lg-12 center-block">
+                               <h5>QUÍMICA SANGUINEA</h5>
+                            </div>
+                            <div class="col-lg-6">
+                              <div class="form-group ">
+                                <label " class="col-sm-2 control-label form-label">HB: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="nombre" step=".01" class="form-control form-control" placeholder="" required>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-6">
+                              <div class="form-group ">
+                                <label " class="col-sm-2 control-label form-label">Hto: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="nombre" step=".01" class="form-control form-control" placeholder="" required>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-12">
+                              <div class="form-group ">
+                                <label " class="col-sm-2 control-label form-label">Leucocitos: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="nombre" step=".01" class="form-control form-control" placeholder="" required>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-12 center-block">
+                               <h5>PROTEINAS SERICAS</h5>
+                            </div>
+                            <div class="col-lg-12">
+                              <div class="form-group ">
+                                <label " class="col-sm-2 control-label form-label">Albúmina: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="nombre" step=".01" class="form-control form-control" placeholder="" required>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-12">
+                              <div class="form-group ">
+                                <label " class="col-sm-2 control-label form-label">PTS Totales: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="nombre" step=".01" class="form-control form-control" placeholder="" required>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-12 center-block">
+                               <h5>PERFIL DE LIPIDOS</h5>
+                            </div>
+                            <div class="col-lg-6">
+                              <div class="form-group ">
+                                <label " class="col-sm-2 control-label form-label">Colesterol: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="nombre" step=".01" class="form-control form-control" placeholder="" required>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-12">
+                              <div class="form-group ">
+                                <label " class="col-sm-2 control-label form-label">Triglecéridos: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="nombre" step=".01" class="form-control form-control" placeholder="" required>
+                                </div>
+                              </div>
+                            </div>.
+
+                             <div class="col-lg-12 center-block">
+                               <h5>ELECTROLITOS SERICOS</h5>
+                            </div>
+                            <div class="col-lg-6">
+                              <div class="form-group ">
+                                <label " class="col-sm-2 control-label form-label">Potasio (K): </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="nombre" step=".01" class="form-control form-control" placeholder="" required>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-6">
+                              <div class="form-group ">
+                                <label " class="col-sm-2 control-label form-label">Sodio (Na): </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="nombre" step=".01" class="form-control form-control" placeholder="" required>
+                                </div>
+                              </div>
+                            </div>
+                             <div class="col-lg-6">
+                              <div class="form-group ">
+                                <label " class="col-sm-2 control-label form-label">Fosforo (P): </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="nombre" step=".01" class="form-control form-control" placeholder="" required>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-6">
+                              <div class="form-group ">
+                                <label " class="col-sm-2 control-label form-label">Calcio (Ca): </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="nombre" step=".01" class="form-control form-control" placeholder="" required>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-12">
+                              <div class="form-group ">
+                                <label " class="col-sm-2 control-label form-label">Magnecio (Mg): </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="nombre" step=".01" class="form-control form-control" placeholder="" required>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-12 center-block">
+                               <h4>TRATAMIENTO MÉDICO</h4>
+                            </div>
+                            <div class="col-lg-12">
+                              <div class="form-group ">
+                                <label " class="col-sm-2 control-label form-label">Nifedipino: </label>
+                                <div class="col-sm-10">
+                                  <input type="text" name="nombre"  class="form-control form-control" placeholder="0-0-0 (Dosis)" required>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-12">
+                              <div class="form-group ">
+                                <label " class="col-sm-2 control-label form-label">Ácido úrico: </label>
+                                <div class="col-sm-10">
+                                  <input type="text" name="nombre"  class="form-control form-control" placeholder="0-0-0 (Dosis)" required>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-12">
+                              <div class="form-group ">
+                                <label " class="col-sm-2 control-label form-label">Furosemida: </label>
+                                <div class="col-sm-10">
+                                  <input type="text" name="nombre"  class="form-control form-control" placeholder="0-0-0 (Dosis)" required>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-12">
+                              <div class="form-group ">
+                                <label " class="col-sm-2 control-label form-label">Tribedoce: </label>
+                                <div class="col-sm-10">
+                                  <input type="text" name="nombre"  class="form-control form-control" placeholder="0-0-0 (Dosis)" required>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-12">
+                              <div class="form-group ">
+                                <label " class="col-sm-2 control-label form-label">Omeprazol: </label>
+                                <div class="col-sm-10">
+                                  <input type="text" name="nombre"  class="form-control form-control" placeholder="0-0-0 (Dosis)" required>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-12 center-block">
+                               <h4>VALORACIÓN NUTRICIONAL</h4>
+                            </div>
+                            <div class="col-lg-12">
+                              <div class="form-group ">
+                               <textarea class="form-control">
+                                 
+                               </textarea>
+                              </div>
+                            </div>
+                            <div class="col-lg-12 center-block">
+                               <h4>INDICACIONES NUTRICIONALES</h4>
+                            </div>
+                            <div class="col-lg-12">
+                              <div class="form-group ">
+                               <textarea class="form-control">
+                                 
+                               </textarea>
+                              </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
