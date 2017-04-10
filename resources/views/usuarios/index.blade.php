@@ -72,6 +72,8 @@ Usuarios <i class="fa fa-home"></i>
                           <td>Administrador</td>
                         @elseif($usuario->tipo==3)
                           <td>Gerente</td>
+                        @elseif($usuario->tipo==4)
+                          <td>Nutriologo</td>
                         @endif
                         <td><a  href="#" data-toggle="modal" data-target="#modal{{$usuario->id}}" class="btn btn-rounded btn-light">Editar usuario</a>
                              <!-- Modal -->

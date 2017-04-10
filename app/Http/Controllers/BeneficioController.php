@@ -11,6 +11,8 @@ use App\Paciente;
 use App\Empresa;
 use App\Concepto;
 use Auth;
+use Session;
+
 
 class BeneficioController extends Controller
 {
@@ -46,26 +48,34 @@ class BeneficioController extends Controller
     	
     }
 
-    // public function editarPaciente(Paciente $paciente,Request $request)
-    // {
-    // 	if($paciente->update(['nombre'=>$request->input('nombre'),'direccion'=>$request->input('direccion'),'telefono'=>$request->input('telefono'),'celular'=>$request->input('celular'),'unidad'=>$request->input('unidad')])){
-
-    // 	}else{
-
-    // 	}
-    // 	switch (Auth::user()->tipo) {
-	   //  	case 1:
-	   //  		return redirect('superAdmin/pacientes');
-	   //  		break;
-	   //  	case 2:
-	   //  		return redirect('admin/pacientes');
-	   //  		break;
-	   //  	case 3:
-	   //  		return redirect('gerente/pacientes');
-	   //  		break;
+    public function editarBeneficio(Beneficio $beneficio,Request $request)
+    {
+    	if($beneficio->sesiones_realizadas>0){
+            Session::flash('message','Ya no se puede modificar este Beneficio');
+            Session::flash('class','danger');
+        }
+        else{
+            if($beneficio->update(['cantidad'=>$request->input('cantidad'),'sesiones'=>$request->input('sesiones')])){
+                Session::flash('message','Beneficio actualizado correctamente');
+                Session::flash('class','success');
+            }else{
+                Session::flash('message','No se pudo actualizar el beneficio');
+                Session::flash('class','danger');
+            }
+        }
+    	switch (Auth::user()->tipo) {
+	    	case 1:
+	    		return redirect('superAdmin/beneficios');
+	    		break;
+	    	case 2:
+	    		return redirect('admin/beneficios');
+	    		break;
+	    	case 3:
+	    		return redirect('gerente/beneficios');
+	    		break;
     	
-   	// 	}
-    // }
+   		}
+    }
     
     public function guardarBeneficio(Request $request)
     {
@@ -74,21 +84,46 @@ class BeneficioController extends Controller
         $beneficio->user_id=Auth::user()->id;
     	$beneficio->estatus=1;
     	if($beneficio->save()){
-
-    	}else{
-
-    	}
+            Session::flash('message','Beneficio creado correctamente');
+            Session::flash('class','success');
+        }else{
+            Session::flash('message','No se pudo crear el beneficio');
+            Session::flash('class','danger');
+        }
     	switch (Auth::user()->tipo) {
 	    	case 1:
-	    		return redirect('superAdmin/pacientes');
+	    		return redirect('superAdmin/beneficios');
 	    		break;
 	    	case 2:
-	    		return redirect('admin/pacientes');
+	    		return redirect('admin/beneficios');
 	    		break;
 	    	case 3:
-	    		return redirect('gerente/pacientes');
+	    		return redirect('gerente/beneficios');
 	    		break;
     	
    		}
    	}
+
+    public function eliminarBeneficio(Beneficio $beneficio){
+        if($beneficio->sesiones_realizadas<1){
+            $beneficio->delete();
+            Session::flash('message','Beneficio eliminado correctamente');
+            Session::flash('class','success');
+        }else{
+            Session::flash('message','No se pudo eliminar el beneficio');
+            Session::flash('class','danger');
+        }
+        switch (Auth::user()->tipo) {
+            case 1:
+                return redirect('superAdmin/beneficios');
+                break;
+            case 2:
+                return redirect('admin/beneficios');
+                break;
+            case 3:
+                return redirect('gerente/beneficios');
+                break;
+        
+        }
+    }
 }

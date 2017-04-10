@@ -54,6 +54,7 @@ Beneficios <i class="fa fa-home"></i>
                         <th>Sesiones</th>
                         <th>S. Realizadas</th>
                         <th>Estatus</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -76,9 +77,72 @@ Beneficios <i class="fa fa-home"></i>
                         @elseif($beneficio->estatus==2)
                           <td>Completado</td>
                         @endif
-                        
+                        @if($beneficio->sesiones_realizadas<1)
+                          <th><a href="" data-toggle="modal" data-target="#beneficio{{$beneficio->id}}" class="btn btn-icon btn-primary" title="Editar"><i class="fa fa-pencil"></i></a>
+                          @if(Auth::user()->tipo<=2)
+                             <a href="{{route('eliminarBeneficio',$beneficio->id)}}"  class="btn btn-icon btn-danger" title="Eliminar" onclick="return confirm('¿Seguro que deseas eliminar el beneficio?');"><i class="fa fa-trash"></i></a>
+                          @else
+                             <a href="{{route('eliminarBeneficioGerente',$beneficio->id)}}"  class="btn btn-icon btn-danger" title="Eliminar" onclick="return confirm('¿Seguro que deseas eliminar el beneficio?');"><i class="fa fa-trash"></i></a>
+                          @endif
+
+                            <div class="modal fade" id="beneficio{{$beneficio->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                              <div class="modal-dialog modal-md">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">Editar Beneficio</h4>
+                                  </div>
+                                  @if(Auth::user()->tipo==2)
+                                    <form class="form-horizontal" role="form"  method="POST" action="{{ route('editarBeneficio',$beneficio->id) }}">
+                                  @elseif(Auth::user()->tipo==3)
+                                    <form class="form-horizontal" role="form"  method="POST" action="{{ route('editarBeneficioGerente',$beneficio->id) }}">
+                                  @endif
+                                    {!! csrf_field() !!}  
+                                    <div class="modal-body">
+                                      <div class="modal-body">     
+                                        <div class="form-group">
+                                            <label " class="col-sm-2 control-label form-label">Paciente: </label>
+                                            <div class="col-sm-10">
+                                              <input type="text" value="{{$beneficio->paciente->nombre}}"  min="1" class="form-control " disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label " class="col-sm-2 control-label form-label">Concepto: </label>
+                                            <div class="col-sm-10">
+                                              <input type="text" value="{{$beneficio->concepto->nombre}}" min="1" class="form-control " disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label " class="col-sm-2 control-label form-label">sesiones: </label>
+                                            <div class="col-sm-10">
+                                              <input type="number" name="sesiones" value="{{$beneficio->sesiones}}" placeholder="Sesiones asignads"  min="1" class="form-control ">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label " class="col-sm-2 control-label form-label">Cantidad: </label>
+                                            <div class="col-sm-10">
+                                              <input type="number" value="{{$beneficio->cantidad}}"  name="cantidad"  placeholder="Cantidad total de beneficio" min="0" step=".1" class="form-control ">
+                                            </div>
+                                        </div>
+                                                         
+                                      </div>
+                                      <div id="loading" class="modal-footer">
+                                        <button type="button"   class="btn btn-white" data-dismiss="modal">Cerrar</button>
+                                        <button type="submit" class="btn btn-default" onclick="enviar();">Guardar</button>
+                                       
+                                      </div>
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
+                            </th>
+                            @else
+                            <th></th>
+                            @endif
+                            
                        
-                        </tr>
+                      </tr>
                   @endforeach
                 </tbody>
             </table>

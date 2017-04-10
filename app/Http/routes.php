@@ -151,6 +151,7 @@ Route::group(['middleware' => 'admin','prefix'=>'admin'], function() {
     Route::get('beneficios',['as'=>'beneficios','uses'=>'BeneficioController@index']);
     Route::post('editarBeneficio/{beneficio}',['as'=>'editarBeneficio','uses'=>'BeneficioController@editarBeneficio'])->where('beneficio', '[0-9]+');
     Route::post('guardarBeneficio',['as'=>'guardarBeneficio','uses'=>'BeneficioController@guardarBeneficio']); 
+    Route::get('eliminarBeneficio/{beneficio}',['as'=>'eliminarBeneficio','uses'=>'BeneficioController@eliminarBeneficio'])->where('beneficio', '[0-9]+');
     // Rutas Recibos
     Route::get('recibos',['as'=>'recibos','uses'=>'ReciboController@index']);
 
@@ -240,6 +241,7 @@ Route::group(['middleware' => 'gerente','prefix'=>'gerente'], function() {
     Route::get('beneficios',['as'=>'beneficiosGerente','uses'=>'BeneficioController@index']);
     Route::post('editarBeneficio/{beneficio}',['as'=>'editarBeneficioGerente','uses'=>'BeneficioController@editarBeneficio'])->where('beneficio', '[0-9]+');
     Route::post('guardarBeneficio',['as'=>'guardarBeneficioGerente','uses'=>'BeneficioController@guardarBeneficio']);
+    Route::get('eliminarBeneficio/{beneficio}',['as'=>'eliminarBeneficioGerente','uses'=>'BeneficioController@eliminarBeneficio'])->where('beneficio', '[0-9]+');
 
     //Rutas Sesiones
     Route::get('sesiones',['as'=>'sesionesGerente','uses'=>'SesionController@index']);
