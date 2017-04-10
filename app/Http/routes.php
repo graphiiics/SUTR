@@ -254,7 +254,13 @@ Route::group(['middleware' => 'nutriologo','prefix'=>'nutriologo'], function() {
 
    // Rutas para reporte de nutrición
    Route::get('reporte-nutricion',['as'=>'reporteNutrcion','uses'=>"NutricionDataController@index"]);
+   Route::get('reporteNutricionPdf/{paciente}',['as'=>'reporteNutricionPdf','uses'=>'NutricionDataController@reporteNutricionPdf'])->where('paciente', '[0-9]+');
+   // Rutas Pacientes
+   Route::get('pacientes',['as'=>'pacientesNutriologo','uses'=>'PacienteController@index']);
+   Route::post('editarPaciente/{paciente}',['as'=>'editarPacienteNutriologo','uses'=>'PacienteController@editarPaciente'])->where('paciente', '[0-9]+');
 
+
+  
 
  });
 

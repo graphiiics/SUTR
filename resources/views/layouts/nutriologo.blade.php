@@ -65,7 +65,7 @@
 <ul class="sidebar-panel nav">
   <li class="title">MENÚ</li>
  
-  <li><a href="{{route('pacientes')}}" ><span class="icon color12"><i class="fa fa-users"></i></span>Pacientes</a><li>
+  <li><a href="{{route('pacientesNutriologo')}}" ><span class="icon color12"><i class="fa fa-users"></i></span>Pacientes</a><li>
   <li><a href="{{route('reporteNutrcion')}}" ><span class="icon color12"><i class="fa fa-apple"></i></span>Reportes</a><li>
 </ul>
 

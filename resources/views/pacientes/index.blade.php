@@ -87,7 +87,7 @@ Pacientes <i class="fa fa-home"></i>
                           <td>No tiene sesiones</td>
                         @endif
                          <td>
-                         <a  href="#" data-toggle="modal" data-target="#modal{{$paciente->id}}" class="btn btn-rounded btn-light">Editar</a>
+                         <a  href="#" data-toggle="modal" data-target="#modal{{$paciente->id}}" class="btn btn-primary btn-icon" title="Editar paciente"><i class="fa fa-pencil"></i></a>
                             <!-- Modal -->
                                 <div class="modal fade" id="modal{{$paciente->id}}" tabindex="-1" role="dialog" aria-hidden="true">
                                   <div class="modal-dialog modal-md">
@@ -102,13 +102,13 @@ Pacientes <i class="fa fa-home"></i>
                                             <div class="form-group">
                                                 <label " class="col-sm-2 control-label form-label">Nombre: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="text" name="nombre" value="{{$paciente->nombre}}" class="form-control form-control-radius" >
+                                                  <input type="text" name="nombre" value="{{$paciente->nombre}}" class="form-control " >
                                                 </div>
                                             </div>
                                             <div  class="form-group">
                                               <label class="col-sm-2 control-label form-label">Unidad: </label>
                                               <div class="col-sm-10">
-                                                <select name="unidad_id" class="selectpicker form-control form-control-radius">
+                                                <select name="unidad_id" class="selectpicker form-control ">
                                                   @if(Auth::user()->tipo<=2) 
                                                     @foreach($unidades as $unidad)
                                                       <option value="{{$unidad->id}}">{{$unidad->nombre}}</option>
@@ -124,19 +124,19 @@ Pacientes <i class="fa fa-home"></i>
                                             <div class="form-group">
                                                 <label " class="col-sm-2 control-label form-label">Dirección: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="text" name="direccion" placeholder="Calle,Número,Colonia,Municipio,Estado" value="{{$paciente->direccion}}" class="form-control form-control-radius">
+                                                  <input type="text" name="direccion" placeholder="Calle,Número,Colonia,Municipio,Estado" value="{{$paciente->direccion}}" class="form-control">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label " class="col-sm-2 control-label form-label">Teléfono: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="text" pattern="[0-9]{10}"  name="telefono"  placeholder="Teléfono de casa" min="0" value="{{$paciente->telefono}}" class="form-control form-control-radius">
+                                                  <input type="text" pattern="[0-9]{10}"  name="telefono"  placeholder="Teléfono de casa" min="0" value="{{$paciente->telefono}}" class="form-control ">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label " class="col-sm-2 control-label form-label">Celular: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="text" pattern="[0-9]{10}"  name="celular" placeholder="Teléfono Celular" min="0" value="{{$paciente->celular}}" class="form-control form-control-radius">
+                                                  <input type="text" pattern="[0-9]{10}"  name="celular" placeholder="Teléfono Celular" min="0" value="{{$paciente->celular}}" class="form-control ">
                                                 </div>
                                             </div>
                                            
@@ -155,14 +155,14 @@ Pacientes <i class="fa fa-home"></i>
 
                               <!-- End Modal Code -->
                               @if($paciente->estatus==1 && Auth::user()->tipo==3)
-                                <a  href="{{route('suspenderPacienteGerente',$paciente->id)}}" class="btn btn-rounded btn-icon btn-warning" title="Suspender paciente"><i class="fa fa-close"></i></a>
+                                <a  href="{{route('suspenderPacienteGerente',$paciente->id)}}" class="btn  btn-icon btn-warning" title="Suspender paciente"><i class="fa fa-close"></i></a>
                               
                               @elseif($paciente->estatus==2 && Auth::user()->tipo==3)
-                                 <a  href="{{route('activarPacienteGerente',$paciente->id)}}" class="btn btn-rounded btn-icon btn-success" title="Activar paciente"><i class="fa fa-check-square-o"></i></a>
+                                 <a  href="{{route('activarPacienteGerente',$paciente->id)}}" class="btn  btn-icon btn-success" title="Activar paciente"><i class="fa fa-check-square-o"></i></a>
                               @elseif($paciente->estatus==2 && Auth::user()->tipo<3)
-                                 <a  href="{{route('eliminarPaciente',$paciente->id)}}" class="btn btn-rounded  btn-icon btn-danger" title="Eliminar paciente"><i class="fa fa-trash"></i></a>
+                                 <a  href="{{route('eliminarPaciente',$paciente->id)}}" class="btn   btn-icon btn-danger" title="Eliminar paciente"><i class="fa fa-trash"></i></a>
                               @elseif($paciente->estatus==1 && Auth::user()->tipo==4)
-                                 <a  href="{{route('eliminarPaciente',$paciente->id)}}" class="btn btn-rounded  btn-icon btn-danger" title="Hoja de nutrición"><i class="fa fa-apple"></i></a>
+                                 <a  href="{{route('reporteNutricionPdf',$paciente->id)}}" class="btn   btn-icon btn-success" title="Hoja de nutrición"><i class="fa fa-apple"></i></a>
                               @endif
                         </td>
                        

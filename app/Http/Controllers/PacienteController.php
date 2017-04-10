@@ -24,11 +24,15 @@ class PacienteController extends Controller
                 $unidades=Unidad::all();
                 break;
             case 2:
-                $pacientes= Paciente::where('estatus','!=',3)->get();;
+                $pacientes= Paciente::where('estatus','!=',3)->get();
                 $unidades=Unidad::all();
                 break;
             case 3:
                 $pacientes= Paciente::where('unidad_id',Auth::user()->unidad_id)->where('estatus','!=',3)->get();
+                break;
+            case 4:
+                $pacientes= Paciente::where('estatus','!=',3)->get();
+                $unidades=Unidad::all();
                 break;
         }
     	
