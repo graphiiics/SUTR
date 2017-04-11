@@ -96,7 +96,13 @@ Pacientes <i class="fa fa-home"></i>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                         <h4 class="modal-title">Editar {{$paciente->nombre}}</h4>
                                       </div>
-                                      <form class="form-horizontal" role="form" method="POST" action="{{ route('editarPacienteGerente',$paciente->id) }}">
+                                      @if(Auth::user()->tipo==2)
+                                         <form class="form-horizontal" role="form" method="POST" action="{{ route('editarPaciente',$paciente->id) }}">     
+                                      @elseif(Auth::user()->tipo==3)
+                                         <form class="form-horizontal" role="form" method="POST" action="{{ route('editarPacienteGerente',$paciente->id) }}">
+                                      @elseif(Auth::user()->tipo==4)
+                                         <form class="form-horizontal" role="form" method="POST" action="{{ route('editarPacienteNutriologo',$paciente->id) }}">       
+                                      @endif
                                         {!! csrf_field() !!}  
                                         <div class="modal-body">
                                             <div class="form-group">
@@ -139,7 +145,30 @@ Pacientes <i class="fa fa-home"></i>
                                                   <input type="text" pattern="[0-9]{10}"  name="celular" placeholder="Teléfono Celular" min="0" value="{{$paciente->celular}}" class="form-control ">
                                                 </div>
                                             </div>
-                                           
+                                            <div class="form-group">
+                                                <label " class="col-sm-2 control-label form-label">Fecha de nacimiento: </label>
+                                                <div class="col-sm-10">
+                                                  <input type="date"   name="fecha_nacimiento"  min="0" value="{{$paciente->fecha_nacimiento}}" class="form-control ">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label " class="col-sm-2 control-label form-label">Inicio de Hemodialisis: </label>
+                                                <div class="col-sm-10">
+                                                  <input type="date"   name="inicio_hemodialisis"  value="{{$paciente->inicio_hemodialisis}}" class="form-control ">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label " class="col-sm-2 control-label form-label">Diagnstico Actual: </label>
+                                                <div class="col-sm-10">
+                                                  <input type="text" name="diagnostico_actual" placeholder="" value="{{$paciente->diagnostico_actual}}" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label " class="col-sm-2 control-label form-label">Diagnostico Segundario: </label>
+                                                <div class="col-sm-10">
+                                                  <input type="text" name="diagnostico_secundario" placeholder="" value="{{$paciente->diagnostico_secundario}}" class="form-control">
+                                                </div>
+                                            </div> 
                                              
                                             
                                            
@@ -186,49 +215,61 @@ Pacientes <i class="fa fa-home"></i>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Nuevo paciente</h4>
               </div>
-              <form class="form-horizontal" role="form"  method="POST" action="{{ route('guardarPacienteGerente') }}">
+              @if(Auth::user()->tipo==2)
+                <form class="form-horizontal" role="form"  method="POST" action="{{ route('guardarPaciente') }}">
+              @elseif(Auth::user()->tipo==3)
+                <form class="form-horizontal" role="form"  method="POST" action="{{ route('guardarPacienteGerente') }}">
+              @endif
+              
                 {!! csrf_field() !!}  
                 <div class="modal-body">
                     <div class="modal-body">
-                                            <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Nombre: </label>
-                                                <div class="col-sm-10">
-                                                  <input type="text" name="nombre"  class="form-control form-control-radius" required="">
-                                                </div>
-                                            </div>
-                                            <div  class="form-group">
-                                              <label class="col-sm-2 control-label form-label">Unidad: </label>
-                                              <div class="col-sm-10">
-                                                <select name="unidad_id" class="selectpicker form-control form-control-radius">
-                                                    @if(Auth::user()->tipo==3)
-                                                    <option value="{{Auth::user()->unidad->id}}">{{Auth::user()->unidad->nombre}}</option>
-                                                    @else
-                                                      @foreach($unidades as $unidad)
-                                                        <option value="{{$unidad->id}}">{{$unidad->nombre}}</option>
-                                                      @endforeach 
-                                                    @endif
-                                                  </select>                  
-                                              </div>
-                                            </div>
-                                                            
-                                            <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Dirección: </label>
-                                                <div class="col-sm-10">
-                                                  <input type="text" name="direccion" placeholder="Calle,Número,Colonia,Municipio,Estado"  class="form-control form-control-radius">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Teléfono: </label>
-                                                <div class="col-sm-10">
-                                                  <input type="text" pattern="[0-9]{10}"  name="telefono"  placeholder="Telefono de casa" min="0"  class="form-control form-control-radius">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Celular: </label>
-                                                <div class="col-sm-10">
-                                                  <input type="text" pattern="[0-9]{10}"  name="celular" placeholder="Teléfono Celular" min="0"  class="form-control form-control-radius">
-                                                </div>
-                                            </div>
+                    <div class="form-group">
+                        <label " class="col-sm-2 control-label form-label">Nombre: </label>
+                        <div class="col-sm-10">
+                          <input type="text" name="nombre"  class="form-control form-control-radius" required="">
+                        </div>
+                    </div>
+                    <div  class="form-group">
+                      <label class="col-sm-2 control-label form-label">Unidad: </label>
+                      <div class="col-sm-10">
+                        <select name="unidad_id" class="selectpicker form-control form-control-radius">
+                            @if(Auth::user()->tipo==3)
+                            <option value="{{Auth::user()->unidad->id}}">{{Auth::user()->unidad->nombre}}</option>
+                            @else
+                              @foreach($unidades as $unidad)
+                                <option value="{{$unidad->id}}">{{$unidad->nombre}}</option>
+                              @endforeach 
+                            @endif
+                          </select>                  
+                      </div>
+                    </div>
+                                    
+                    <div class="form-group">
+                        <label " class="col-sm-2 control-label form-label">Dirección: </label>
+                        <div class="col-sm-10">
+                          <input type="text" name="direccion" placeholder="Calle,Número,Colonia,Municipio,Estado"  class="form-control form-control-radius">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label " class="col-sm-2 control-label form-label">Teléfono: </label>
+                        <div class="col-sm-10">
+                          <input type="text" pattern="[0-9]{10}"  name="telefono"  placeholder="Telefono de casa" min="0"  class="form-control form-control-radius">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label " class="col-sm-2 control-label form-label">Celular: </label>
+                        <div class="col-sm-10">
+                          <input type="text" pattern="[0-9]{10}"  name="celular" placeholder="Teléfono Celular" min="0"  class="form-control form-control-radius">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label " class="col-sm-2 control-label form-label">Fecha de nacimiento: </label>
+                        <div class="col-sm-10">
+                          <input type="date"   name="fecha_nacimiento"  min="0"  class="form-control ">
+                        </div>
+                    </div>
+                                           
                    
                     
                 </div>

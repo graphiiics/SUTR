@@ -41,7 +41,7 @@ class PacienteController extends Controller
 
     public function editarPaciente(Paciente $paciente,Request $request)
     {
-    	if($paciente->update(['nombre'=>$request->input('nombre'),'direccion'=>$request->input('direccion'),'telefono'=>$request->input('telefono'),'celular'=>$request->input('celular'),'unidad'=>$request->input('unidad')])){
+    	if($paciente->update($request->all())){
              Session::flash('message','Datos del paciente actualizados correctamente');
             Session::flash('class','success');
         }else{
@@ -58,6 +58,9 @@ class PacienteController extends Controller
 	    	case 3:
 	    		return redirect('gerente/pacientes');
 	    		break;
+            case 4:
+                return redirect('nutriologo/pacientes');
+                break;
     	
    		}
     }
