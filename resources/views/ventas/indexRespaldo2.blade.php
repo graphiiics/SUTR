@@ -209,7 +209,7 @@ Ventas <i class="fa fa-home"></i>
                       <label class="col-sm-2 control-label form-label">Unidad: </label>
                       <div class="col-sm-10">
 
-                        <select name="unidad" v-model="pago" class="selectpicker form-control form-control-radius" >
+                        <select name="unidad" v-model="pago" class="form-control " >
                               <option value="0">Todas</option>
                             @foreach($usuarios as $usuario)
                               <option value="{{$usuario->id}}">{{$usuario->unidad->nombre}}</option>
@@ -340,7 +340,7 @@ Ventas <i class="fa fa-home"></i>
                           <div  class="form-group">
                             <label class="col-sm-2 control-label form-label">Tipo: </label>
                             <div class="col-sm-10">
-                              <select name="pago" v-model="pago" class="selectpicker form-control" >
+                              <select name="pago" v-model="pago" class="form-control" >
                                   <option value="1">Efectivo</option>
                                   <option value="2">Credito</option>
                               </select>                  
@@ -349,13 +349,13 @@ Ventas <i class="fa fa-home"></i>
                           <div class="form-group ">
                               <label  class="col-lg-2 control-label form-label">Cliente:</label>
                               <div class="col-lg-10">
-                                <input type="text"  name="cliente" v-model="cliente" placeholder="Nombre Completo"  class="form-control form-control-radius" required>
+                                <input type="text"  name="cliente" v-model="cliente" placeholder="Nombre Completo"  class="form-control " required>
                               </div>
                           </div>
                           <div class="form-group  ">
                               <label  class="col-lg-2 md-2 control-label form-label">Producto:</label>
                               <div class="col-lg-8 md-8">
-                                <select  v-model="producto"  id="producto" class="form-control form-control-radius"  @change="datosProducto(producto)">
+                                <select  v-model="producto"  id="producto" class="form-control "  @change="datosProducto(producto)">
                                     <option value="" >Selecciona un suplemento</option>
                                     <option v-for="suplemento in suplementos" value="@{{suplemento.key}}">
                                       @{{suplemento.nombre}} (@{{suplemento.presentacion}})
@@ -371,7 +371,7 @@ Ventas <i class="fa fa-home"></i>
                             <div class="col-lg-6 md-6">
                                 <div class="input-group">
                                     <div class="input-group-addon">Cantidad</div>
-                                      <input type="number" v-model="cantidad"  value="1" min="1" :max="cantidadMaxima" class="form-control form-control-radius" >
+                                      <input type="number" v-model="cantidad"  value="1" min="1" :max="cantidadMaxima" class="form-control " >
                                    
                                   </div>
                             </div>
@@ -379,7 +379,7 @@ Ventas <i class="fa fa-home"></i>
 
                                  <div class="input-group">
                                     <div class="input-group-addon">$</div>
-                                     <input type="number"  v-model="precio" min="0" value="0" step=".01" class="form-control form-control-radius" >
+                                     <input type="number"  v-model="precio" min="0" value="0" step=".01" class="form-control " >
                                   </div>
                             </div>
                           </div>

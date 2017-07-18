@@ -127,7 +127,7 @@
                           <div  class="form-group">
                             <label class="col-sm-2 control-label form-label">Comentarios: </label>
                             <div class="col-sm-10">
-                              <input type="text" name="comentarios" id="comentarios" class=" form-control form-control-radius" >
+                              <input type="text" name="comentarios" id="comentarios" class=" form-control " >
                             </div>
                           </div>
                         @endif 
@@ -197,7 +197,7 @@
               <div  class="form-group">
                 <label class="col-sm-2 control-label form-label">Unidad: </label>
                 <div class="col-sm-10">
-                  <select name="unidad" class="selectpicker form-control form-control-radius">
+                  <select name="unidad" class="form-control ">
                    {{--  @if(Auth::user()->tipo<=2)
                       @foreach($unidades as $unidad)
                       <option value="{{$unidad->id}}">{{$unidad->nombre}}</option>
@@ -211,15 +211,15 @@
               <div  class="form-group">
                 <label class="col-sm-2 control-label form-label">Comentarios: </label>
                 <div class="col-sm-10">
-                  <input type="text" name="comentarios"    class=" form-control form-control-radius" >
+                  <input type="text" name="comentarios"    class=" form-control " >
                 </div>
               </div>
 
               <div>
                 <div class="form-group col-lg-8 md-8 sm-8">
-                    <label " class="col-lg-4 control-label form-label">Producto:</label>
+                    <label class="col-lg-4 control-label form-label">Producto:</label>
                     <div class="col-lg-8">
-                      <select id="nProducto" onchange="cantidadAlmacen();" class="selectpicker form-control form-control-radius">
+                      <select id="nProducto" onchange="cantidadAlmacen();" class="form-control ">
                         @foreach($productos as $producto)
                           @if($producto->unidades()->first()->pivot->cantidad>0) {{-- Solicita cantidad al almacen --}}
                             <option value="{{$producto->id}}-{{$producto->nombre}}" >{{$producto->nombre}}</option>
@@ -230,7 +230,7 @@
                 </div>
                 <div class="form-group col-lg-4 md-4 sm-4">
                     <div class="col-lg-12">
-                      <input type="number"   id="cProducto"  value="1" min="1" class="form-control form-control-radius" >
+                      <input type="number"   id="cProducto"  value="1" min="1" class="form-control " >
                     </div>
                 </div>
                  <a  href="#" id="agregar" onclick="AgregarCampos();" type="button" class="btn btn-rounded btn-success   btn-icon"><i class="fa fa-plus"></i></a>
@@ -276,7 +276,7 @@ $(document).ready(function() {
       cantidad=cantidadMax;
     }
        nextinput++;
-       campo = '<div id="campo'+nextinput+'"><div class="form-group col-lg-8 md-8 sm-8"><label  class="col-lg-4 control-label form-label">Producto '+(nextinput)+':</label><div class="col-lg-8"><input type="text" id="producto'+nextinput+'" name="producto'+nextinput+'" value="'+producto.substring(producto.indexOf('-')+1)+'" class="form-control form-control-radius" disabled > <input type="hidden" name="producto'+nextinput+'" value="'+producto.substring(0,producto.indexOf('-'))+'"></div></div><div class="form-group col-lg-4 md-4 sm-4"><div class="col-lg-12"><input type="number" value="'+cantidad+'" min="1" max="'+cantidadMax+'" name="cantidad'+nextinput+'" min="1" class="form-control form-control-radius" required ></div></div><div class="form-group col-lg-2 md-2 sm-2"></div>  </div>';
+       campo = '<div id="campo'+nextinput+'"><div class="form-group col-lg-8 md-8 sm-8"><label  class="col-lg-4 control-label form-label">Producto '+(nextinput)+':</label><div class="col-lg-8"><input type="text" id="producto'+nextinput+'" name="producto'+nextinput+'" value="'+producto.substring(producto.indexOf('-')+1)+'" class="form-control " disabled > <input type="hidden" name="producto'+nextinput+'" value="'+producto.substring(0,producto.indexOf('-'))+'"></div></div><div class="form-group col-lg-4 md-4 sm-4"><div class="col-lg-12"><input type="number" value="'+cantidad+'" min="1" max="'+cantidadMax+'" name="cantidad'+nextinput+'" min="1" class="form-control " required ></div></div><div class="form-group col-lg-2 md-2 sm-2"></div>  </div>';
     
    
      

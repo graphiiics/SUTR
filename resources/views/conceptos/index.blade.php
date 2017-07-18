@@ -73,9 +73,9 @@ Conceptos <i class="fa fa-home"></i>
                         {!! csrf_field() !!}  
                         <div class="modal-body">
                             <div class="form-group">
-                                <label " class="col-sm-2 control-label form-label">Nombre: </label>
+                                <label class="col-sm-2 control-label form-label">Nombre: </label>
                                 <div class="col-sm-10">
-                                  <input type="text" name="nombre"  class="form-control form-control-radius" placeholder="Nombre del concepto" required>
+                                  <input type="text" name="nombre"  class="form-control " placeholder="Nombre del concepto" required>
                                 </div>
                             </div>
                              

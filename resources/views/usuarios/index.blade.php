@@ -9,7 +9,7 @@
   }
 ?>
 @extends("$variable")
-@section('titulo') Usuarios 
+@section('titulo') Usuarios
 @endsection
 @section('tituloModulo')
 Usuarios <i class="fa fa-home"></i>
@@ -33,7 +33,7 @@ Usuarios <i class="fa fa-home"></i>
         @endif
       <div class="panel panel-default">
         <div class="panel-title">
-         
+
         </div>
         <div class="panel-body table-responsive">
 
@@ -85,26 +85,26 @@ Usuarios <i class="fa fa-home"></i>
                                         <h4 class="modal-title">Editar {{$usuario->name}}</h4>
                                       </div>
                                       <form class="form-horizontal" role="form" method="POST" action="{{ route('editarUsuario',$usuario->id) }}">
-                                        {!! csrf_field() !!}  
+                                        {!! csrf_field() !!}
                                         <div class="modal-body">
-                                            
+
                                             <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Nombre: </label>
+                                                <label class="col-sm-2 control-label form-label">Nombre: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="text"  name="name" value="{{$usuario->name}}" class="form-control form-control-radius">
+                                                  <input type="text"  name="name" value="{{$usuario->name}}" class="form-control ">
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Telefóno: </label>
+                                                <label class="col-sm-2 control-label form-label">Telefóno: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="tel" pattern="[0-9]{10}" name="telefono" value="{{$usuario->telefono}}" class="form-control form-control-radius">
+                                                  <input type="tel" pattern="[0-9]{10}" name="telefono" value="{{$usuario->telefono}}" class="form-control ">
                                                 </div>
                                             </div>
-                                             
+
                                             <div class="form-group">
                                               <label class="col-sm-2 control-label form-label">Estado: </label>
                                               <div class="col-sm-10">
-                                                <select name="estatus" value="{{$usuario->estatus}}" class="selectpicker form-control form-control-radius">
+                                                <select name="estatus" value="{{$usuario->estatus}}" class="form-control ">
                                                   @if($usuario->estatus==1)
                                                     <option value="1" selected>Activo</option>
                                                     <option value="2" >Suspendido</option>
@@ -112,27 +112,27 @@ Usuarios <i class="fa fa-home"></i>
                                                     <option value="1" >Activo</option>
                                                     <option value="2" selected>Suspendido</option>
                                                   @endif
-                                                  </select>                  
+                                                  </select>
                                               </div>
                                             </div>
-                                                                                    
+
                                             <div class="form-group">
                                               <label class="col-sm-2 control-label form-label">Unidad: </label>
                                               <div class="col-sm-10">
-                                                <select name="unidad_id" class="selectpicker form-control form-control-radius">
+                                                <select name="unidad_id" class="form-control ">
                                                  @foreach($unidades as $unidad)
                                                     @if($unidad->id==$usuario->unidad_id)
                                                        <option value="{{$unidad->id}}" selected >{{$unidad->nombre}}</option>
                                                     @else
                                                       <option value="{{$unidad->id}}" >{{$unidad->nombre}}</option>
                                                     @endif
-                                                  @endforeach  
-                                                </select>              
+                                                  @endforeach
+                                                </select>
                                               </div>
                                             </div>
-                                            
-                                            
-                                           
+
+
+
                                         </div>
                                         <div class="modal-footer">
                                           <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
@@ -167,57 +167,57 @@ Usuarios <i class="fa fa-home"></i>
                         <h4 class="modal-title">Nuevo usuario</h4>
                       </div>
                       <form class="form-horizontal" role="form" method="POST" enctype="multipart/form-data" action="{{ route('guardarUsuario') }}">
-                        {!! csrf_field() !!}  
+                        {!! csrf_field() !!}
                         <div class="modal-body">
                             <div class="form-group">
-                                <label " class="col-sm-2 control-label form-label">Nombre: </label>
+                                <label class="col-sm-2 control-label form-label">Nombre: </label>
                                 <div class="col-sm-10">
-                                  <input type="text" name="name"  class="form-control form-control-radius" placeholder="Nombre completo" required>
+                                  <input type="text" name="name"  class="form-control " placeholder="Nombre completo" required>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label " class="col-sm-2 control-label form-label">Correo: </label>
+                                <label class="col-sm-2 control-label form-label">Correo: </label>
                                 <div class="col-sm-10">
-                                  <input type="email" name="email"  class="form-control form-control-radius"  placeholder="Correo valido" required>
+                                  <input type="email" name="email"  class="form-control "  placeholder="Correo valido" required>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label " class="col-sm-2 control-label form-label">Telefóno: </label>
+                                <label class="col-sm-2 control-label form-label">Telefóno: </label>
                                 <div class="col-sm-10">
-                                  <input type="tel" name="telefono" pattern="[0-9]{10}" class="form-control form-control-radius" placeholder="10 dígitos"  required>
+                                  <input type="tel" name="telefono" pattern="[0-9]{10}" class="form-control " placeholder="10 dígitos"  required>
                                 </div>
                             </div>
-                             
+
                             <div class="form-group">
                               <label class="col-sm-2 control-label form-label">Tipo: </label>
                               <div class="col-sm-10">
-                                <select name="tipo" class="selectpicker form-control form-control-radius">
+                                <select name="tipo" class="form-control ">
                                     @if(Auth::user()->tipo==1)
                                       <option value="2">Administrador</option>
                                       <option value="3">Gerente</option>
                                     @elseif(Auth::user()->tipo==2)
                                       <option value="3">Gerente</option>
                                     @endif
-                                  </select>                  
+                                  </select>
                               </div>
                             </div>
-                                                                    
+
                             <div class="form-group">
                               <label class="col-sm-2 control-label form-label">Unidad: </label>
                               <div class="col-sm-10">
-                                <select name="unidad_id"  class="selectpicker form-control form-control-radius">
+                                <select name="unidad_id"  class="form-control ">
                                  @foreach($unidades as $key=> $unidad)
                                       <option value="{{$unidad->id}}" >{{$unidad->nombre}}</option>
-                                  @endforeach  
-                                </select>              
+                                  @endforeach
+                                </select>
                               </div>
                             </div>
                             <div class="form-group">
-                            <label " class="col-sm-2 control-label form-label">Foto:</label>
+                            <label class="col-sm-2 control-label form-label">Foto:</label>
                                 <div class="col-sm-10">
-                                  <input type="file" name="foto"  class="form-control form-control-radius">
+                                  <input type="file" name="foto"  class="form-control ">
                                 </div>
-                            </div> 
+                            </div>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
@@ -229,9 +229,9 @@ Usuarios <i class="fa fa-home"></i>
                 </div>
 
       <!-- End Modal Code -->
-    
-      
- 
+
+
+
  @endsection
 
  @section ('js')
@@ -250,5 +250,3 @@ function enviar(){
 
 
 @stop
-
-

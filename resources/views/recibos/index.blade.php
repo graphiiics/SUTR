@@ -210,7 +210,7 @@ Recibos <i class="fa fa-home"></i>
                   <div class="row">
                   <div class="col-sm-3"> 
                   <label>Unidad</label> 
-                    <select name="usuario" id="usuarioFechas" onchange="pacientesUnidad();" class="selectpicker form-control form-control" >
+                    <select name="usuario" id="usuarioFechas" onchange="pacientesUnidad();" class="form-control form-control" >
                     <option value="0" selected >Todas</option>
                       @foreach($usuarios as $usuario)
                         
@@ -278,7 +278,7 @@ Recibos <i class="fa fa-home"></i>
                     <div  class="form-group">
                       <label class="col-sm-2 control-label form-label">Paciente: </label>
                       <div class="col-sm-10">
-                        <select name="paciente_id" id="paciente" onchange="datosPaciente();" class="selectpicker form-control form-control">
+                        <select name="paciente_id" id="paciente" onchange="datosPaciente();" class="form-control form-control">
                             <option value="0">Seleccionar paciente</option>
                             @foreach($pacientes as $paciente)
                               <option value="{{$paciente->id}}">{{$paciente->nombre}}</option>
@@ -289,7 +289,7 @@ Recibos <i class="fa fa-home"></i>
                     <div  class="form-group">
                       <label class="col-sm-2 control-label form-label">Unidad: </label>
                       <div class="col-sm-10">
-                        <select name="unidad_id" class="selectpicker form-control form-control">
+                        <select name="unidad_id" class="form-control form-control">
 
                             <option value="{{Auth::user()->unidad->id}}">{{Auth::user()->unidad->nombre}}</option>
                           </select>                  
@@ -298,7 +298,7 @@ Recibos <i class="fa fa-home"></i>
                                     
                   
                     <div class="form-group">
-                        <label " class="col-sm-2 control-label form-label">Cantidad: </label>
+                        <label class="col-sm-2 control-label form-label">Cantidad: </label>
                         <div class="col-sm-10">
                           <input type="number" pattern="[0-9]{10}"  id="cantidad" name="cantidad" step=".1" value="1020" placeholder="Cantidad" min="0"  class="form-control form-control">
                         </div>
@@ -312,7 +312,7 @@ Recibos <i class="fa fa-home"></i>
                       </div>
                     </div>
                      <div class="form-group">
-                      <label " class="col-sm-2 control-label form-label">Folio: </label>
+                      <label class="col-sm-2 control-label form-label">Folio: </label>
                       <div class="col-sm-10">
                         <input type="number"   name="folio"  placeholder="Folio de recibos anteriores" min="0" class="form-control form-control" readonly="" value="{{$ultimoFolio}}">
                       </div>

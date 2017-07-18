@@ -76,33 +76,33 @@ Proveedores <i class="fa fa-home"></i>
                                         {!! csrf_field() !!}  
                                         <div class="modal-body">
                                             <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Nombre: </label>
+                                                <label class="col-sm-2 control-label form-label">Nombre: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="text" name="nombre" value="{{$proveedor->nombre}}" class="form-control form-control-radius" >
+                                                  <input type="text" name="nombre" value="{{$proveedor->nombre}}" class="form-control " >
                                                 </div>
                                             </div>
                                               <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Iniciales: </label>
+                                                <label class="col-sm-2 control-label form-label">Iniciales: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="text"  name="iniciales" value="{{$proveedor->iniciales}}" class="form-control form-control-radius">
+                                                  <input type="text"  name="iniciales" value="{{$proveedor->iniciales}}" class="form-control ">
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Contacto: </label>
+                                                <label class="col-sm-2 control-label form-label">Contacto: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="text"  name="contacto" value="{{$proveedor->gerente}}" class="form-control form-control-radius">
+                                                  <input type="text"  name="contacto" value="{{$proveedor->gerente}}" class="form-control ">
                                                 </div>
                                             </div>
                                              <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Teléfono: </label>
+                                                <label class="col-sm-2 control-label form-label">Teléfono: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="tel" name="telefono" value="{{$proveedor->telefono}}" class="form-control form-control-radius">
+                                                  <input type="tel" name="telefono" value="{{$proveedor->telefono}}" class="form-control ">
                                                 </div>
                                             </div>
                                              <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Correo: </label>
+                                                <label class="col-sm-2 control-label form-label">Correo: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="email"  name="correo" value="{{$proveedor->correo}}" class="form-control form-control-radius">
+                                                  <input type="email"  name="correo" value="{{$proveedor->correo}}" class="form-control ">
                                                 </div>
                                             </div>
                                              
@@ -149,33 +149,33 @@ Proveedores <i class="fa fa-home"></i>
                   {!! csrf_field() !!}  
                   <div class="modal-body">
                       <div class="form-group">
-                          <label " class="col-sm-2 control-label form-label">Nombre: </label>
+                          <label class="col-sm-2 control-label form-label">Nombre: </label>
                           <div class="col-sm-10">
-                            <input type="text" name="nombre" placeholder="Empresa" class="form-control form-control-radius" >
+                            <input type="text" name="nombre" placeholder="Empresa" class="form-control " >
                           </div>
                       </div>
                       <div class="form-group">
-                          <label " class="col-sm-2 control-label form-label">Iniciales: </label>
+                          <label class="col-sm-2 control-label form-label">Iniciales: </label>
                           <div class="col-sm-10">
-                            <input type="text"  name="iniciales" placeholder="Nombre completo" class="form-control form-control-radius">
+                            <input type="text"  name="iniciales" placeholder="Nombre completo" class="form-control ">
                           </div>
                       </div>
                       <div class="form-group">
-                          <label " class="col-sm-2 control-label form-label">Contacto: </label>
+                          <label class="col-sm-2 control-label form-label">Contacto: </label>
                           <div class="col-sm-10">
-                            <input type="text"  name="contacto" placeholder="Nombre completo" class="form-control form-control-radius">
+                            <input type="text"  name="contacto" placeholder="Nombre completo" class="form-control ">
                           </div>
                       </div>
                        <div class="form-group">
-                          <label " class="col-sm-2 control-label form-label">Teléfono: </label>
+                          <label class="col-sm-2 control-label form-label">Teléfono: </label>
                           <div class="col-sm-10">
-                            <input type="tel" pattern="[0-9]{10}"  name="telefono" placeholder="10 dígitos" class="form-control form-control-radius">
+                            <input type="tel" pattern="[0-9]{10}"  name="telefono" placeholder="10 dígitos" class="form-control ">
                           </div>
                       </div>
                        <div class="form-group">
-                          <label " class="col-sm-2 control-label form-label">Correo: </label>
+                          <label class="col-sm-2 control-label form-label">Correo: </label>
                           <div class="col-sm-10">
-                            <input type="email"  name="correo" placeholder="Correo electrónico" class="form-control form-control-radius">
+                            <input type="email"  name="correo" placeholder="Correo electrónico" class="form-control ">
                           </div>
                       </div>
                        

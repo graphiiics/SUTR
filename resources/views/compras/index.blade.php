@@ -158,7 +158,7 @@ Compras <i class="fa fa-home"></i>
                           <div  class="form-group">
                             <label class="col-sm-2 control-label form-label">Proveedor: </label>
                             <div class="col-sm-10">
-                              <select name="proveedor" id="proveedor" onchange="actualizarProductos();" class="form-control form-control-radius">
+                              <select name="proveedor" id="proveedor" onchange="actualizarProductos();" class="form-control ">
                                 <option>Selecciona un proveedor</option>
                                  @foreach($proveedores  as $proveedor)
                                  <option value="{{$proveedor->id}}" >{{$proveedor->nombre}}</option>
@@ -170,7 +170,7 @@ Compras <i class="fa fa-home"></i>
                           <div class="form-group  ">
                               <label  class="col-lg-2 md-2 control-label form-label">Producto:</label>
                               <div class="col-lg-8 md-8">
-                                <select id="nProducto" onchange="actualizarPrecio();" class=" form-control form-control-radius" disabled>
+                                <select id="nProducto" onchange="actualizarPrecio();" class=" form-control " disabled>
                                 </select>     
                               </div>
                               <div class="col-lg-2 md-2">
@@ -182,7 +182,7 @@ Compras <i class="fa fa-home"></i>
                             <div class="col-lg-6 md-6">
                                 <div class="input-group">
                                     <div class="input-group-addon">Cant.</div>
-                                      <input type="number"   id="cProducto" value="1" min="1"  class="form-control form-control-radius" disabled>
+                                      <input type="number"   id="cProducto" value="1" min="1"  class="form-control " disabled>
                                    
                                   </div>
                             </div>
@@ -190,7 +190,7 @@ Compras <i class="fa fa-home"></i>
                              <div class="col-lg-6 md-6">
                                 <div class="input-group">
                                     <div class="input-group-addon"> contenido p/c:</div>
-                                      <input type="number"   id="cantidadCaja" value="1" min="1"  class="form-control form-control-radius" disabled>
+                                      <input type="number"   id="cantidadCaja" value="1" min="1"  class="form-control " disabled>
                                    
                                   </div>
                             </div>
@@ -198,7 +198,7 @@ Compras <i class="fa fa-home"></i>
 
                                  <div class="input-group">
                                     <div class="input-group-addon">$</div>
-                                     <input type="number" id="precio"  min="0" step=".01" class="form-control form-control-radius" disabled>
+                                     <input type="number" id="precio"  min="0" step=".01" class="form-control " disabled>
                                   </div>
                             </div>
                             <div class="col-lg-6 md-6">
@@ -240,13 +240,13 @@ Compras <i class="fa fa-home"></i>
                             <div class="col-lg-6 md-6">
                               <label  class="col-lg-4 md-4 control-label form-label">Cantidad total:</label>
                                 <div class="col-lg-8 md-8">
-                                  <input type="text"   id="tProductos"   class="form-control form-control-radius" disabled>
+                                  <input type="text"   id="tProductos"   class="form-control " disabled>
                                 </div>
                             </div>
                             <div class="col-lg-6 md-6">
                               <label  class="col-lg-4 md-4 control-label form-label">Precio total:</label>
                                 <div class="col-lg-8 md-8">
-                                  <input type="text"   id="tPrecio"   class="form-control form-control-radius" disabled>
+                                  <input type="text"   id="tPrecio"   class="form-control " disabled>
                                 </div>
                             </div>
                           </div>

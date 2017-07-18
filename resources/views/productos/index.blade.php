@@ -135,22 +135,22 @@ Productos <i class="fa fa-home"></i>
                                         {!! csrf_field() !!}  
                                         <div class="modal-body">
                                             <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Nombre: </label>
+                                                <label class="col-sm-2 control-label form-label">Nombre: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="text" name="nombre" value="{{$producto->nombre}}" class="form-control form-control-radius" >
+                                                  <input type="text" name="nombre" value="{{$producto->nombre}}" class="form-control " >
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Precio Venta: </label>
+                                                <label class="col-sm-2 control-label form-label">Precio Venta: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="number" name="precio_venta" min="0" value="{{$producto->precio_venta}}" class="form-control form-control-radius">
+                                                  <input type="number" name="precio_venta" min="0" value="{{$producto->precio_venta}}" class="form-control ">
                                                 </div>
                                             </div>
                                              
                                             <div class="form-group">
                                               <label class="col-sm-2 control-label form-label">Categoría: </label>
                                               <div class="col-sm-10">
-                                                <select name="categoria" value="{{$producto->categoria}}" class="selectpicker form-control form-control-radius">
+                                                <select name="categoria" value="{{$producto->categoria}}" class="form-control ">
                                                   @if($producto->categoria=="Medicamento")
                                                     <option selected>Medicamento</option>
                                                     <option>Suplemento</option>
@@ -174,7 +174,7 @@ Productos <i class="fa fa-home"></i>
                                             <div class="form-group">
                                               <label class="col-sm-2 control-label form-label">Presentación: </label>
                                               <div class="col-sm-10">
-                                                <select name="presentacion" value="{{$producto->presentacion}}" class="selectpicker form-control form-control-radius">
+                                                <select name="presentacion" value="{{$producto->presentacion}}" class="form-control ">
                                                   @if($producto->presentacion=="Pieza")
                                                     <option selected>Pieza</option>
                                                     <option>Paquete</option>
@@ -198,15 +198,15 @@ Productos <i class="fa fa-home"></i>
                                             @foreach($unidades as $key=> $unidad)
                                             <div class="form-group col-lg-12 md-12">
                                               <div class="form-group col-lg-6 md-12">
-                                                  <label " class="col-sm-4 control-label form-label">{{$unidad->nombre}}: </label>
+                                                  <label class="col-sm-4 control-label form-label">{{$unidad->nombre}}: </label>
                                                   <div class="col-sm-8">
-                                                    <input type="number" name="cantidadUnidad{{$unidad->id}}" value="{{$producto->unidades->find($unidad->id)->pivot->cantidad}}" class="form-control form-control-radius" min="0">
+                                                    <input type="number" name="cantidadUnidad{{$unidad->id}}" value="{{$producto->unidades->find($unidad->id)->pivot->cantidad}}" class="form-control " min="0">
                                                   </div>
                                               </div>
                                                <div class="form-group col-lg-6 md-12">
-                                                  <label " class="col-sm-4 control-label form-label">Stock minimo: </label>
+                                                  <label class="col-sm-4 control-label form-label">Stock minimo: </label>
                                                   <div class="col-sm-8">
-                                                    <input type="number" name="productoMinimoUnidad{{$unidad->id}}" value="{{$producto->unidades->find($unidad->id)->pivot->stock_minimo}}" class="form-control form-control-radius" min="0">
+                                                    <input type="number" name="productoMinimoUnidad{{$unidad->id}}" value="{{$producto->unidades->find($unidad->id)->pivot->stock_minimo}}" class="form-control " min="0">
                                                   </div>
                                               </div>
                                             </div>
@@ -250,22 +250,22 @@ Productos <i class="fa fa-home"></i>
                                         {!! csrf_field() !!}  
                                         <div class="modal-body">
                                             <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Nombre: </label>
+                                                <label class="col-sm-2 control-label form-label">Nombre: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="text" name="nombre" class="form-control form-control-radius" required>
+                                                  <input type="text" name="nombre" class="form-control " required>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Precio venta: </label>
+                                                <label class="col-sm-2 control-label form-label">Precio venta: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="number" min="0" name="precio_venta" value="0" class="form-control form-control-radius" required >
+                                                  <input type="number" min="0" name="precio_venta" value="0" class="form-control " required >
                                                 </div>
                                             </div>
                                              
                                             <div class="form-group">
                                               <label class="col-sm-2 control-label form-label">Categoría: </label>
                                               <div class="col-sm-10">
-                                                <select name="categoria" class="selectpicker form-control form-control-radius">
+                                                <select name="categoria" class="form-control ">
                                                     <option>Medicamento</option>
                                                     <option>Suplemento</option>
                                                     <option>Material</option>
@@ -275,7 +275,7 @@ Productos <i class="fa fa-home"></i>
                                             <div class="form-group">
                                               <label class="col-sm-2 control-label form-label">Tipo: </label>
                                               <div class="col-sm-10">
-                                                <select name="presentacion" class="selectpicker form-control form-control-radius">
+                                                <select name="presentacion" class="form-control ">
                                                     <option>Paquete</option>
                                                     <option>Caja</option>
                                                     <option>Pieza</option>
@@ -287,15 +287,15 @@ Productos <i class="fa fa-home"></i>
                                                
                                               <div class="form-group col-lg-12 md-12">
                                               <div class="form-group col-lg-6 md-12">
-                                                  <label " class="col-sm-4 control-label form-label">{{$unidad->nombre}}: </label>
+                                                  <label class="col-sm-4 control-label form-label">{{$unidad->nombre}}: </label>
                                                   <div class="col-sm-8">
-                                                    <input type="number" name="cantidadUnidad{{$unidad->id}}" value="0" class="form-control form-control-radius" min="0">
+                                                    <input type="number" name="cantidadUnidad{{$unidad->id}}" value="0" class="form-control " min="0">
                                                   </div>
                                               </div>
                                                <div class="form-group col-lg-6 md-12">
-                                                  <label " class="col-sm-4 control-label form-label">Stock minimo: </label>
+                                                  <label class="col-sm-4 control-label form-label">Stock minimo: </label>
                                                   <div class="col-sm-8">
-                                                    <input type="number" name="productoMinimoUnidad{{$unidad->id}}" value="0" class="form-control form-control-radius" min="0">
+                                                    <input type="number" name="productoMinimoUnidad{{$unidad->id}}" value="0" class="form-control " min="0">
                                                   </div>
                                               </div>
                                             </div>

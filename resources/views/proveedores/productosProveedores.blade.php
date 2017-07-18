@@ -13,7 +13,7 @@
   }
 ?>
 @extends("$variable")
-@section('titulo') Precios de Productos 
+@section('titulo') Precios de Productos
 @endsection
 @section('tituloModulo')
 Productos <i class="fa fa-home"></i>
@@ -46,7 +46,7 @@ Productos <i class="fa fa-home"></i>
         @endif
       <div class="panel panel-default">
         <div class="panel-title">
-         
+
         </div>
         <div class="panel-body table-responsive">
 
@@ -62,7 +62,7 @@ Productos <i class="fa fa-home"></i>
                         <th>Acciones</th>
                     </tr>
                 </thead>
-             
+
                 <tbody>
                     @foreach ($proveedores as $proveedor )
                        @foreach($proveedor->productos as $producto)
@@ -83,42 +83,42 @@ Productos <i class="fa fa-home"></i>
                                         <h4 class="modal-title">Editar </h4>
                                       </div>
                                       <form class="form-horizontal" role="form" method="POST" action="{{ route('editarProductoProveedor') }}">
-                                        {!! csrf_field() !!}  
+                                        {!! csrf_field() !!}
                                         <div class="modal-body">
                                             <div class="form-group col-lg-12 md-12 sm-812">
-                                                <label " class="col-lg-2 control-label form-label">Proveedores:</label>
+                                                <label class="col-lg-2 control-label form-label">Proveedores:</label>
                                                 <div class="col-lg-10">
-                                                  <select  name="proveedor"  class="selectpicker form-control form-control-radius">
-                                                   
+                                                  <select  name="proveedor"  class="form-control ">
+
                                                       {{-- Solicita cantidad al almacen --}}
                                                         <option value="{{$proveedor->id}}" >{{$proveedor->nombre}}</option>
-                                                    
-                                                  </select>     
+
+                                                  </select>
                                                 </div>
                                             </div>
                                             <input type="hidden" name="productoActual" value="{{$producto->id}}">
                                             <div class="form-group col-lg-12 md-812 sm-12">
-                                                <label " class="col-lg-2 control-label form-label productoClass">Producto:</label>
+                                                <label class="col-lg-2 control-label form-label productoClass">Producto:</label>
                                                 <div class="col-lg-10">
-                                                  <select  name="producto"  class="selectpicker form-control form-control-radius">
+                                                  <select  name="producto"  class="form-control ">
                                                     @foreach($productos as $producto)
                                                        {{-- Solicita cantidad al almacen --}}
                                                         <option value="{{$producto->id}}" >{{$producto->nombre}}</option>
-                                             
+
                                                     @endforeach
-                                                  </select>     
+                                                  </select>
                                                 </div>
                                             </div>
                                               <div class="form-group">
-                                              <label " class="col-sm-2 control-label form-label">Precio: </label>
+                                              <label class="col-sm-2 control-label form-label">Precio: </label>
                                               <div class="col-sm-10">
-                                                <input type="number" name="precio" placeholder="Empresa" step="0.01" min="0" value="0" class="form-control form-control-radius" >
+                                                <input type="number" name="precio" placeholder="Empresa" step="0.01" min="0" value="0" class="form-control " >
                                               </div>
                                           </div>
                                           <div class="form-group">
                                             <label class="col-sm-4 control-label form-label">Eliminar:</label>
                                             <div class="col-sm-8">
-                                              <input type="checkbox" class="toggle" name="eliminar" data-toggle="toggle" data-on=" " data-off=" ">
+                                              <input type="checkbox" name="eliminar" >
                                             </div>
                                           </div>
                                         </div>
@@ -131,7 +131,7 @@ Productos <i class="fa fa-home"></i>
                                   </div>
                                 </div>
                               <!-- End Modal Code -->
-                              </td>                     
+                              </td>
                       </tr>
                       @endforeach
                   @endforeach
@@ -151,36 +151,36 @@ Productos <i class="fa fa-home"></i>
                   <h4 class="modal-title">Nueva relación producto-proveedor</h4>
                 </div>
                 <form class="form-horizontal" role="form" method="POST" action="{{ route('guardarProductoProveedor') }}">
-                  {!! csrf_field() !!}  
+                  {!! csrf_field() !!}
                   <div class="modal-body">
-                      
+
                       <div class="form-group col-lg-12 md-12 sm-812">
-                          <label " class="col-lg-2 control-label form-label">Proveedores:</label>
+                          <label class="col-lg-2 control-label form-label">Proveedores:</label>
                           <div class="col-lg-10">
-                            <select id="NuevoProveedor" name="proveedor" onchange="productosDisponibles();" class="selectpicker form-control form-control-radius">
+                            <select id="NuevoProveedor" name="proveedor" onchange="productosDisponibles();" class="form-control ">
                               @foreach($proveedores as $proveedor)
                                 {{-- Solicita cantidad al almacen --}}
                                   <option value="{{$proveedor->id}}" >{{$proveedor->nombre}}</option>
                                 @endforeach
-                            </select>     
+                            </select>
                           </div>
                       </div>
                       <div class="form-group col-lg-12 md-812 sm-12">
-                          <label " class="col-lg-2 control-label form-label">Producto:</label>
+                          <label class="col-lg-2 control-label form-label">Producto:</label>
                           <div class="col-lg-10">
-                            <select id="NuevoProducto" name="producto"  class="selectpicker form-control form-control-radius">
-                              
-                            </select>     
+                            <select id="NuevoProducto" name="producto"  class="form-control ">
+
+                            </select>
                           </div>
                       </div>
                       <div class="form-group">
-                          <label " class="col-sm-2 control-label form-label">Precio: </label>
+                          <label class="col-sm-2 control-label form-label">Precio: </label>
                           <div class="col-sm-10">
-                            <input type="number" name="precio" placeholder="Empresa" step="0.01" min="0" value="0" class="form-control form-control-radius" >
+                            <input type="number" name="precio" placeholder="Empresa" step="0.01" min="0" value="0" class="form-control " >
                           </div>
                       </div>
-                      
-                       
+
+
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
@@ -202,20 +202,20 @@ Productos <i class="fa fa-home"></i>
                   <h4 class="modal-title">Selecciona los proveedores a comparar</h4>
                 </div>
                 <form class="form-horizontal" role="form" method="POST" action="{{ route('precioProveedoresPdf') }}">
-                  {!! csrf_field() !!}  
+                  {!! csrf_field() !!}
                   <div class="modal-body">
-                      
+
                       <div class="form-group col-lg-12 md-12 sm-812">
-                          <label " class="col-lg-2 control-label form-label">Proveedores:</label>
+                          <label class="col-lg-2 control-label form-label">Proveedores:</label>
                           <div class="col-lg-9">
-                            <select id="proveedorImprimir" name="proveedor"  class="selectpicker form-control form-control-radius">
+                            <select id="proveedorImprimir" name="proveedor"  class="form-control ">
                               @foreach($proveedores as $proveedor)
                                 {{-- Solicita cantidad al almacen --}}
                                   <option value="{{$proveedor->id}}-{{$proveedor->nombre}}" >{{$proveedor->nombre}}</option>
                               @endforeach
-                            </select>    
+                            </select>
                           </div>
-                         
+
                           <button type="button" onclick="agregarProveedor();" class="btn btn-rounded btn-success btn-icon"><i class="fa fa-plus"></i></button>
                       </div>
                   </div>
@@ -260,7 +260,7 @@ function productosDisponibles(){
       success: llegada,
     });
   function llegada(data){
-   
+
     $.each(data, function(i,p) {
             $('#NuevoProducto').append($('<option>', {
             value: p.id,
@@ -275,7 +275,7 @@ function agregarProveedor(){
   contadorProveedor++;
   var proveedor=$('#proveedorImprimir').val();
   $('#totalProveedores').val(contadorProveedor);
-  var input=' <div class="col-lg-10 col-lg-offset-1"><input type="text" class="form-control form-control-radius" readonly value="'+proveedor+'"><div><input type="hidden" name="proveedor'+contadorProveedor+'" value="'+proveedor.substring(0,proveedor.indexOf('-'))+'" >';
+  var input=' <div class="col-lg-10 col-lg-offset-1"><input type="text" class="form-control " readonly value="'+proveedor+'"><div><input type="hidden" name="proveedor'+contadorProveedor+'" value="'+proveedor.substring(0,proveedor.indexOf('-'))+'" >';
   $('#imprimirProveedores').append(input);
   $("#proveedorImprimir option[value='"+proveedor+"']").remove();
 }

@@ -243,7 +243,7 @@
           <div  class="form-group">
             <label class="col-lg-2 sm-2  control-label form-label">Unidad: </label>
             <div class="col-lg-10 sm-10 ">
-              <select name="unidad"  class="selectpicker form-control" >
+              <select name="unidad"  class="form-control" >
                 <option value="{{Auth::user()->undiad_id}}">{{Auth::user()->unidad->nombre}}</option>
               </select>                  
             </div>

@@ -354,7 +354,7 @@ Ventas <i class="fa fa-home"></i>
 
                   <div class="row">
                   <div class="col-sm-8"> 
-                    <select name="usuario" id="usuarioFechas" class="selectpicker form-control form-control" >
+                    <select name="usuario" id="usuarioFechas" class="form-control form-control" >
                     <option value="0">Todas</option>
                       @foreach($usuarios as $usuario)
                         
@@ -395,7 +395,7 @@ Ventas <i class="fa fa-home"></i>
               <div  class="modal-body">
                 <div class="row">
                   <div class="col-sm-8"> 
-                    <select name="usuario" id="usuarioSuplentos" class="selectpicker form-control form-control-radius" >
+                    <select name="usuario" id="usuarioSuplentos" class="form-control " >
                       @foreach($usuarios as $usuario)
                         <option value="{{$usuario->id}}">{{$usuario->name}}</option>
                       @endforeach 
@@ -535,7 +535,7 @@ Ventas <i class="fa fa-home"></i>
                           <div  class="form-group">
                             <label class="col-sm-2 control-label form-label">Tipo: </label>
                             <div class="col-sm-10">
-                              <select name="pago" v-model="pago" class="selectpicker form-control" >
+                              <select name="pago" v-model="pago" class="form-control" >
                                   <option value="1">Efectivo</option>
                                   <option value="2">Credito</option>
                               </select>                  

@@ -106,7 +106,7 @@ Pacientes <i class="fa fa-home"></i>
                                         {!! csrf_field() !!}  
                                         <div class="modal-body">
                                             <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Nombre: </label>
+                                                <label class="col-sm-2 control-label form-label">Nombre: </label>
                                                 <div class="col-sm-10">
                                                   <input type="text" name="nombre" value="{{$paciente->nombre}}" class="form-control " >
                                                 </div>
@@ -114,7 +114,7 @@ Pacientes <i class="fa fa-home"></i>
                                             <div  class="form-group">
                                               <label class="col-sm-2 control-label form-label">Unidad: </label>
                                               <div class="col-sm-10">
-                                                <select name="unidad_id" class="selectpicker form-control ">
+                                                <select name="unidad_id" class="form-control ">
                                                   @if(Auth::user()->tipo<=2) 
                                                     @foreach($unidades as $unidad)
                                                       <option value="{{$unidad->id}}">{{$unidad->nombre}}</option>
@@ -128,43 +128,43 @@ Pacientes <i class="fa fa-home"></i>
                                             </div>
                                                             
                                             <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Dirección: </label>
+                                                <label class="col-sm-2 control-label form-label">Dirección: </label>
                                                 <div class="col-sm-10">
                                                   <input type="text" name="direccion" placeholder="Calle,Número,Colonia,Municipio,Estado" value="{{$paciente->direccion}}" class="form-control">
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Teléfono: </label>
+                                                <label class="col-sm-2 control-label form-label">Teléfono: </label>
                                                 <div class="col-sm-10">
                                                   <input type="text" pattern="[0-9]{10}"  name="telefono"  placeholder="Teléfono de casa" min="0" value="{{$paciente->telefono}}" class="form-control ">
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Celular: </label>
+                                                <label class="col-sm-2 control-label form-label">Celular: </label>
                                                 <div class="col-sm-10">
                                                   <input type="text" pattern="[0-9]{10}"  name="celular" placeholder="Teléfono Celular" min="0" value="{{$paciente->celular}}" class="form-control ">
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Fecha de nacimiento: </label>
+                                                <label class="col-sm-2 control-label form-label">Fecha de nacimiento: </label>
                                                 <div class="col-sm-10">
                                                   <input type="date"   name="fecha_nacimiento"  min="0" value="{{$paciente->fecha_nacimiento}}" class="form-control ">
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Inicio de Hemodialisis: </label>
+                                                <label class="col-sm-2 control-label form-label">Inicio de Hemodialisis: </label>
                                                 <div class="col-sm-10">
                                                   <input type="date"   name="inicio_hemodialisis"  value="{{$paciente->inicio_hemodialisis}}" class="form-control ">
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Diagnstico Actual: </label>
+                                                <label class="col-sm-2 control-label form-label">Diagnstico Actual: </label>
                                                 <div class="col-sm-10">
                                                   <input type="text" name="diagnostico_actual" placeholder="" value="{{$paciente->diagnostico_actual}}" class="form-control">
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Diagnostico Segundario: </label>
+                                                <label class="col-sm-2 control-label form-label">Diagnostico Segundario: </label>
                                                 <div class="col-sm-10">
                                                   <input type="text" name="diagnostico_secundario" placeholder="" value="{{$paciente->diagnostico_secundario}}" class="form-control">
                                                 </div>
@@ -225,15 +225,15 @@ Pacientes <i class="fa fa-home"></i>
                 <div class="modal-body">
                     <div class="modal-body">
                     <div class="form-group">
-                        <label " class="col-sm-2 control-label form-label">Nombre: </label>
+                        <label class="col-sm-2 control-label form-label">Nombre: </label>
                         <div class="col-sm-10">
-                          <input type="text" name="nombre"  class="form-control form-control-radius" required="">
+                          <input type="text" name="nombre"  class="form-control " required="">
                         </div>
                     </div>
                     <div  class="form-group">
                       <label class="col-sm-2 control-label form-label">Unidad: </label>
                       <div class="col-sm-10">
-                        <select name="unidad_id" class="selectpicker form-control form-control-radius">
+                        <select name="unidad_id" class="form-control ">
                             @if(Auth::user()->tipo==3)
                             <option value="{{Auth::user()->unidad->id}}">{{Auth::user()->unidad->nombre}}</option>
                             @else
@@ -246,25 +246,25 @@ Pacientes <i class="fa fa-home"></i>
                     </div>
                                     
                     <div class="form-group">
-                        <label " class="col-sm-2 control-label form-label">Dirección: </label>
+                        <label class="col-sm-2 control-label form-label">Dirección: </label>
                         <div class="col-sm-10">
-                          <input type="text" name="direccion" placeholder="Calle,Número,Colonia,Municipio,Estado"  class="form-control form-control-radius">
+                          <input type="text" name="direccion" placeholder="Calle,Número,Colonia,Municipio,Estado"  class="form-control ">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label " class="col-sm-2 control-label form-label">Teléfono: </label>
+                        <label class="col-sm-2 control-label form-label">Teléfono: </label>
                         <div class="col-sm-10">
-                          <input type="text" pattern="[0-9]{10}"  name="telefono"  placeholder="Telefono de casa" min="0"  class="form-control form-control-radius">
+                          <input type="text" pattern="[0-9]{10}"  name="telefono"  placeholder="Telefono de casa" min="0"  class="form-control ">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label " class="col-sm-2 control-label form-label">Celular: </label>
+                        <label class="col-sm-2 control-label form-label">Celular: </label>
                         <div class="col-sm-10">
-                          <input type="text" pattern="[0-9]{10}"  name="celular" placeholder="Teléfono Celular" min="0"  class="form-control form-control-radius">
+                          <input type="text" pattern="[0-9]{10}"  name="celular" placeholder="Teléfono Celular" min="0"  class="form-control ">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label " class="col-sm-2 control-label form-label">Fecha de nacimiento: </label>
+                        <label class="col-sm-2 control-label form-label">Fecha de nacimiento: </label>
                         <div class="col-sm-10">
                           <input type="date"   name="fecha_nacimiento"  min="0"  class="form-control ">
                         </div>

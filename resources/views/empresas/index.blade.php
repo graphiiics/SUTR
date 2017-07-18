@@ -78,39 +78,39 @@ Empresas <i class="fa fa-home"></i>
                                         {!! csrf_field() !!}  
                                         <div class="modal-body">
                                             <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Nombre: </label>
+                                                <label class="col-sm-2 control-label form-label">Nombre: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="text" name="razon_social" value="{{$empresa->razon_social}}" class="form-control form-control-radius" >
+                                                  <input type="text" name="razon_social" value="{{$empresa->razon_social}}" class="form-control " >
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">RFC: </label>
+                                                <label class="col-sm-2 control-label form-label">RFC: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="text" name="rfc" value="{{$empresa->rfc}}" class="form-control form-control-radius" >
+                                                  <input type="text" name="rfc" value="{{$empresa->rfc}}" class="form-control " >
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Telefono: </label>
+                                                <label class="col-sm-2 control-label form-label">Telefono: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="text" name="telefono" value="{{$empresa->telefono}}" class="form-control form-control-radius" >
+                                                  <input type="text" name="telefono" value="{{$empresa->telefono}}" class="form-control " >
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Correo: </label>
+                                                <label class="col-sm-2 control-label form-label">Correo: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="text" name="correo" value="{{$empresa->correo}}" class="form-control form-control-radius" >
+                                                  <input type="text" name="correo" value="{{$empresa->correo}}" class="form-control " >
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Dirección: </label>
+                                                <label class="col-sm-2 control-label form-label">Dirección: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="text" name="direccion" value="{{$empresa->direccion}}" class="form-control form-control-radius" >
+                                                  <input type="text" name="direccion" value="{{$empresa->direccion}}" class="form-control " >
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Contacto: </label>
+                                                <label class="col-sm-2 control-label form-label">Contacto: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="text" name="persona_contacto" value="{{$empresa->persona_contacto}}" class="form-control form-control-radius" >
+                                                  <input type="text" name="persona_contacto" value="{{$empresa->persona_contacto}}" class="form-control " >
                                                 </div>
                                             </div>
                                         </div>
@@ -152,39 +152,39 @@ Empresas <i class="fa fa-home"></i>
                   {!! csrf_field() !!}  
                   <div class="modal-body">
                       <div class="form-group">
-                          <label " class="col-sm-2 control-label form-label">Nombre: </label>
+                          <label class="col-sm-2 control-label form-label">Nombre: </label>
                           <div class="col-sm-10">
-                            <input type="text" name="razon_social"  placeholder="Razón social de la empresa" class="form-control form-control-radius" >
+                            <input type="text" name="razon_social"  placeholder="Razón social de la empresa" class="form-control " >
                           </div>
                       </div>
                       <div class="form-group">
-                          <label " class="col-sm-2 control-label form-label">RFC: </label>
+                          <label class="col-sm-2 control-label form-label">RFC: </label>
                           <div class="col-sm-10">
-                            <input type="text" name="rfc" placeholder="RFC con homoclave" class="form-control form-control-radius" >
+                            <input type="text" name="rfc" placeholder="RFC con homoclave" class="form-control " >
                           </div>
                       </div>
                       <div class="form-group">
-                          <label " class="col-sm-2 control-label form-label">Telefono: </label>
+                          <label class="col-sm-2 control-label form-label">Telefono: </label>
                           <div class="col-sm-10">
-                            <input type="text" name="telefono" placeholder="Número completo" class="form-control form-control-radius" >
+                            <input type="text" name="telefono" placeholder="Número completo" class="form-control " >
                           </div>
                       </div>
                       <div class="form-group">
-                          <label " class="col-sm-2 control-label form-label">Correo: </label>
+                          <label class="col-sm-2 control-label form-label">Correo: </label>
                           <div class="col-sm-10">
-                            <input type="email" name="correo"   placeholder="Correo electrónico" class="form-control form-control-radius" >
+                            <input type="email" name="correo"   placeholder="Correo electrónico" class="form-control " >
                           </div>
                       </div>
                       <div class="form-group">
-                          <label " class="col-sm-2 control-label form-label">Dirección: </label>
+                          <label class="col-sm-2 control-label form-label">Dirección: </label>
                           <div class="col-sm-10">
-                            <input type="text" name="direccion"  placeholder="Calle,Número,CP,Colonia,Municipio,Estado" class="form-control form-control-radius" >
+                            <input type="text" name="direccion"  placeholder="Calle,Número,CP,Colonia,Municipio,Estado" class="form-control " >
                           </div>
                       </div>
                       <div class="form-group">
-                          <label " class="col-sm-2 control-label form-label">Contacto: </label>
+                          <label class="col-sm-2 control-label form-label">Contacto: </label>
                           <div class="col-sm-10">
-                            <input type="text" name="persona_contacto" placeholder="Persona con quien contactarse"  class="form-control form-control-radius" >
+                            <input type="text" name="persona_contacto" placeholder="Persona con quien contactarse"  class="form-control " >
                           </div>
                       </div>
                   </div>

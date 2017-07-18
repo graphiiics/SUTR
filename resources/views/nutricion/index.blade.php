@@ -86,7 +86,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                             </div>
                             <div class="col-lg-4">
                               <div class="form-group ">
-                                <label " class="col-sm-2 control-label form-label">Grasa: </label>
+                                <label class="col-sm-2 control-label form-label">Grasa: </label>
                                 <div class="col-sm-10">
                                   <input type="number" name="grasa" step=".01" class="form-control form-control" placeholder="">
                                 </div>
@@ -94,7 +94,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                             </div>
                             <div class="col-lg-4">
                               <div class="form-group ">
-                                <label " class="col-sm-2 control-label form-label">MM: </label>
+                                <label class="col-sm-2 control-label form-label">MM: </label>
                                 <div class="col-sm-10">
                                   <input type="number" name="mm" step=".01" class="form-control form-control" placeholder="">
                                 </div>
@@ -102,7 +102,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                             </div>
                             <div class="col-lg-4">
                               <div class="form-group ">
-                                <label " class="col-sm-2 control-label form-label">Agua: </label>
+                                <label class="col-sm-2 control-label form-label">Agua: </label>
                                 <div class="col-sm-10">
                                   <input type="number" name="agua" step=".01" class="form-control form-control" placeholder="">
                                 </div>
@@ -110,7 +110,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                             </div>
                             <div class="col-lg-4">
                               <div class="form-group ">
-                                <label " class="col-sm-2 control-label form-label">GV: </label>
+                                <label class="col-sm-2 control-label form-label">GV: </label>
                                 <div class="col-sm-10">
                                   <input type="number" name="gv" step=".01" class="form-control form-control" placeholder="">
                                 </div>
@@ -118,7 +118,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                             </div>
                             <div class="col-lg-4">
                               <div class="form-group ">
-                                <label " class="col-sm-2 control-label form-label">Peso seco: </label>
+                                <label class="col-sm-2 control-label form-label">Peso seco: </label>
                                 <div class="col-sm-10">
                                   <input type="number" name="peso_seco" step=".01" class="form-control form-control" placeholder="">
                                 </div>
@@ -134,7 +134,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                             </div>
                             <div class="col-lg-4">
                               <div class="form-group ">
-                                <label " class="col-sm-2 control-label form-label">Glucosa: </label>
+                                <label class="col-sm-2 control-label form-label">Glucosa: </label>
                                 <div class="col-sm-10">
                                   <input type="number" name="glucosa" step=".01" class="form-control form-control" placeholder="">
                                 </div>
@@ -142,7 +142,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                             </div>
                             <div class="col-lg-4">
                               <div class="form-group ">
-                                <label " class="col-sm-2 control-label form-label">Urea: </label>
+                                <label class="col-sm-2 control-label form-label">Urea: </label>
                                 <div class="col-sm-10">
                                   <input type="number" name="urea" step=".01" class="form-control form-control" placeholder="">
                                 </div>
@@ -150,7 +150,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                             </div>
                             <div class="col-lg-4">
                               <div class="form-group ">
-                                <label " class="col-sm-2 control-label form-label">Creatitina: </label>
+                                <label class="col-sm-2 control-label form-label">Creatitina: </label>
                                 <div class="col-sm-10">
                                   <input type="number" name="creatitina" step=".01" class="form-control form-control" placeholder="">
                                 </div>
@@ -158,7 +158,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                             </div>
                             <div class="col-lg-4">
                               <div class="form-group ">
-                                <label " class="col-sm-2 control-label form-label">Ácido úrico: </label>
+                                <label class="col-sm-2 control-label form-label">Ácido úrico: </label>
                                 <div class="col-sm-10">
                                   <input type="number" name="acido_urico" step=".01" class="form-control form-control" placeholder="">
                                 </div>
@@ -166,7 +166,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                             </div>
                              <div class="col-lg-4">
                               <div class="form-group ">
-                                <label " class="col-sm-2 control-label form-label">BUN: </label>
+                                <label class="col-sm-2 control-label form-label">BUN: </label>
                                 <div class="col-sm-10">
                                   <input type="number" name="bun" step=".01" class="form-control form-control" placeholder="">
                                 </div>
@@ -178,7 +178,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                             </div>
                             <div class="col-lg-4">
                               <div class="form-group ">
-                                <label " class="col-sm-2 control-label form-label">HB: </label>
+                                <label class="col-sm-2 control-label form-label">HB: </label>
                                 <div class="col-sm-10">
                                   <input type="number" name="hb" step=".01" class="form-control form-control" placeholder="">
                                 </div>
@@ -186,7 +186,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                             </div>
                             <div class="col-lg-4">
                               <div class="form-group ">
-                                <label " class="col-sm-2 control-label form-label">Hto: </label>
+                                <label class="col-sm-2 control-label form-label">Hto: </label>
                                 <div class="col-sm-10">
                                   <input type="number" name="hto" step=".01" class="form-control form-control" placeholder="">
                                 </div>
@@ -194,7 +194,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                             </div>
                             <div class="col-lg-4">
                               <div class="form-group ">
-                                <label " class="col-sm-2 control-label form-label">Leucocitos: </label>
+                                <label class="col-sm-2 control-label form-label">Leucocitos: </label>
                                 <div class="col-sm-10">
                                   <input type="number" name="leucocitos" step=".01" class="form-control form-control" placeholder="">
                                 </div>
@@ -205,7 +205,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                             </div>
                             <div class="col-lg-4">
                               <div class="form-group ">
-                                <label " class="col-sm-2 control-label form-label">Albúmina: </label>
+                                <label class="col-sm-2 control-label form-label">Albúmina: </label>
                                 <div class="col-sm-10">
                                   <input type="number" name="albumina" step=".01" class="form-control form-control" placeholder="">
                                 </div>
@@ -213,7 +213,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                             </div>
                             <div class="col-lg-4">
                               <div class="form-group ">
-                                <label " class="col-sm-2 control-label form-label">PTS Totales: </label>
+                                <label class="col-sm-2 control-label form-label">PTS Totales: </label>
                                 <div class="col-sm-10">
                                   <input type="number" name="pts_totales" step=".01" class="form-control form-control" placeholder="">
                                 </div>
@@ -224,7 +224,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                             </div>
                             <div class="col-lg-4">
                               <div class="form-group ">
-                                <label " class="col-sm-2 control-label form-label">Colesterol: </label>
+                                <label class="col-sm-2 control-label form-label">Colesterol: </label>
                                 <div class="col-sm-10">
                                   <input type="number" name="colesterol" step=".01" class="form-control form-control" placeholder="">
                                 </div>
@@ -232,7 +232,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                             </div>
                             <div class="col-lg-4">
                               <div class="form-group ">
-                                <label " class="col-sm-2 control-label form-label">Triglecéridos: </label>
+                                <label class="col-sm-2 control-label form-label">Triglecéridos: </label>
                                 <div class="col-sm-10">
                                   <input type="number" name="trigleceridos" step=".01" class="form-control form-control" placeholder="">
                                 </div>
@@ -244,7 +244,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                             </div>
                             <div class="col-lg-4">
                               <div class="form-group ">
-                                <label " class="col-sm-2 control-label form-label">Potasio(K): </label>
+                                <label class="col-sm-2 control-label form-label">Potasio(K): </label>
                                 <div class="col-sm-10">
                                   <input type="number" name="potasio" step=".01" class="form-control form-control" placeholder="">
                                 </div>
@@ -252,7 +252,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                             </div>
                             <div class="col-lg-4">
                               <div class="form-group ">
-                                <label " class="col-sm-2 control-label form-label">Sodio(Na): </label>
+                                <label class="col-sm-2 control-label form-label">Sodio(Na): </label>
                                 <div class="col-sm-10">
                                   <input type="number" name="sodio" step=".01" class="form-control form-control" placeholder="">
                                 </div>
@@ -260,7 +260,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                             </div>
                              <div class="col-lg-4">
                               <div class="form-group ">
-                                <label " class="col-sm-2 control-label form-label">Fosforo(P): </label>
+                                <label class="col-sm-2 control-label form-label">Fosforo(P): </label>
                                 <div class="col-sm-10">
                                   <input type="number" name="fosforo" step=".01" class="form-control form-control" placeholder="">
                                 </div>
@@ -268,7 +268,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                             </div>
                             <div class="col-lg-4">
                               <div class="form-group ">
-                                <label " class="col-sm-2 control-label form-label">Calcio(Ca): </label>
+                                <label class="col-sm-2 control-label form-label">Calcio(Ca): </label>
                                 <div class="col-sm-10">
                                   <input type="number" name="calcio" step=".01" class="form-control form-control" placeholder="">
                                 </div>
@@ -276,7 +276,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                             </div>
                             <div class="col-lg-4">
                               <div class="form-group ">
-                                <label " class="col-sm-2 control-label form-label">Magnesio (Mg): </label>
+                                <label class="col-sm-2 control-label form-label">Magnesio (Mg): </label>
                                 <div class="col-sm-10">
                                   <input type="number" name="magnesio" step=".01" class="form-control form-control" placeholder="">
                                 </div>
@@ -287,7 +287,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                             </div>
                             <div class="col-lg-4">
                               <div class="form-group ">
-                                <label " class="col-sm-2 control-label form-label">Nifedipino: </label>
+                                <label class="col-sm-2 control-label form-label">Nifedipino: </label>
                                 <div class="col-sm-10">
                                   <input type="text" name="nifedipino"  class="form-control form-control" placeholder="0-0-0 (Dosis)">
                                 </div>
@@ -296,7 +296,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                            
                             <div class="col-lg-4">
                               <div class="form-group ">
-                                <label " class="col-sm-2 control-label form-label">Furosemida: </label>
+                                <label class="col-sm-2 control-label form-label">Furosemida: </label>
                                 <div class="col-sm-10">
                                   <input type="text" name="furosemida"  class="form-control form-control" placeholder="0-0-0 (Dosis)">
                                 </div>
@@ -304,7 +304,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                             </div>
                             <div class="col-lg-4">
                               <div class="form-group ">
-                                <label " class="col-sm-2 control-label form-label">Tribedoce: </label>
+                                <label class="col-sm-2 control-label form-label">Tribedoce: </label>
                                 <div class="col-sm-10">
                                   <input type="text" name="tribedoce"  class="form-control form-control" placeholder="0-0-0 (Dosis)">
                                 </div>
@@ -312,7 +312,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                             </div>
                             <div class="col-lg-4">
                               <div class="form-group ">
-                                <label " class="col-sm-2 control-label form-label">Omeprazol: </label>
+                                <label class="col-sm-2 control-label form-label">Omeprazol: </label>
                                 <div class="col-sm-10">
                                   <input type="text" name="omeprazol"  class="form-control form-control" placeholder="0-0-0 (Dosis)">
                                 </div>
@@ -320,7 +320,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                             </div>
                              <div class="col-lg-4">
                               <div class="form-group ">
-                                <label " class="col-sm-2 control-label form-label">Ácido úrico: </label>
+                                <label class="col-sm-2 control-label form-label">Ácido úrico: </label>
                                 <div class="col-sm-10">
                                   <input type="text" name="acido_folico"  class="form-control form-control" placeholder="0-0-0 (Dosis)">
                                 </div>

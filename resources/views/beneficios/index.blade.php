@@ -101,26 +101,26 @@ Beneficios <i class="fa fa-home"></i>
                                     <div class="modal-body">
                                       <div class="modal-body">     
                                         <div class="form-group">
-                                            <label " class="col-sm-2 control-label form-label">Paciente: </label>
+                                            <label class="col-sm-2 control-label form-label">Paciente: </label>
                                             <div class="col-sm-10">
                                               <input type="text" value="{{$beneficio->paciente->nombre}}"  min="1" class="form-control " disabled>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label " class="col-sm-2 control-label form-label">Concepto: </label>
+                                            <label class="col-sm-2 control-label form-label">Concepto: </label>
                                             <div class="col-sm-10">
                                               <input type="text" value="{{$beneficio->concepto->nombre}}" min="1" class="form-control " disabled>
                                             </div>
                                         </div>
 
                                         <div class="form-group">
-                                            <label " class="col-sm-2 control-label form-label">sesiones: </label>
+                                            <label class="col-sm-2 control-label form-label">sesiones: </label>
                                             <div class="col-sm-10">
                                               <input type="number" name="sesiones" value="{{$beneficio->sesiones}}" placeholder="Sesiones asignads"  min="1" class="form-control ">
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label " class="col-sm-2 control-label form-label">Cantidad: </label>
+                                            <label class="col-sm-2 control-label form-label">Cantidad: </label>
                                             <div class="col-sm-10">
                                               <input type="number" value="{{$beneficio->cantidad}}"  name="cantidad"  placeholder="Cantidad total de beneficio" min="0" step=".1" class="form-control ">
                                             </div>
@@ -173,7 +173,7 @@ Beneficios <i class="fa fa-home"></i>
                    <div  class="form-group">
                     <label class="col-sm-2 control-label form-label">Paciente: </label>
                     <div class="col-sm-10">
-                      <select name="paciente_id" class="selectpicker form-control form-control-radius">
+                      <select name="paciente_id" class="form-control ">
                           @foreach($pacientes as $paciente) 
                             <option value="{{$paciente->id}}">{{$paciente->nombre}}</option>
                           @endforeach
@@ -183,7 +183,7 @@ Beneficios <i class="fa fa-home"></i>
                   <div  class="form-group">
                     <label class="col-sm-2 control-label form-label">Unidad: </label>
                     <div class="col-sm-10">
-                      <select name="unidad_id" class="selectpicker form-control form-control-radius">
+                      <select name="unidad_id" class="form-control ">
                          @if(Auth::user()->tipo==3)
                          
                            <option value="{{Auth::user()->unidad->id}}">{{Auth::user()->unidad->nombre}}</option>
@@ -199,7 +199,7 @@ Beneficios <i class="fa fa-home"></i>
                    <div  class="form-group">
                     <label class="col-sm-2 control-label form-label">Empresa: </label>
                     <div class="col-sm-10">
-                      <select name="empresa_id" class="selectpicker form-control form-control-radius">
+                      <select name="empresa_id" class="form-control ">
                           @foreach($empresas as $empresa) 
                             <option value="{{$empresa->id}}">{{$empresa->razon_social}}</option>
                           @endforeach
@@ -209,7 +209,7 @@ Beneficios <i class="fa fa-home"></i>
                   <div  class="form-group">
                     <label class="col-sm-2 control-label form-label">Concepto: </label>
                     <div class="col-sm-10">
-                      <select name="concepto_id" class="selectpicker form-control form-control-radius">
+                      <select name="concepto_id" class="form-control ">
                           @foreach($conceptos as $concepto) 
                             <option value="{{$concepto->id}}">{{$concepto->nombre}}</option>
                           @endforeach
@@ -218,15 +218,15 @@ Beneficios <i class="fa fa-home"></i>
                   </div>
                                   
                   <div class="form-group">
-                      <label " class="col-sm-2 control-label form-label">sesiones: </label>
+                      <label class="col-sm-2 control-label form-label">sesiones: </label>
                       <div class="col-sm-10">
-                        <input type="number" name="sesiones" placeholder="Sesiones asignads"  min="1" class="form-control form-control-radius">
+                        <input type="number" name="sesiones" placeholder="Sesiones asignads"  min="1" class="form-control ">
                       </div>
                   </div>
                   <div class="form-group">
-                      <label " class="col-sm-2 control-label form-label">Cantidad: </label>
+                      <label class="col-sm-2 control-label form-label">Cantidad: </label>
                       <div class="col-sm-10">
-                        <input type="number"   name="cantidad"  placeholder="Cantidad total de beneficio" min="0" step=".1" class="form-control form-control-radius">
+                        <input type="number"   name="cantidad"  placeholder="Cantidad total de beneficio" min="0" step=".1" class="form-control ">
                       </div>
                   </div>
                                    

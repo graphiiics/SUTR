@@ -145,7 +145,7 @@ Registro <i class="fa fa-home"></i>
                   <div  class="form-group">
                     <label class="col-sm-2 control-label form-label">Unidad: </label>
                     <div class="col-sm-10">
-                      <select name="unidad" class="selectpicker form-control form-control-radius">
+                      <select name="unidad" class="form-control ">
                           {{-- @if(Auth::user()->tipo<=2)
                           @foreach($unidades as$unidad)
                             <option value="{{$unidad->id}}">{{$unidad->nombre}}</option>
@@ -159,7 +159,7 @@ Registro <i class="fa fa-home"></i>
                   <div  class="form-group">
                     <label class="col-sm-2 control-label form-label">Tipo: </label>
                     <div class="col-sm-10">
-                      <select name="tipo"  id="tipo" onchange="cantidadUnidad();" class="selectpicker form-control form-control">
+                      <select name="tipo"  id="tipo" onchange="cantidadUnidad();" class="form-control form-control">
                           <option value="1">Entrada</option>
                           <option value="2">Salida</option>
                         </select>                  
@@ -173,9 +173,9 @@ Registro <i class="fa fa-home"></i>
                     </div>
                   <div>
                     <div class="form-group col-lg-8 md-8 sm-8">
-                        <label " class="col-lg-4 control-label form-label">Producto:</label>
+                        <label class="col-lg-4 control-label form-label">Producto:</label>
                         <div class="col-lg-8">
-                          <select id="nProducto" onchange="cantidadUnidad();" class="selectpicker form-control form-control">
+                          <select id="nProducto" onchange="cantidadUnidad();" class="form-control form-control">
                             @foreach($productos as $producto)
                             <option value="{{$producto->id}}-{{$producto->nombre}}" >{{$producto->nombre}}</option>
                             @endforeach
@@ -236,7 +236,7 @@ $(document).ready(function() {
 
     }
      
-    campo = '<div id="campo'+nextinput+'"><div class="form-group col-lg-8 md-8 sm-8"><label  class="col-lg-4 control-label form-label">Producto '+(nextinput)+':</label><div class="col-lg-8"><input type="text" id="producto'+nextinput+'" name="producto'+nextinput+'" value="'+producto.substring(producto.indexOf('-')+1)+'" class="form-control form-control-radius" disabled > <input type="hidden" name="producto'+nextinput+'" value="'+producto.substring(0,producto.indexOf('-'))+'"></div></div><div class="form-group col-lg-4 md-4 sm-4"><div class="col-lg-12"><input type="number" value="'+cantidad+'" min="1" max="'+cantidadMax+'" name="cantidad'+nextinput+'" min="1" class="form-control form-control-radius" required ></div></div><div class="form-group col-lg-2 md-2 sm-2"></div>  </div>';
+    campo = '<div id="campo'+nextinput+'"><div class="form-group col-lg-8 md-8 sm-8"><label  class="col-lg-4 control-label form-label">Producto '+(nextinput)+':</label><div class="col-lg-8"><input type="text" id="producto'+nextinput+'" name="producto'+nextinput+'" value="'+producto.substring(producto.indexOf('-')+1)+'" class="form-control " disabled > <input type="hidden" name="producto'+nextinput+'" value="'+producto.substring(0,producto.indexOf('-'))+'"></div></div><div class="form-group col-lg-4 md-4 sm-4"><div class="col-lg-12"><input type="number" value="'+cantidad+'" min="1" max="'+cantidadMax+'" name="cantidad'+nextinput+'" min="1" class="form-control " required ></div></div><div class="form-group col-lg-2 md-2 sm-2"></div>  </div>';
      
     if(producto!=null){
         $('#totalProductos').val(nextinput);

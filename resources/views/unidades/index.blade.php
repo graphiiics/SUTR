@@ -69,15 +69,15 @@ Unidades <i class="fa fa-home"></i>
                                         <div class="modal-body">
                                             
                                             <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Nombre: </label>
+                                                <label class="col-sm-2 control-label form-label">Nombre: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="text"  name="nombre" value="{{$unidad->nombre}}" class="form-control form-control-radius">
+                                                  <input type="text"  name="nombre" value="{{$unidad->nombre}}" class="form-control ">
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label " class="col-sm-2 control-label form-label">Dirección: </label>
+                                                <label class="col-sm-2 control-label form-label">Dirección: </label>
                                                 <div class="col-sm-10">
-                                                  <input type="text"  name="direccion" value="{{$unidad->direccion}}" class="form-control form-control-radius">
+                                                  <input type="text"  name="direccion" value="{{$unidad->direccion}}" class="form-control ">
                                                 </div>
                                             </div>
                                              
@@ -120,15 +120,15 @@ Unidades <i class="fa fa-home"></i>
                         {!! csrf_field() !!}  
                         <div class="modal-body">
                             <div class="form-group">
-                                <label " class="col-sm-2 control-label form-label">Nombre: </label>
+                                <label class="col-sm-2 control-label form-label">Nombre: </label>
                                 <div class="col-sm-10">
-                                  <input type="text" name="nombre"  class="form-control form-control-radius" placeholder="Nombre de la unidad" required>
+                                  <input type="text" name="nombre"  class="form-control " placeholder="Nombre de la unidad" required>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label " class="col-sm-2 control-label form-label">Correo: </label>
+                                <label class="col-sm-2 control-label form-label">Correo: </label>
                                 <div class="col-sm-10">
-                                  <input type="text" name="direccion"  class="form-control form-control-radius"  placeholder="Dirección de la unidad" required>
+                                  <input type="text" name="direccion"  class="form-control "  placeholder="Dirección de la unidad" required>
                                 </div>
                             </div>
                              

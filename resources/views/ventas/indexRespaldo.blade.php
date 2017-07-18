@@ -292,7 +292,7 @@ Ventas <i class="fa fa-home"></i>
                           <div  class="form-group">
                             <label class="col-sm-2 control-label form-label">Tipo: </label>
                             <div class="col-sm-10">
-                              <select name="pago" class="selectpicker form-control form-control-radius">
+                              <select name="pago" class="form-control ">
                                   <option value="1">Efectivo</option>
                                   <option value="2">Credito</option>
                               </select>                  
@@ -301,13 +301,13 @@ Ventas <i class="fa fa-home"></i>
                           <div class="form-group ">
                               <label  class="col-lg-2 control-label form-label">Cliente:</label>
                               <div class="col-lg-10">
-                                <input type="text"  name="cliente"  placeholder="Nombre Completo"  class="form-control form-control-radius" required>
+                                <input type="text"  name="cliente"  placeholder="Nombre Completo"  class="form-control " required>
                               </div>
                           </div>
                           <div class="form-group  ">
                               <label  class="col-lg-2 md-2 control-label form-label">Producto:</label>
                               <div class="col-lg-8 md-8">
-                                <select id="nProducto" v-model="nuevo_producto.nombre" onchange="actualizarPrecio();" class="selectpicker form-control form-control-radius">
+                                <select id="nProducto" v-model="nuevo_producto.nombre" onchange="actualizarPrecio();" class="form-control ">
                                   @foreach($productos as $producto)
                                     @if($producto->unidades()->find(Auth::user()->unidad_id)->pivot->cantidad>0)
                                     <option value="{{$producto->id}}-{{$producto->nombre}}${{$producto->precio_venta}}" >{{$producto->nombre}}</option>
@@ -324,7 +324,7 @@ Ventas <i class="fa fa-home"></i>
                             <div class="col-lg-6 md-6">
                                 <div class="input-group">
                                     <div class="input-group-addon">Cantidad</div>
-                                      <input type="number" v-model="nuevo_producto.cantidad"  id="cProducto" value="1" min="1"  class="form-control form-control-radius" >
+                                      <input type="number" v-model="nuevo_producto.cantidad"  id="cProducto" value="1" min="1"  class="form-control " >
                                    
                                   </div>
                             </div>
@@ -332,7 +332,7 @@ Ventas <i class="fa fa-home"></i>
 
                                  <div class="input-group">
                                     <div class="input-group-addon">$</div>
-                                     <input type="number"  v-model="nuevo_producto.precio" id="precio" min="0" value="0" step=".01" class="form-control form-control-radius" >
+                                     <input type="number"  v-model="nuevo_producto.precio" id="precio" min="0" value="0" step=".01" class="form-control " >
                                   </div>
                             </div>
                           </div>
@@ -411,7 +411,7 @@ $(document).ready(function() {
     var cantidadMax=parseInt($('#cProducto').prop('max'));
     var precio=parseFloat($('#precio').val());
      if(producto.substring(0,producto.indexOf('-'))==19){
-      campoCatheter='<div class="col-lg-12 md-12"><label  class="col-lg-4 md-4 control-label form-label">Instaldor:</label><div class="col-lg-8 md-8"><input type="text"   id="instalador" name="instalador"  class="form-control form-control-radius" ></div></div>';
+      campoCatheter='<div class="col-lg-12 md-12"><label  class="col-lg-4 md-4 control-label form-label">Instaldor:</label><div class="col-lg-8 md-8"><input type="text"   id="instalador" name="instalador"  class="form-control " ></div></div>';
        $("#catheter").prepend(campoCatheter);
      }
      if(cantidad>cantidadMax){
