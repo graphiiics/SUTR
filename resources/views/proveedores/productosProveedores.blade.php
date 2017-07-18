@@ -101,9 +101,13 @@ Productos <i class="fa fa-home"></i>
                                                 <label class="col-lg-2 control-label form-label productoClass">Producto:</label>
                                                 <div class="col-lg-10">
                                                   <select  name="producto"  class="form-control ">
-                                                    @foreach($productos as $producto)
+                                                    @foreach($productos as $productoProve)
                                                        {{-- Solicita cantidad al almacen --}}
-                                                        <option value="{{$producto->id}}" >{{$producto->nombre}}</option>
+                                                        @if($productoProve->id == $producto->id)
+                                                          <option value="{{$productoProve->id}}" selected>{{$productoProve->nombre}}</option>
+                                                        @else
+                                                          <option value="{{$productoProve->id}}" >{{$productoProve->nombre}}</option>
+                                                        @endif
 
                                                     @endforeach
                                                   </select>
