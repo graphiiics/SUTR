@@ -76,7 +76,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                     <div class="modal-content">
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Nuevo Reporte</h4>
+                        <h4 class="modal-title">Nuevo Reporte del Nutriólogo</h4>
                       </div>
                       <form class="form-horizontal" role="form" method="POST" enctype="multipart/form-data" action="{{ route('guardarHojaNutricion') }}">
                         {!! csrf_field() !!}  
