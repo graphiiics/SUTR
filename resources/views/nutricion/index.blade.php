@@ -71,19 +71,36 @@ Hoja nutricional  <i class="fa fa-home"></i>
     </div>
     <!-- End Panel -->
       <!-- Modal -->
-                <div class="modal fade" id="modal_nuevo" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal fade" id="modal_nuevo" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                   <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">Nuevo Reporte del Nutriólogo</h4>
                       </div>
-                      <form class="form-horizontal" role="form" method="POST" enctype="multipart/form-data" action="{{ route('guardarHojaNutricion') }}">
+                     <!-- <form class="form-horizontal" role="form" method="POST" enctype="multipart/form-data" action="{{ route('guardarHojaNutricion') }}">-->
+                      <form class="form-horizontal" role="form" method="POST" enctype="multipart/form-data" >
                         {!! csrf_field() !!}  
                         <div class="modal-body row">
+                          <div id="paciente">
+                            <div class="col-lg-12 ">
+                               <h4 class="center-block">Seleccione un paciente</h4>
+                            </div>
+
+                            <div class="col-lg-12">
+                              <div class="form-group ">
+                                <label class="col-sm-2 control-label form-label">Paciente</label>
+                                <div class="col-sm-10">
+                                  <input type="text" name="user_id" list="pacientes" class="form-control form-control" placeholder="">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div id="antropometria">
                             <div class="col-lg-12 ">
                                <h4 class="center-block">ANTROPOMETRÍA</h4>
                             </div>
+
                             <div class="col-lg-4">
                               <div class="form-group ">
                                 <label class="col-sm-2 control-label form-label">Grasa: </label>
@@ -124,8 +141,8 @@ Hoja nutricional  <i class="fa fa-home"></i>
                                 </div>
                               </div>
                             </div>
-
-
+                          </div>
+                          <div id="analisis-bio" style="height: 400px; overflow-y: scroll;">
                             <div class="col-lg-12 center-block">
                                <h4>ANÁLISIS BIOQUIMICO</h4>
                             </div>
@@ -282,6 +299,9 @@ Hoja nutricional  <i class="fa fa-home"></i>
                                 </div>
                               </div>
                             </div>
+                        </div>
+                        <div id="tratamiento-medico">
+                        
                             <div class="col-lg-12 center-block">
                                <h4>TRATAMIENTO MÉDICO</h4>
                             </div>
@@ -326,26 +346,32 @@ Hoja nutricional  <i class="fa fa-home"></i>
                                 </div>
                               </div>
                             </div>
+                          </div>
+                          <div id="valor-nutricional">
+                          
                             <div class="col-lg-12 center-block">
                                <h4>VALORACIÓN NUTRICIONAL</h4>
                             </div>
                             <div class="col-lg-12">
                               <div class="form-group ">
-                               <textarea class="form-control" name="valoracion" height="200px"></textarea>
+                               <textarea class="form-control" name="valoracion" rows="10" height="200px"></textarea>
                               </div>
                             </div>
+                          </div>
+                           <div id="indicaciones-nutricionales">
                             <div class="col-lg-12 center-block">
                                <h4>INDICACIONES NUTRICIONALES</h4>
                             </div>
                             <div class="col-lg-12">
                               <div class="form-group ">
-                               <textarea class="form-control" name="indicaciones" height="200px"></textarea>
+                               <textarea class="form-control" name="indicaciones" rows="10" height="200px"></textarea>
                               </div>
+                            </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
-                          <button type="submit" class="btn btn-default" onclick="enviar();">Guardar</button>
+                          <button type="button" class="btn btn-white" onclick="reporte.back()">Cerrar</button>
+                          <button type="button" class="btn btn-default" onclick="reporte.next()">Siguiente</button>
                         </div>
                       </form>
                     </div>
@@ -354,21 +380,26 @@ Hoja nutricional  <i class="fa fa-home"></i>
 
       <!-- End Modal Code -->
     
-      
+      <datalist id="pacientes">
+        @foreach ($pacientes as $paciente)
+          <option value="{{$paciente->id}}-{{$paciente->nombre}}"></option>
+        @endforeach
+      </datalist>
  
  @endsection
 
  @section ('js')
 <script src="{{asset('js/datatables/datatables.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/nutricion-reportes.js')}}"></script>
 <script>
 $(document).ready(function() {
     $('#example0').DataTable();
 } );
 function enviar(){
-  $('form').submit(function(){
+  /*$('form').submit(function(){
   $(this).find(':submit').remove();
   $('#loading').append('<img class="img responsive" width="30" src="{{asset('img/loading.gif')}}">');
-});
+});*/
 }
 </script>
 

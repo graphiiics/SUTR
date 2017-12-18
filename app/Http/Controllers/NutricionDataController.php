@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\NutricionData;
+use App\Paciente;
+//use Barryvdh\DomPDF\Facade as PDF;
+use PDF;
 
 class NutricionDataController extends Controller
 {
@@ -24,8 +27,9 @@ class NutricionDataController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
-        return view('nutricion/index');
+    {  
+        $pacientes= Paciente::where('estatus','!=',3)->get();
+        return view('nutricion/index',['pacientes' => $pacientes]);
     }
 
     public function guardarHojaNutricion(Request $request)
@@ -46,4 +50,13 @@ class NutricionDataController extends Controller
         
         }
     }
+
+    public function reporteNutricionPdf(Request $request){
+        $pdf = PDF::loadView('nutricion/reportes');
+        return $pdf->download();
+
+        //return view('nutricion/reportes');
+    }
+
+    
 }

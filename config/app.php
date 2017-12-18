@@ -157,6 +157,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Codedge\Fpdf\FpdfServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
     ],
 
     /*
@@ -202,7 +203,8 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
-        'Fpdf'      => Codedge\Fpdf\Facades\Fpdf::class,
+        'Fpdf'      => Codedge\Fpdf\Facades\Fpdf::class,        	
+        'PDF'       => Barryvdh\DomPDF\Facade::class,
         'Excel'     => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
