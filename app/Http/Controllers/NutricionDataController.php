@@ -6,8 +6,9 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\NutricionData;
 use App\Paciente;
-//use Barryvdh\DomPDF\Facade as PDF;
 use PDF;
+use Session;
+use Auth;
 
 class NutricionDataController extends Controller
 {
@@ -45,17 +46,15 @@ class NutricionDataController extends Controller
         switch (Auth::user()->tipo) {
             case 4:
                 return redirect('nutriologo/reporte-nutricion');
-                break;
-            
-        
+                break;        
         }
     }
 
-    public function reporteNutricionPdf(Request $request){
-        $pdf = PDF::loadView('nutricion/reportes');
-        return $pdf->download();
-
-        //return view('nutricion/reportes');
+    public function reporteNutricionPdf(Request $request,$paciente){
+        $reporteData = NutricionData::where('paciente_id','=',$paciente)->leftJoin('pacientes', 'paciente_id','=','pacientes.id')->first();
+        $pdf = PDF::loadView('nutricion/reportes',['reporte' => $reporteData]);
+        return $pdf->stream();
+        //return view('nutricion/reportes',['reporte' => $reporteData]);
     }
 
     

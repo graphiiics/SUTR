@@ -74,12 +74,12 @@ Hoja nutricional  <i class="fa fa-home"></i>
                 <div class="modal fade" id="modal_nuevo" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                   <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-                      <div class="modal-header">
+                      <div class="modal-header"> 
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">Nuevo Reporte del Nutriólogo</h4>
                       </div>
-                     <!-- <form class="form-horizontal" role="form" method="POST" enctype="multipart/form-data" action="{{ route('guardarHojaNutricion') }}">-->
-                      <form class="form-horizontal" role="form" method="POST" enctype="multipart/form-data" >
+                     <!-- <form class="form-horizontal" role="form" method="POST" enctype="multipart/form-data" a>-->
+                      <form class="form-horizontal" role="form" method="POST" enctype="multipart/form-data" action="{{ route('guardarHojaNutricion') }}">
                         {!! csrf_field() !!}  
                         <div class="modal-body row">
                           <div id="paciente">
@@ -91,7 +91,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                               <div class="form-group ">
                                 <label class="col-sm-2 control-label form-label">Paciente</label>
                                 <div class="col-sm-10">
-                                  <input type="text" name="user_id" list="pacientes" class="form-control form-control" placeholder="">
+                                  <input type="text" name="paciente_id" list="pacientes" class="form-control form-control" placeholder="">
                                 </div>
                               </div>
                             </div>

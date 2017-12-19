@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class NutricionData extends Model
 {
     protected $fillable = [
-        'user_id',
+        'paciente_id',
 		'grasa',
 		'mm',
+		'agua',
 		'gv',
 		'peso_seco',
 		'glucosa',
