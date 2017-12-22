@@ -96,11 +96,13 @@ Hoja nutricional  <i class="fa fa-home"></i>
                               </div>
                             </div>
                           </div>
-                          <div id="antropometria">
+                          <div id="antropometria" style="height: 400px; overflow-y: scroll">
                             <div class="col-lg-12 ">
                                <h4 class="center-block">ANTROPOMETRÍA</h4>
                             </div>
-
+                            <div class="col-lg-12 center-block">
+                               <h5>COMPARTIMENTOS CORPORALES POR BIOIMPEDANCIA</h5>
+                            </div>
                             <div class="col-lg-4">
                               <div class="form-group ">
                                 <label class="col-sm-2 control-label form-label">Grasa: </label>
@@ -135,9 +137,68 @@ Hoja nutricional  <i class="fa fa-home"></i>
                             </div>
                             <div class="col-lg-4">
                               <div class="form-group ">
+                                <label class="col-sm-2 control-label form-label">IMC: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="imc" step=".01" class="form-control form-control" placeholder="">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-4">
+                              <div class="form-group ">
                                 <label class="col-sm-2 control-label form-label">Peso seco: </label>
                                 <div class="col-sm-10">
                                   <input type="number" name="peso_seco" step=".01" class="form-control form-control" placeholder="">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-12 center-block">
+                               <h5>CIRCUNFERENCIAS Y PLIEGUES CUTANEOS</h5>
+                            </div>
+                            <div class="col-lg-4">
+                              <div class="form-group ">
+                                <label class="col-sm-2 control-label form-label">Estatura: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="estatura" step=".01" class="form-control form-control" placeholder="">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-4">
+                              <div class="form-group ">
+                                <label class="col-sm-2 control-label form-label">CMB: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="cmb" step=".01" class="form-control form-control" placeholder="">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-4">
+                              <div class="form-group ">
+                                <label class="col-sm-2 control-label form-label">C. Muñeca: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="c_m" step=".01" class="form-control form-control" placeholder="">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-4">
+                              <div class="form-group ">
+                                <label class="col-sm-2 control-label form-label">PCT: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="pct" step=".01" class="form-control form-control" placeholder="">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-4">
+                              <div class="form-group ">
+                                <label class="col-sm-2 control-label form-label">Complexion: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="complexion" step=".01" class="form-control form-control" placeholder="">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-4">
+                              <div class="form-group ">
+                                <label class="col-sm-2 control-label form-label">AMBd%: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="ambd" step=".01" class="form-control form-control" placeholder="">
                                 </div>
                               </div>
                             </div>
@@ -211,6 +272,38 @@ Hoja nutricional  <i class="fa fa-home"></i>
                             </div>
                             <div class="col-lg-4">
                               <div class="form-group ">
+                                <label class="col-sm-2 control-label form-label">VCM: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="vcm" step=".01" class="form-control form-control" placeholder="">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-4">
+                              <div class="form-group ">
+                                <label class="col-sm-2 control-label form-label">WBC: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="wbc" step=".01" class="form-control form-control" placeholder="">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-4">
+                              <div class="form-group ">
+                                <label class="col-sm-2 control-label form-label">RBC: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="rbc" step=".01" class="form-control form-control" placeholder="">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-4">
+                              <div class="form-group ">
+                                <label class="col-sm-2 control-label form-label">PLQ: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="plq" step=".01" class="form-control form-control" placeholder="">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-4">
+                              <div class="form-group ">
                                 <label class="col-sm-2 control-label form-label">Leucocitos: </label>
                                 <div class="col-sm-10">
                                   <input type="number" name="leucocitos" step=".01" class="form-control form-control" placeholder="">
@@ -236,6 +329,14 @@ Hoja nutricional  <i class="fa fa-home"></i>
                                 </div>
                               </div>
                             </div>
+                            <div class="col-lg-4">
+                              <div class="form-group ">
+                                <label class="col-sm-2 control-label form-label">Globulinas: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="globulinas" step=".01" class="form-control form-control" placeholder="">
+                                </div>
+                              </div>
+                            </div>
                             <div class="col-lg-12 center-block">
                                <h5>PERFIL DE LIPIDOS</h5>
                             </div>
@@ -254,7 +355,31 @@ Hoja nutricional  <i class="fa fa-home"></i>
                                   <input type="number" name="trigleceridos" step=".01" class="form-control form-control" placeholder="">
                                 </div>
                               </div>
-                            </div>.
+                            </div>
+                            <div class="col-lg-4">
+                              <div class="form-group ">
+                                <label class="col-sm-2 control-label form-label">HDL: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="hdl" step=".01" class="form-control form-control" placeholder="">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-4">
+                              <div class="form-group ">
+                                <label class="col-sm-2 control-label form-label">LDL: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="ldl" step=".01" class="form-control form-control" placeholder="">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-4">
+                              <div class="form-group ">
+                                <label class="col-sm-2 control-label form-label">VLDL: </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="vldl" step=".01" class="form-control form-control" placeholder="">
+                                </div>
+                              </div>
+                            </div>
 
                              <div class="col-lg-12 center-block">
                                <h5>ELECTROLITOS SERICOS</h5>
@@ -299,9 +424,26 @@ Hoja nutricional  <i class="fa fa-home"></i>
                                 </div>
                               </div>
                             </div>
+                            <div class="col-lg-4">
+                              <div class="form-group ">
+                                <label class="col-sm-2 control-label form-label">Cloro (Cl): </label>
+                                <div class="col-sm-10">
+                                  <input type="number" name="cloro" step=".01" class="form-control form-control" placeholder="">
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                        <div id="exploracion-fisica">
+                            <div class="col-lg-12 center-block">
+                               <h4>EXPLORACION FISICA </h4>
+                            </div>
+                            <div class="col-lg-12">
+                              <div class="form-group ">
+                               <textarea class="form-control" name="exploracion_fisica" rows="10" height="200px"></textarea>
+                              </div>
+                            </div>
                         </div>
                         <div id="tratamiento-medico">
-                        
                             <div class="col-lg-12 center-block">
                                <h4>TRATAMIENTO MÉDICO</h4>
                             </div>
@@ -348,7 +490,6 @@ Hoja nutricional  <i class="fa fa-home"></i>
                             </div>
                           </div>
                           <div id="valor-nutricional">
-                          
                             <div class="col-lg-12 center-block">
                                <h4>VALORACIÓN NUTRICIONAL</h4>
                             </div>
@@ -358,7 +499,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
                               </div>
                             </div>
                           </div>
-                           <div id="indicaciones-nutricionales">
+                          <div id="indicaciones-nutricionales">
                             <div class="col-lg-12 center-block">
                                <h4>INDICACIONES NUTRICIONALES</h4>
                             </div>
@@ -367,8 +508,200 @@ Hoja nutricional  <i class="fa fa-home"></i>
                                <textarea class="form-control" name="indicaciones" rows="10" height="200px"></textarea>
                               </div>
                             </div>
+                          </div>
+                          <div id="valoracion-medica">
+                            <div class="col-lg-12 center-block">
+                               <h4>VALORACIÓN MEDICA </h4>
                             </div>
+                            <div class="col-lg-12">
+                              <div class="form-group ">
+                               <textarea class="form-control" name="valoracion_medica" rows="10" height="200px"></textarea>
+                              </div>
+                            </div>
+                          </div>
+                          <div id="indicaciones-medicas">
+                            <div class="col-lg-12 center-block">
+                               <h4>INDICACIONES MEDICAS </h4>
+                            </div>
+                            <div class="col-lg-12">
+                              <div class="form-group ">
+                               <textarea class="form-control" name="indicaciones_medicas" rows="10" height="200px"></textarea>
+                              </div>
+                            </div>
+                          </div>
+                          <div id="nota-medica">
+                            <div class="col-lg-12 center-block">
+                               <h4>NOTA MEDICA DE SEGUIMIENTO</h4>
+                            </div>
+                            <div class="col-lg-12">
+                              <div class="form-group ">
+                               <textarea class="form-control" name="nota_medica" rows="10" height="200px"></textarea>
+                              </div>
+                            </div>
+                          </div>
+                          <div id="valoracion-nutricional-seguimiento">
+                            <div class="col-lg-12 center-block">
+                               <h4>VALORACION NUTRICIONAL DE SEGUIMIENTO </h4>
+                            </div>
+                            <div class="col-lg-12">
+                              <div class="form-group ">
+                               <textarea class="form-control" name="valoracion_nutricional_seguimiento" rows="10" height="200px"></textarea>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div id="malnutricion" style="height: 400px; overflow-y: scroll;">
+                            <div class="col-lg-12 center-block">
+                               <h4>ESCALA DE MALNUTRICIÓN ADAPTADA DE LA SGA PARA PACIENTES EN HEMODIÁLISIS:</h4>
+                            </div>
+                            <div class="col-lg-12 center-block">
+                              <h5>1.CAMBIO DE PESO (cambio total en los últimos 6 meses)</h5>
+                                <div class="radio-inline">
+                                  <input type="radio" name="cambio_de_peso" value="1">
+                                  <label class="control-label form-label">1-Sin cambio de peso o ganancia</label>
+                                </div>
+                                <div class="radio-inline">
+                                  <input type="radio" name="cambio_de_peso" value="2">
+                                  <label class="control-label form-label">2-Pérdida de peso < 5%</label>
+                                </div>
+                                <div class="radio-inline">
+                                  <input type="radio" name="cambio_de_peso" value="3">
+                                  <label class="control-label form-label">3-Pérdida de peso de 5 a 10 %</label>
+                                </div>
+                                <div class="radio-inline">
+                                  <input type="radio" name="cambio_de_peso" value="4">
+                                  <label class="control-label form-label">4-Pérdida de peso de 10-15%</label>
+                                </div>
+                                <div class="radio-inline">
+                                  <input type="radio" name="cambio_de_peso" value="5">
+                                  <label class="control-label form-label">5-Pérdida de peso > 15%</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 center-block">
+                              <h5>2.INGESTA DIETÉTICA</h5>
+                                <div class="radio-inline">
+                                  <input type="radio" name="ingesta_dietetica" value="1">
+                                  <label class="control-label form-label">1-Sin cambio</label>
+                                </div>
+                                <div class="radio-inline">
+                                  <input type="radio" name="ingesta_dietetica" value="2">
+                                  <label class="control-label form-label">2-Dieta sólida sub-óptima</label>
+                                </div>
+                                <div class="radio-inline">
+                                  <input type="radio" name="ingesta_dietetica" value="3">
+                                  <label class="control-label form-label">3-Dieta líquida o disminución general moderada</label>
+                                </div>
+                                <div class="radio-inline">
+                                  <input type="radio" name="ingesta_dietetica" value="4">
+                                  <label class="control-label form-label">4-Liquida hipocalórica</label>
+                                </div>
+                                <div class="radio-inline">
+                                  <input type="radio" name="ingesta_dietetica" value="5">
+                                  <label class="control-label form-label">5-Anorexia, inanición</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 center-block">
+                              <h5>3.SINTOMAS GASTROINTESTINALES</h5>
+                                <div class="radio-inline">
+                                  <input type="radio" name="sintomas_gastrointestinales" value="1">
+                                  <label class="control-label form-label">1-Sin síntomas</label>
+                                </div>
+                                <div class="radio-inline">
+                                  <input type="radio" name="sintomas_gastrointestinales" value="2">
+                                  <label class="control-label form-label">2-Náusea</label>
+                                </div>
+                                <div class="radio-inline">
+                                  <input type="radio" name="sintomas_gastrointestinales" value="3">
+                                  <label class="control-label form-label">3-Vómito y síntomas GI moderados</label>
+                                </div>
+                                <div class="radio-inline">
+                                  <input type="radio" name="sintomas_gastrointestinales" value="4">
+                                  <label class="control-label form-label">4-Diarrea</label>
+                                </div>
+                                <div class="radio-inline">
+                                  <input type="radio" name="sintomas_gastrointestinales" value="5">
+                                  <label class="control-label form-label">5-Anorexia severa</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 center-block">
+                              <h5>4.CAPACIDAD FUNCIONAL (Discapacidad funcional relacionado con la nutrición)</h5>
+                                <div class="radio-inline">
+                                  <input type="radio" name="capacidad_funcional" value="1">
+                                  <label class="control-label form-label">1-Sin dificultad</label>
+                                </div>
+                                <div class="radio-inline">
+                                  <input type="radio" name="capacidad_funcional" value="2">
+                                  <label class="control-label form-label">2-Ambulación con dificultad</label>
+                                </div>
+                                <div class="radio-inline">
+                                  <input type="radio" name="capacidad_funcional" value="3">
+                                  <label class="control-label form-label">3-Actividad normal con dificultad</label>
+                                </div>
+                                <div class="radio-inline">
+                                  <input type="radio" name="capacidad_funcional" value="4">
+                                  <label class="control-label form-label">4-Actividad ligera</label>
+                                </div>
+                                <div class="radio-inline">
+                                  <input type="radio" name="capacidad_funcional" value="5">
+                                  <label class="control-label form-label">5-Muy poca actividad, silla-cama</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 center-block">
+                              <h5>5.COMORBILIDADES</h5>
+                                <div class="radio-inline">
+                                  <input type="radio" name="comorbilidades" value="1">
+                                  <label class="control-label form-label">1-MDH < 12 meses Y sano</label>
+                                </div>
+                                <div class="radio-inline">
+                                  <input type="radio" name="comorbilidades" value="2">
+                                  <label class="control-label form-label">2-MDH de 1 a 2 años y comorbilidad leve</label>
+                                </div>
+                                <div class="radio-inline">
+                                  <input type="radio" name="comorbilidades" value="3">
+                                  <label class="control-label form-label">3-MDH de 2 a 4 años >75 años y comorbilidad moderada</label>
+                                </div>
+                                <div class="radio-inline">
+                                  <input type="radio" name="comorbilidades" value="4">
+                                  <label class="control-label form-label">4- > de 4 años y comorbilidad severa </label>
+                                </div>
+                                <div class="radio-inline">
+                                  <input type="radio" name="comorbilidades" value="5">
+                                  <label class="control-label form-label">5-Múltiples  y comorbilidades</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 center-block">
+                              <h5>6.EXAMEN FISICO. PÉRDIDA DE GRASA SUBCUTÁNEA (debajo de ojos, bíceps, tríceps)</h5>
+                                <div class="radio-inline">
+                                  <input type="radio" name="examen_fisico" value="1">
+                                  <label class="control-label form-label">1-Sin pérdida</label>
+                                </div>
+                                <div class="radio-inline">
+                                  <input type="radio" name="examen_fisico" value="3">
+                                  <label class="control-label form-label">3-Moderada </label>
+                                </div>
+                                <div class="radio-inline">
+                                  <input type="radio" name="examen_fisico" value="5">
+                                  <label class="control-label form-label">5-Severa </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 center-block">
+                              <h5>7.SIGNOS DE PÉRDIDA MUSCULAR (sienes, espalda alta, escapula, clavícula, cuádriceps, pantorrilla, hombros, dorso de mano)</h5>
+                                <div class="radio-inline">
+                                  <input type="radio" name="signos_perdida_muscular" value="1">
+                                  <label class="control-label form-label">1-Sin pérdida</label>
+                                </div>
+                                <div class="radio-inline">
+                                  <input type="radio" name="signos_perdida_muscular" value="3">
+                                  <label class="control-label form-label">3-Moderada </label>
+                                </div>
+                                <div class="radio-inline">
+                                  <input type="radio" name="signos_perdida_muscular" value="5">
+                                  <label class="control-label form-label">5-Severa </label>
+                                </div>
+                            </div>
+                          </div>
                         </div>
+
                         <div class="modal-footer">
                           <button type="button" class="btn btn-white" onclick="reporte.back()">Cerrar</button>
                           <button type="button" class="btn btn-default" onclick="reporte.next()">Siguiente</button>
@@ -382,7 +715,7 @@ Hoja nutricional  <i class="fa fa-home"></i>
     
       <datalist id="pacientes">
         @foreach ($pacientes as $paciente)
-          <option value="{{$paciente->id}}-{{$paciente->nombre}}"></option>
+          <option value="{{$paciente->id}}-{{$paciente->nombre}}-{{$paciente->unidad->name}}"></option>
         @endforeach
       </datalist>
  

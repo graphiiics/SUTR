@@ -37,10 +37,10 @@ class NutricionDataController extends Controller
     {
         $hoja= new NutricionData($request->all());
         if($hoja->save()){
-            Session::flash('message','Paciente registrado correctamente');
+            Session::flash('message','Hoja de nutrición guardada correctamente');
             Session::flash('class','success');
         }else{
-            Session::flash('message','Error al registrar paciente');
+            Session::flash('message','Error al guardar la hora de nutrición paciente');
             Session::flash('class','danger');
         }
         switch (Auth::user()->tipo) {
@@ -51,9 +51,9 @@ class NutricionDataController extends Controller
     }
 
     public function reporteNutricionPdf(Request $request,$paciente){
-        $reporteData = NutricionData::where('paciente_id','=',$paciente)->leftJoin('pacientes', 'paciente_id','=','pacientes.id')->first();
+        $reporteData = NutricionData::where('nutricion_datas.id','=',$paciente)->leftJoin('pacientes', 'paciente_id','=','pacientes.id')->first();
         $pdf = PDF::loadView('nutricion/reportes',['reporte' => $reporteData]);
-        return $pdf->stream();
+        return $pdf->stream('reporte.pdf');
         //return view('nutricion/reportes',['reporte' => $reporteData]);
     }
 

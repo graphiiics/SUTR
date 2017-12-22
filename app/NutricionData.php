@@ -36,7 +36,36 @@ class NutricionData extends Model
 		'tribedoce',
 		'omeprazol',
 		'valoracion',
-		'indicaciones'
+		'indicaciones',
+
+		'imc',
+		'estatura',
+		'cmb',
+		'c_m',
+		'pct',
+		'complexion',
+        'ambd',
+        'vcm',
+        'wbc',
+        'rbc',
+        'plq',
+        'globulinas',
+        'hdl',
+        'ldl',
+        'vldl',
+        'cloro',
+        'exploracion_fisica',
+        'valoracion_medica',
+        'indicaciones_medicas',
+        'nota_medica',
+        'valoracion_nutricional_seguimiento',
+        'cambio_de_peso',
+        'ingesta_dietetica',
+        'sintomas_gastrointestinales',
+        'capacidad_funcional',
+        'comorbilidades',
+        'examen_fisico',
+        'signos_perdida_muscular'
     ];
 
     public function paciente()

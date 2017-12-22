@@ -2,7 +2,7 @@ $(document).ready(function() {
 	reporte.init();
 	/*$('form').submit(function(event){
 		event.preventDefault();
-		$('input[name="user_id"]').val($('input[name="user_id"]').val().split('-')[0]);
+		//$('input[name="user_id"]').val($('input[name="user_id"]').val().split('-')[0]);
 		alert($(this).serialize());
 		this.reset();
 		reporte.init();
@@ -12,12 +12,19 @@ $(document).ready(function() {
 
 let reporte = {
 	cont : 0,
-	secciones : [ $('#paciente'),
+	secciones : [ 
+				  $('#paciente'),
 				  $('#antropometria'),
 				  $('#analisis-bio'),
+				  $('#exploracion-fisica'),
 				  $('#tratamiento-medico'),
 				  $('#valor-nutricional'),
 				  $('#indicaciones-nutricionales'),
+				  $('#valoracion-medica'),
+				  $('#indicaciones-medicas'),
+				  $('#nota-medica'),
+				  $('#valoracion-nutricional-seguimiento'),
+				  $('#malnutricion')
 				],
 	close : false,
 	init : function(){
