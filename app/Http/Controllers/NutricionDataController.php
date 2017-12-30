@@ -6,6 +6,7 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\NutricionData;
 use App\Paciente;
+use App\Unidad;
 use PDF;
 use Session;
 use Auth;
@@ -29,8 +30,10 @@ class NutricionDataController extends Controller
      */
     public function index()
     {  
-        $pacientes= Paciente::where('estatus','!=',3)->get();
-        return view('nutricion/index',['pacientes' => $pacientes]);
+        $reportes =  NutricionData::all();
+        $unidades = Unidad::all();
+        $pacientes = Paciente::where('estatus','!=',3)->get();
+        return view('nutricion/index',['pacientes' => $pacientes,'reportes' => $reportes]);
     }
 
     public function guardarHojaNutricion(Request $request)

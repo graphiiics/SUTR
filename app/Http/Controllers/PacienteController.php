@@ -9,6 +9,7 @@ use App\Paciente;
 use App\Unidad;
 use Auth;
 use Session;
+use App\NutricionData;
 
 class PacienteController extends Controller
 {
@@ -33,9 +34,15 @@ class PacienteController extends Controller
             case 4:
                 $pacientes= Paciente::where('estatus','!=',3)->get();
                 $unidades=Unidad::all();
+                for ($i=0; $i < sizeof($pacientes) ; $i++) { 
+                    //var_dump($pacientes[$i]->id);
+                    $reporteData = NutricionData::where('paciente_id','=',$pacientes[$i]->id)->orderBy('id','DESC')->first();
+                    if(isset($reporteData)){
+                        $pacientes[$i]->reporte = $reporteData->id;
+                    }
+                }
                 break;
         }
-    	
     	return view('pacientes/index',compact('pacientes','unidades'));
     }
 

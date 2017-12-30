@@ -191,7 +191,9 @@ Pacientes <i class="fa fa-home"></i>
                               @elseif($paciente->estatus==2 && Auth::user()->tipo<3)
                                  <a  href="{{route('eliminarPaciente',$paciente->id)}}" class="btn   btn-icon btn-danger" title="Eliminar paciente"><i class="fa fa-trash"></i></a>
                               @elseif($paciente->estatus==1 && Auth::user()->tipo==4)
-                                 <a  href="{{route('reporteNutricionPdf',$paciente->id)}}" class="btn   btn-icon btn-success" title="Hoja de nutrición" target="_blank"><i class="fa fa-apple"></i></a>
+                              @endif
+                              @if(isset($paciente->reporte))
+                                <a  href="{{route('reporteNutricionPdf',$paciente->reporte)}}" class="btn   btn-icon btn-success" title="Hoja de nutrición" target="_blank"><i class="fa fa-apple"></i></a>
                               @endif
                         </td>
                        

@@ -45,22 +45,24 @@ Hoja nutricional  <i class="fa fa-home"></i>
                 <thead>
                     <tr>
                         <th>Id</th>
-                        <th>Nombre</th>
-                        <th>Unidad</th>
+                        <th>Nombre del Paciente</th>
+                        <th>Unidad del paciente</th>
                         <th>Fecha</th>
                         <th>Acciones</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                   {{--  @foreach ($reportes as $reporte)
+                    @foreach ($reportes as $reporte)
                       <tr>
-                        <td>{{$hoja->id}}</td>
-                        <td>{{$hoja->paciente->nombre}}</td>
-                        <td>{{$hoja->paciente->unidad->name}}</td>
-                        <td>{{$hoja->fecha}}</td>
+                        <td>{{$reporte->id}}</td>
+                        <td>{{$reporte->paciente->nombre}}</td>
+                        <td>{{$reporte->paciente->unidad->name}}</td>
+                        <td>{{$reporte->created_at}}</td>
                         <td>Algo lleva aqui!</td>
+                        <td><a  href="{{route('reporteNutricionPdf',$reporte->id)}}" class="btn   btn-icon btn-success" title="Hoja de nutrición" target="_blank"><i class="fa fa-apple"></i></a></td>
                     </tr>
-                  @endforeach --}}
+                  @endforeach 
                 </tbody>
             </table>
 
