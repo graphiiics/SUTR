@@ -1,3 +1,9 @@
+<?php
+        $path = public_path('/img/LOGOTIPO2.jpg');
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
@@ -26,19 +32,20 @@
 		H2.western { font-family: "Cambria", serif; font-size: 13pt }
 		H2.cjk { font-family: "Arial"; font-size: 13pt }
 		H2.ctl { font-family: ; font-size: 13pt }
+		IMG { margin-top: -20px }
 
 	</STYLE>
 </HEAD>
 <BODY LANG="es-MX" DIR="LTR">
 <P STYLE="margin-bottom: 0.14in">	</P>
-<P STYLE="margin-bottom: 0.14in"><SPAN CLASS="sd-abs-pos" STYLE="position: absolute; top: 0.1in; left: 0in; width: 123px"><IMG SRC="" NAME="Imagen 1" WIDTH=123 HEIGHT=123 BORDER=0 ></SPAN><BR><BR>
+<P STYLE="margin-bottom: 0.14in"><SPAN CLASS="sd-abs-pos" STYLE="position: absolute; top: 0.1in; left: 0in; width: 123px"><IMG SRC="{{ $base64 }}" NAME="Imagen 1" WIDTH=200 HEIGHT=150 BORDER=0 ></SPAN><BR><BR>
 </P>
 <H1 CLASS="western" ALIGN=CENTER STYLE="margin-top: 0in"><FONT COLOR="#1f497d">UNIDAD
 DE TERAPIA RENAL S.C.</FONT></H1>
 <H1 CLASS="western" ALIGN=CENTER STYLE="margin-top: 0in"><FONT COLOR="#1f497d"><FONT SIZE=3>DEPARTAMENTO
 DE NUTRICIÓN</FONT></FONT></H1>
 <H2 CLASS="western" ALIGN=CENTER><FONT COLOR="#1f497d"><FONT SIZE=2 STYLE="font-size: 11pt"><SPAN STYLE="font-weight: normal">REPORTE
-MEDICO NUTRICIONAL GENERAL</SPAN></FONT></FONT></H2><BR/>
+MEDICO NUTRICIONAL GENERAL</SPAN></FONT></FONT></H2><BR/><BR/><BR/>
 <CENTER>
 	<TABLE WIDTH=100% CELLPADDING=7 CELLSPACING=0>
 		<COL WIDTH=90>
